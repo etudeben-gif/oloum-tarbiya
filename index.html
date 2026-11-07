@@ -28,7 +28,7 @@ select{background:#fff;border:1px solid #cbdce1;border-radius:10px;padding:10px;
 <section class="card"><h3>الأسئلة</h3><div id="q-grid" class="gridnum"></div></section>
 </aside>
 <div class="content">
-<section class="card lesson" id="lesson-card"><div class="step"><b>1</b> الدرس</div><h2 id="lesson-title"></h2><p id="lesson-text"></p><div id="lesson-tip" class="keypoint"></div></section>
+<section class="card lesson" id="lesson-card"><div class="step"><b>1</b> الدرس</div><h2 id="lesson-title"></h2><p id="lesson-text"></p><div id="lesson-tip" class="keypoint" hidden></div><p class="info"><a id="lesson-source" target="_blank" rel="noopener noreferrer" hidden></a></p></section>
 <section class="card original" id="question-card"><div class="titleline"><div class="step" style="margin:0"><b>2</b> السؤال الأصلي</div><span id="q-code" class="question-code">Q61</span></div>
 <div class="source-view"><div class="toolbar"><span class="small" id="sheet-label">الصفحة</span><div class="toolbox"><button id="zoom-out" type="button" aria-label="تصغير">−</button><span id="zoom-label" class="small">100%</span><button id="zoom-in" type="button" aria-label="تكبير">+</button><button id="page-toggle" type="button">الصفحة كاملة</button></div></div><div class="frame" id="canvas-frame"><div class="loader" id="loading">تحميل صورة السؤال الأصلي...</div><canvas id="question-canvas" aria-label="السؤال والاختيارات كما وردا في ورقة الامتحان الأصلية"></canvas></div></div>
 <div class="info">تُعرض صورة السؤال والاختيارات كما وردت في الوثيقة المصورة، دون تغيير النص أو الصياغة. يمكن تكبير الصورة أو فتح الصفحة كاملة.</div>
@@ -36,12 +36,12 @@ select{background:#fff;border:1px solid #cbdce1;border-radius:10px;padding:10px;
 <div class="buttons"><button type="button" class="primary" id="check">تصحيح الجواب</button><button type="button" class="secondary" id="skip">تخطي السؤال</button></div><div class="result" id="feedback" hidden></div>
 <div class="nav"><button type="button" id="prev">→ السابق</button><button type="button" id="next">التالي ←</button></div></section>
 </div></div></main>
-<script src="explanations.js"></script>
+<script src="lessons-sourced.js"></script>
 <script>
 (function(){
 'use strict';
 const exams=[
-{id:'2022',name:'نونبر 2022',count:60,first:2,groups:null,per:6,choices:4,keys:'AACADAABACBADABBCCBBCBCACBCDACBCBADDACBCABDDBCBDBCBBACDBABDB',map:'172eggggggddgggdg77ggg0gg1gggdggdgggg7g7g3ggggggeeggggg2gggg',range:[.11,.90]},
+{id:'2022',name:'نونبر 2022',count:60,first:2,groups:null,per:6,choices:4,keys:'ACCADAABACBADABBCCBBCBCACBCDACBCBADDACBCABDDBCBDBCBBACDBABDB',map:'172eggggggddgggdg77ggg0gg1gggdggdgggg7g7g3ggggggeeggggg2gggg',range:[.11,.90]},
 {id:'2023',name:'دجنبر 2023',count:60,first:3,groups:null,per:6,choices:4,keys:'CACBDDBBACADDDACDCAADBBDBADACBDDBCADBDABDACBADAADABDACCDBAAD',map:'gggdgg7c5ddg0ggcggggdg77dg6gggg5ggagf7gg0gg3gg13gggggggggggg',range:[.09,.88]},
 {id:'2024f',name:'فبراير 2024',count:54,first:2,groups:null,per:6,choices:4,keys:'',map:'d6dgg130d06g1d013dg53g9g39g10ggggg0ggggg1ggggegggggggg',range:[.12,.86]},
 {id:'2024a',name:'أبريل 2024',count:60,first:1,groups:[5,5,6,5,5,6,6,6,6,6,4],per:5,choices:4,keys:'BAAABABBBCDABADBDACBADCCAADBCACDAAABACBABACAADDADBCBABCDCABA',map:'80070dgg1ddgggggedgggg702ggegggg6dg6gggg9ge6ggdggggggfgggggg',range:[.10,.84]},
@@ -90,11 +90,42 @@ const top=full?0:Math.max(0,rawTop-.016),bottom=full?1:Math.min(1,rawBottom+.02)
 if(cache[src]&&cache[src].complete){paint(cache[src]);return}
 const im=new Image();cache[src]=im;im.onload=()=>paint(im);im.onerror=()=>{if(token!==showImage.token)return;$('loading').hidden=false;$('loading').textContent='تعذر تحميل الصورة. افتح الموقع من رابط GitHub Pages وتأكد من الاتصال بالإنترنت.'};im.src=src}
 showImage.token=0;
-function lessonFor(e,i){const str=e.map||'';const l='0123456789abcdefg'.indexOf(str[i]||'g');return lessons[l<0?16:l]||lessons[16]}
+function lessonFor(e,i){
+const db=window.MASAR_SOURCE_COURSES;
+if(!db||!db.questionTopics||!db.questionTopics[e.id])return null;
+const t=db.questionTopics[e.id][i];return t&&db.topics[t]?db.topics[t]:null;
+}
 function updateScore(){let attempted=0,eligible=0,correct=0;for(const e of exams){for(let i=0;i<e.count;i++){const chosen=answers[id(e,i+61)];if(!chosen)continue;attempted++;const key=e.keys[i];if(key&&key!=='-'){eligible++;if(key===chosen)correct++}}}$('score').textContent=correct+' / '+eligible;$('completed').textContent=attempted+' من 354 سؤالاً';$('progress-bar').style.width=(attempted/354*100)+'%'}
-function showFeedback(){const e=exams[examIndex],key=e.keys[qi],chosen=answers[id(e,qi+61)],box=$('feedback');box.hidden=false;if(!key){box.className='result neutral';box.textContent='سُجّل اختيارك: '+chosen+'. لا يتوفر مفتاح إجابة متحقق منه لهذه الدورة، لذلك لم تُحسب نقطة.';return}const good=chosen===key;box.className='result'+(good?'':' bad');box.textContent=(good?'✓ إجابة مطابقة لمفتاح التصحيح المتوفر.':'إجابتك لا تطابق مفتاح التصحيح المتوفر.')+' الجواب في المفتاح: '+key+'. هذا تصحيح متوفر للمراجعة، وليس تصحيحاً وزارياً مؤكداً.';const qInfo=(window.MASAR_EXPLANATIONS||[]).find(q=>q.year===e.id&&q.n===qi+61);if(qInfo&&qInfo.why&&!qInfo.uncertain){const p=document.createElement('p');p.textContent='التفسير: '+qInfo.why;box.appendChild(p)}}
+function showFeedback(){
+ const e=exams[examIndex],key=e.keys[qi],chosen=answers[id(e,qi+61)],box=$('feedback');
+ box.hidden=false;box.replaceChildren();
+ if(!key){
+   box.className='result neutral';box.textContent='سُجّلت الإجابة. التصحيح غير متحقق منه لهذه الدورة.';return;
+ }
+ const good=(chosen===key);
+ box.className='result'+(good?'':' bad');
+ const strong=document.createElement('strong');strong.className='answer-title';strong.textContent=good?'✓ صحيح':'✗ خطأ';box.appendChild(strong);
+ if(!good){
+  const p=document.createElement('p');p.textContent='الاختيار في مفتاح التصحيح المتوفر: '+key;box.appendChild(p);
+ }
+ const lesson=lessonFor(e,qi);
+ if(lesson){
+  const p=document.createElement('p');p.textContent='المعلومة المرتبطة بالسؤال من المرجع: '+lesson.summary;box.appendChild(p);
+  const a=document.createElement('a');a.href=lesson.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='المصدر: '+lesson.publisher+' ↗';box.appendChild(a);
+ }
+}
 function render(){const e=exams[examIndex],n=qi+61,lesson=lessonFor(e,qi);$('exam-select').value=e.id;$('number-select').innerHTML='';for(let i=0;i<e.count;i++){const o=document.createElement('option');o.value=String(i);o.textContent='Q'+(i+61);$('number-select').appendChild(o)}$('number-select').value=String(qi);$('exam-meta').textContent=e.count+' سؤالاً · من Q61 إلى Q'+(60+e.count);
-$('lesson-title').textContent=lesson[0];$('lesson-text').textContent=lesson[1];$('lesson-tip').textContent=lesson[2];$('q-code').textContent='Q'+n;
+if(lesson){
+  $('lesson-title').textContent=lesson.title;
+  $('lesson-text').textContent=lesson.summary;
+  $('lesson-tip').hidden=true;
+  const link=$('lesson-source');link.hidden=false;link.href=lesson.url;link.textContent='الدرس الأصلي في المصدر: '+lesson.publisher+' ↗';
+}else{
+  $('lesson-title').textContent='درس هذا السؤال قيد التحقق';
+  $('lesson-text').textContent='لم نتحقق بعد من مرجع يطابق هذا السؤال تحديداً. لن نعرض درساً عاماً غير مرتبط به.';
+  $('lesson-tip').hidden=true;$('lesson-source').hidden=true;
+}
+$('q-code').textContent='Q'+n;
 $('answers').innerHTML='';const selected=answers[id(e,n)]||'';for(let i=0;i<e.choices;i++){const letter='ABCDE'[i],label=document.createElement('label');label.className='option';const input=document.createElement('input');input.type='radio';input.name='answer';input.value=letter;input.checked=selected===letter;label.append(input,document.createTextNode(letter));$('answers').appendChild(label)}
 $('check').disabled=!!selected;$('check').textContent=selected?'تم حفظ الجواب':'تصحيح الجواب';$('feedback').hidden=true;if(selected)showFeedback();
 $('prev').disabled=qi===0;$('next').disabled=qi===e.count-1;$('skip').disabled=qi===e.count-1;full=false;$('page-toggle').textContent='الصفحة كاملة';zoom=100;
