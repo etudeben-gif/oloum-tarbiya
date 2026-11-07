@@ -74,7 +74,18 @@ function locate(e,i){if(e.groups){let remaining=i;for(let j=0;j<e.groups.length;
 function setZoom(v){zoom=Math.min(220,Math.max(100,v));$('zoom-label').textContent=zoom+'%';$('question-canvas').style.width=zoom+'%'}
 function showImage(){const e=exams[examIndex],loc=locate(e,qi),src='images/'+e.id+'-'+String(loc.page).padStart(2,'0')+'.webp';
 $('sheet-label').textContent=e.name+' · الصفحة '+loc.page;$('loading').hidden=false;$('question-canvas').hidden=true;const token=++showImage.token;
-function paint(img){if(token!==showImage.token)return;const [top0,bottom0]=e.range;const top=full?0:Math.max(0,top0+(bottom0-top0)*loc.slot/loc.count-.012),bottom=full?1:Math.min(1,top0+(bottom0-top0)*(loc.slot+1)/loc.count+.016);const x=full?0:Math.floor(img.naturalWidth*.018),y=Math.floor(img.naturalHeight*top),w=full?img.naturalWidth:Math.floor(img.naturalWidth*.964),h=Math.max(1,Math.floor(img.naturalHeight*(bottom-top)));const cv=$('question-canvas');cv.width=w;cv.height=h;const ctx=cv.getContext('2d');ctx.drawImage(img,x,y,w,h,0,0,w,h);cv.hidden=false;$('loading').hidden=true;setZoom(zoom)}
+function paint(img){if(token!==showImage.token)return;const borders={
+'2022':[.14,.282,.405,.532,.66,.785,.915],
+'2023':[.10,.237,.36,.478,.593,.702,.822],
+'2024f':[.085,.213,.342,.48,.616,.76,.885],
+'2024o':[.132,.281,.408,.54,.669,.848],
+'2025':[.11,.263,.415,.568,.72,.915]
+};
+const b=e.id==='2024a'?(loc.count===5?[.095,.235,.365,.503,.655,.84]:loc.count===6?[.09,.225,.35,.472,.595,.72,.855]:[.10,.285,.48,.67,.87]):borders[e.id];
+const [top0,bottom0]=e.range;
+const rawTop=b&&b.length===loc.count+1?b[loc.slot]:top0+(bottom0-top0)*loc.slot/loc.count;
+const rawBottom=b&&b.length===loc.count+1?b[loc.slot+1]:top0+(bottom0-top0)*(loc.slot+1)/loc.count;
+const top=full?0:Math.max(0,rawTop-.016),bottom=full?1:Math.min(1,rawBottom+.02);const x=full?0:Math.floor(img.naturalWidth*.018),y=Math.floor(img.naturalHeight*top),w=full?img.naturalWidth:Math.floor(img.naturalWidth*.964),h=Math.max(1,Math.floor(img.naturalHeight*(bottom-top)));const cv=$('question-canvas');cv.width=w;cv.height=h;const ctx=cv.getContext('2d');ctx.drawImage(img,x,y,w,h,0,0,w,h);cv.hidden=false;$('loading').hidden=true;setZoom(zoom)}
 if(cache[src]&&cache[src].complete){paint(cache[src]);return}
 const im=new Image();cache[src]=im;im.onload=()=>paint(im);im.onerror=()=>{if(token!==showImage.token)return;$('loading').hidden=false;$('loading').textContent='تعذر تحميل الصورة. افتح الموقع من رابط GitHub Pages وتأكد من الاتصال بالإنترنت.'};im.src=src}
 showImage.token=0;
