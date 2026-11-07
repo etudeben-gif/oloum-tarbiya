@@ -12,29 +12,24 @@
 </style>
 </head>
 <body>
-<header><div class="in"><div class="small" style="color:#e3f4ee">موقع تعليمي مجاني ومستقل</div>
-<h1>📗 مسار علوم التربية</h1>
-<p>قرا الدرس، جاوب على السؤال، وشوف الجواب الصحيح والسبب ديالو. خدم براحتك من أي هاتف أو كمبيوتر، بلا حساب وبلا تحميل.</p>
-<div class="meta"><span class="chip">درس ← سؤال ← تصحيح</span><span class="chip">120 سؤالاً مشروحاً</span><span class="chip">حساب النقط</span><span class="chip">حفظ تقدمك</span></div></div></header>
 <main>
-<div class="notice"><strong>توثيق:</strong> الأسئلة هنا <strong>معاد صياغتها للتدريب</strong> انطلاقاً من محاور الأسئلة المرقمة في امتحاني 2022 وأكتوبر 2024، ماشي نسخ حرفية من الورقة الرسمية. التصحيحات المتوفرة مقترحة، وبعض الأسئلة المختلف عليها ما كتحسبش فالنقطة. باقي السنوات غادي تحتاج استخراجاً ومراجعة مستقلة، لذلك ما كنعرضوش ليها أجوبة مخترعة.</div>
 <div class="grid">
 <aside class="side">
 <section class="card wide"><h3>اختار الامتحان</h3>
 <label class="field" for="year">الدورة</label>
 <select id="year"><option value="2022">نونبر 2022 – 60 سؤالاً</option><option value="2024o">أكتوبر 2024 – 60 سؤالاً</option></select>
 <label class="field" for="qnum">السؤال</label><select id="qnum"><option value="61">السؤال 61</option></select>
-<div class="tile">تقدر تبدل السؤال أو الدورة ف أي وقت.</div>
+
 </section>
 <section class="card"><h3>النقطة ديالك</h3><div class="score" id="score">0 / 0</div><div id="attempts" class="small">مازال ما جاوبتيش</div><div class="bar"><div class="fill" id="bar"></div></div><button class="ghost" type="button" id="reset" style="width:100%">نعاود من الأول</button></section>
-<section class="card"><h3>كيفاش تخدم؟</h3><div class="small">1. فهم الدرس اللي فوق السؤال.<br>2. اختار جواب واحد.<br>3. ضغط «صحح الجواب».<br>4. شوف التفسير والنقطة.<br>5. دوز للسؤال الموالي.</div></section>
+
 </aside>
 <section>
 <article class="card lesson" id="lesson">
 <div class="section-label"><span class="num">1</span> أولاً: فهم الدرس</div>
 <h2 id="lesson-title">فيكوتسكي والتعلم</h2><p id="lesson-body">التفاعل الاجتماعي واللغة كيساعدو المتعلم يفهم وينمي قدراتو. الأستاذ أو الزميل الأكثر خبرة يقدر يقدّم دعماً مناسباً، ومن بعد يتراجع الدعم مع زيادة الاستقلالية.</p>
 <div id="tip" class="tip">💡 تذكّر: فيكوتسكي = التعلم الاجتماعي ومنطقة النمو القريب.</div>
-<div class="sources small">المراجع: <a id="reference-link" target="_blank" rel="noopener" href="https://www.britannica.com/biography/Lev-Vygotsky">اطّلع على المرجع التعليمي</a></div>
+
 </article>
 <article class="card question" id="question">
 <div class="section-label"><span class="num">2</span> ثانياً: جرّب تجاوب</div>
@@ -45,11 +40,11 @@
 <div id="feedback" class="feedback" hidden></div>
 <div class="nav"><button class="ghost" id="prev" type="button">→ السؤال السابق</button><button class="ghost" id="next" type="button">السؤال الموالي ←</button></div>
 </article>
-<section class="card"><h3>مراجع موثوقة للمراجعة</h3><p class="small">الدروس شروحات تعليمية مستقلة. كنستعمل مراجع أكاديمية عامة، ومعطيات الوزارة حيث كيتعلق الموضوع بالإصلاح والتربية الدامجة. وما كنسمّيش التصحيح المقترح رسمياً.</p><a href="https://www.men.gov.ma/" target="_blank" rel="noopener">وزارة التربية الوطنية المغربية</a> · <a href="https://www.britannica.com/" target="_blank" rel="noopener">Encyclopaedia Britannica</a> · <a href="https://www.unesco.org/en/education" target="_blank" rel="noopener">UNESCO</a></section>
+
 </section>
 </div>
 </main>
-<footer><div class="in">مسار علوم التربية · مشروع تعليمي غير تابع لوزارة التربية الوطنية · يُفضّل الرجوع إلى الوثائق الرسمية عند اختلاف المراجع.</div></footer>
+
 <script src="quiz-data.js"></script>
 <script>
 (function(){
@@ -85,7 +80,7 @@ function showFeedback(q){let box=$("feedback"),given=answers[key(q)];box.hidden=
 let good=given===q.correct;box.className="feedback"+(good?"":" bad");box.innerHTML="<strong>"+(good?"✅ جواب صحيح! +1 نقطة":"❌ ماشي الجواب الصحيح")+"</strong>";const p=document.createElement("p");p.textContent="الجواب الصحيح: "+q.correct;box.appendChild(p);const exp=document.createElement("p");exp.textContent="الشرح: "+q.why;box.appendChild(exp)}
 function render(){const a=subset(),q=a[current];if(!q){$("question-title").textContent="تعذر تحميل الأسئلة. يمكن تعاود تفتح الصفحة.";return}
 $("qnum").innerHTML="";a.forEach((item,i)=>{let o=document.createElement("option");o.value=String(i);o.textContent="السؤال Q"+item.n+(answers[key(item)]?" ✓":"");$("qnum").appendChild(o)});$("qnum").value=String(current);
-const lesson=lessonData[q.lesson]||lessonData[16];$("lesson-title").textContent=lesson[0];$("lesson-body").textContent=lesson[1];$("tip").textContent="💡 "+lesson[2];$("reference-link").href=lesson[3];$("question-ref").textContent=(year==="2022"?"نونبر 2022":"أكتوبر 2024")+" · مستوحى من سؤال Q"+q.n;$("question-counter").textContent=(current+1)+" / "+a.length;$("question-title").textContent=q.prompt;
+const lesson=lessonData[q.lesson]||lessonData[16];$("lesson-title").textContent=lesson[0];$("lesson-body").textContent=lesson[1];$("tip").textContent="💡 "+lesson[2];$("question-ref").textContent=(year==="2022"?"نونبر 2022":"أكتوبر 2024")+" · مستوحى من سؤال Q"+q.n;$("question-counter").textContent=(current+1)+" / "+a.length;$("question-title").textContent=q.prompt;
 let c=choices(q),opts=$("options");opts.innerHTML="";c.forEach((x,i)=>{let label=document.createElement("label");label.className="opt";let radio=document.createElement("input");radio.type="radio";radio.name="answer";radio.value=x;radio.checked=answers[key(q)]===x;let letter=document.createElement("span");letter.className="letter";letter.textContent="ABCD"[i];let txt=document.createElement("span");txt.textContent=x;label.append(radio,letter,txt);opts.appendChild(label)});
 $("feedback").hidden=true;$("submit").disabled=false;$("submit").textContent="صحّح الجواب";if(answers[key(q)]){showFeedback(q);$("submit").disabled=true;$("submit").textContent="جاوبتي على هاد السؤال"}
 $("prev").disabled=current===0;$("next").disabled=current===a.length-1;$("skip").disabled=current===a.length-1;total()}
