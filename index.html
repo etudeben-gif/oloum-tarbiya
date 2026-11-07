@@ -33,7 +33,7 @@
 </article>
 <article class="card question" id="question">
 <div class="section-label"><span class="num">2</span> ثانياً: جرّب تجاوب</div>
-<div class="page"><span id="question-ref">نونبر 2022 · مستوحى من Q61</span><span>•</span><span id="question-counter">1 / 60</span></div>
+<div class="page"><span id="question-ref">تدريب Q61</span><span>•</span><span id="question-counter">1 / 60</span></div>
 <h2 id="question-title">شنو العلاقة بين التعلم والنمو عند فيكوتسكي؟</h2>
 <div id="options" class="choices"><label class="opt"><input type="radio" name="answer" value="A"><span class="letter">A</span><span>التعلم المدعوم اجتماعياً يمكن يسبق النمو ويقوده</span></label></div>
 <div class="actions"><button class="primary" id="submit" type="button">صحّح الجواب</button><button class="secondary" id="skip" type="button">دوز للسؤال الموالي</button></div>
@@ -80,7 +80,7 @@ function showFeedback(q){let box=$("feedback"),given=answers[key(q)];box.hidden=
 let good=given===q.correct;box.className="feedback"+(good?"":" bad");box.innerHTML="<strong>"+(good?"✅ جواب صحيح! +1 نقطة":"❌ ماشي الجواب الصحيح")+"</strong>";const p=document.createElement("p");p.textContent="الجواب الصحيح: "+q.correct;box.appendChild(p);const exp=document.createElement("p");exp.textContent="الشرح: "+q.why;box.appendChild(exp)}
 function render(){const a=subset(),q=a[current];if(!q){$("question-title").textContent="تعذر تحميل الأسئلة. يمكن تعاود تفتح الصفحة.";return}
 $("qnum").innerHTML="";a.forEach((item,i)=>{let o=document.createElement("option");o.value=String(i);o.textContent="السؤال Q"+item.n+(answers[key(item)]?" ✓":"");$("qnum").appendChild(o)});$("qnum").value=String(current);
-const lesson=lessonData[q.lesson]||lessonData[16];$("lesson-title").textContent=lesson[0];$("lesson-body").textContent=lesson[1];$("tip").textContent="💡 "+lesson[2];$("question-ref").textContent=(year==="2022"?"نونبر 2022":"أكتوبر 2024")+" · مستوحى من سؤال Q"+q.n;$("question-counter").textContent=(current+1)+" / "+a.length;$("question-title").textContent=q.prompt;
+const lesson=lessonData[q.lesson]||lessonData[16];$("lesson-title").textContent=lesson[0];$("lesson-body").textContent=lesson[1];$("tip").textContent="💡 "+lesson[2];$("question-ref").textContent=(year==="2022"?"نونبر 2022":"أكتوبر 2024")+" · تدريب Q"+q.n;$("question-counter").textContent=(current+1)+" / "+a.length;$("question-title").textContent=q.prompt;
 let c=choices(q),opts=$("options");opts.innerHTML="";c.forEach((x,i)=>{let label=document.createElement("label");label.className="opt";let radio=document.createElement("input");radio.type="radio";radio.name="answer";radio.value=x;radio.checked=answers[key(q)]===x;let letter=document.createElement("span");letter.className="letter";letter.textContent="ABCD"[i];let txt=document.createElement("span");txt.textContent=x;label.append(radio,letter,txt);opts.appendChild(label)});
 $("feedback").hidden=true;$("submit").disabled=false;$("submit").textContent="صحّح الجواب";if(answers[key(q)]){showFeedback(q);$("submit").disabled=true;$("submit").textContent="جاوبتي على هاد السؤال"}
 $("prev").disabled=current===0;$("next").disabled=current===a.length-1;$("skip").disabled=current===a.length-1;total()}
