@@ -36,6 +36,7 @@ select{background:#fff;border:1px solid #cbdce1;border-radius:10px;padding:10px;
 <div class="buttons"><button type="button" class="primary" id="check">تصحيح الجواب</button><button type="button" class="secondary" id="skip">تخطي السؤال</button></div><div class="result" id="feedback" hidden></div>
 <div class="nav"><button type="button" id="prev">→ السابق</button><button type="button" id="next">التالي ←</button></div></section>
 </div></div></main>
+<script src="explanations.js"></script>
 <script>
 (function(){
 'use strict';
@@ -108,5 +109,4 @@ $('zoom-in').onclick=()=>setZoom(zoom+40);$('zoom-out').onclick=()=>setZoom(zoom
 $('reset').onclick=function(){if(confirm('هل تريد حذف الإجابات المسجلة على هذا الجهاز؟')){answers={};save();render()}};
 render();
 })();
-</script><script src="explanations.js"></script>
-</body></html>
+</script></body></html>
