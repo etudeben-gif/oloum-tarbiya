@@ -14,7 +14,7 @@
   <img id="page-image" alt="صفحة من الامتحان الأصلي" style="width:100%;height:auto;border:1px solid #dde6ee;border-radius:12px;display:none">
   <div id="scan-fallback" class="summary">يمكن تصفح PDF الأصلي من رابط التحميل فوق.</div>
   <iframe id="pdf-embed" title="الامتحان المصور PDF" loading="lazy" style="width:100%;height:58vh;min-height:340px;border:1px solid #dae5ed;border-radius:12px"></iframe>
-</div><div class="small">منين تقرا السؤال، اختار الجواب من A إلى D (أو E فدورة أكتوبر 2024).</div><div id="choice" class="choices"></div><div class="actions"><button class="primary" id="check">تأكيد وتصحيح</button><button class="muted" id="prev">→ السابق</button><button class="muted" id="next">الموالي ←</button></div><div id="feedback" class="feedback" hidden></div></div><h3 style="margin-top:20px">انتقل إلى سؤال</h3><div id="qnav" class="qnav"></div></article>
+</div><div class="small">منين تقرا السؤال، اختار الجواب من A إلى D، أو E فدورتي أكتوبر 2024 ونونبر 2025.</div><div id="choice" class="choices"></div><div class="actions"><button class="primary" id="check">تأكيد وتصحيح</button><button class="muted" id="prev">→ السابق</button><button class="muted" id="next">الموالي ←</button></div><div id="feedback" class="feedback" hidden></div></div><h3 style="margin-top:20px">انتقل إلى سؤال</h3><div id="qnav" class="qnav"></div></article>
 <article class="panel"><h2>📚 مكتبة الدروس المركزة</h2><div class="library" id="lessons"></div></article>
 <article class="panel"><h2>امتحان 2025</h2><p>أضفنا دورة نونبر 2025 إلى بنك الأسئلة، ونسختها الأصلية منشورة مجاناً. لا نحسب نقاطها قبل مراجعة التصحيح المقترح.</p><a href="https://www.wadifa-info.com/نموذج-مباراة/2166" target="_blank" rel="noopener">الامتحان الأصلي والتصحيح المقترح ↗</a></article></section></div></main>
 <footer><div class="inner">مسار علوم التربية — مشروع تعليمي مستقل، غير تابع لوزارة التربية الوطنية. راجع الورقة الأصلية ومصدر كل جواب قبل الاعتماد عليه.</div></footer>
@@ -65,7 +65,12 @@ function score(){var a=0,b=0,c=0;exams.forEach(function(ex){for(var i=0;i<ex.cou
 function render(){var ex=exams[eidx],li=ex.map.charAt(qi),ix='0123456789abcdefg'.indexOf(li);if(ix<0)ix=16;var lesson=lessons[ix];$('session-title').textContent=ex.name;$('counter').textContent='Q'+(qi+61)+' / Q'+(60+ex.count);
 $('key-status').textContent=ex.keys?'مفتاح إجابة من الملفات المرفوعة، يلزم التحقق منه (غير رسمي)':'لا يوجد مفتاح إجابة موثوق متوفر؛ بدون تنقيط';
 $('lesson-title').textContent=lesson[0];$('lesson-body').textContent=lesson[1];$('lesson-tip').textContent='💡 '+lesson[2];$('lesson-source').href=lesson[3];$('lesson-source').textContent='قراءة المرجع ↗';
-$('qtitle').textContent='السؤال الأصلي Q'+(qi+61);$('source-link').href=pageId(ex); $('pdf-embed').src=pageId(ex)+'#toolbar=1'; showPage(ex,1);
+$('qtitle').textContent='السؤال الأصلي Q'+(qi+61);$('source-link').href=pageId(ex);
+var starts={'2022':2,'2023':2,'2024f':1,'2024a':1,'2024o':1,'2025':1};
+var per={'2022':6,'2023':6,'2024f':6,'2024a':5,'2024o':5,'2025':5};
+var p=Math.min(pages[ex.id],starts[ex.id]+Math.floor(qi/per[ex.id]));
+$('pdf-embed').src=pageId(ex)+'#page='+p;
+showPage(ex,p);
 $('exams').innerHTML='';exams.forEach(function(x,i){var b=document.createElement('button');b.type='button';b.className='session'+(i===eidx?' active':'');b.textContent=x.name+' · '+x.count+' سؤال';b.onclick=function(){eidx=i;qi=0;render()};$('exams').appendChild(b)});
 var letters=(ex.id==='2024o'||ex.id==='2025')?['A','B','C','D','E']:['A','B','C','D'];$('choice').innerHTML='';answer=stored[id()]||'';letters.forEach(function(l){var label=document.createElement('label'),input=document.createElement('input');input.type='radio';input.name='a';input.value=l;input.checked=answer===l;input.onchange=function(){answer=l};label.appendChild(input);label.appendChild(document.createTextNode(l));$('choice').appendChild(label)});
 $('qnav').innerHTML='';for(var i=0;i<ex.count;i++){(function(j){var b=document.createElement('button');b.type='button';b.textContent=String(61+j);b.className=(j===qi?'active ':'')+(stored[ex.id+'-'+(61+j)]?'done':'');b.onclick=function(){qi=j;render()};$('qnav').appendChild(b)})(i)}
