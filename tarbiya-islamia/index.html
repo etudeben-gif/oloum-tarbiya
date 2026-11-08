@@ -42,13 +42,13 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 .grade-feedback.wrong{background:#fff4eb;border-color:#ebc6af}.grade-feedback.pending{background:#f1f4f7;border-color:#dae3e8}
 .grade-feedback strong{display:block;font-size:17px}.mistake-button{display:block;text-align:right;width:100%;margin:7px 0}
 @media(max-width:760px){.quiz-layout{grid-template-columns:1fr}.quiz-menu{position:static}.quiz-menu select{width:100%}.quiz-paper{padding:13px}.scan-frame{max-height:65vh}}
-</style><link rel="stylesheet" href="../assets/masar-premium.css"></head><body>
+</style><link rel="stylesheet" href="../assets/masar-premium.css"><link rel="stylesheet" href="courses.css"></head><body>
 <header><div class="wrap"><strong>مسار | التربية الإسلامية</strong><a href="../">علوم التربية</a></div></header>
 <main>
 <div class="section-eyebrow">مادة التخصص · الديداكتيك</div><h1>التربية الإسلامية</h1>
 <p class="sub">التحضير لمباراة التعليم الثانوي الإعدادي والتأهيلي — دروس، ديداكتيك المادة، وامتحانات الدورات السابقة.</p>
 <div class="meter"><span class="metric">التخصص والديداكتيك</span><span class="metric">امتحانات 2021–2025</span><span class="metric">مراجع الوزارة وملفات المراجعة</span><span class="metric" id="progress">تقدّمك: 0</span></div>
-<nav aria-label="أقسام الصفحة"><button type="button" class="active" data-tab="exams">الامتحانات</button><button type="button" data-tab="courses">الدروس</button><button type="button" data-tab="review">أخطائي ونقطي</button><button type="button" data-tab="library">الوثائق والمراجع</button></nav>
+<nav aria-label="أقسام الصفحة"><button type="button" class="active" data-tab="exams">الامتحانات وQCM</button><button type="button" data-tab="courses">الدروس المفصلة</button><button type="button" data-tab="review">أخطائي ونقطي</button><button type="button" data-tab="library">الوثائق والمراجع</button></nav>
 <section id="exams" class="screen">
 <div class="quiz-layout">
 <div class="card quiz-menu">
@@ -225,4 +225,4 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=function(){showTab(
 renderQuiz();renderMistakes();
 })();
 </script>
-</body></html>
+<script src="courses-full.js"></script><script src="courses-ui.js"></script></body></html>
