@@ -1,0 +1,23 @@
+name: Smoke-test Islamic Education in-site reading passages
+on:
+  push:
+    paths:
+      - 'tarbiya-islamia/index.html'
+      - 'tarbiya-islamia/courses-ui.js'
+      - 'tarbiya-islamia/courses-full.js'
+      - 'scripts/test-islam-reading.cjs'
+      - '.github/workflows/test-islam-reading.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  ui-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --ignore-scripts jsdom@24
+      - run: node scripts/test-islam-reading.cjs
