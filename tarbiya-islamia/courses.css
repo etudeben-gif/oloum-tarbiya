@@ -1,0 +1,26 @@
+/* Full online lessons */
+.course-hero{padding:23px;border-radius:18px;background:linear-gradient(120deg,#e8f6f3,#edf4fb);border:1px solid #cce6df;margin:0 0 16px}
+.course-hero h2{font-size:26px;color:#124653;margin:6px 0}.course-hero p{color:#4c6b78;margin:5px 0 15px}
+.course-filters{display:flex;gap:8px;margin:12px 0;flex-wrap:wrap}
+.course-filters input,.course-filters select{padding:11px 13px;min-width:180px;flex:1;border-radius:11px;border:1px solid #cbdee4;background:#fff;color:#183c4b}
+.course-library-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.course-library-tile{display:flex;flex-direction:column;align-items:flex-start;gap:10px;text-align:right;min-height:185px;margin:0!important;cursor:pointer}
+.course-library-tile h3{font-size:17px;margin:0}.course-library-tile p{font-size:13px;color:#526c78;flex:1;line-height:1.85;margin:0}
+.course-library-tile .mini{font-weight:700;color:#087d75!important}
+.course-library-tile.selected{border-color:#0da187!important;box-shadow:0 0 0 2px #16ab8f22!important}
+.course-library-tile:hover{border-color:#5bb9aa!important;transform:translateY(-2px)}
+.course-detail{border-top:4px solid #149482!important;padding:22px!important}
+.course-detail-head{padding-bottom:12px;border-bottom:1px solid #e3edf0}
+.course-detail-head h2{font-size:25px!important;margin:7px 0}
+.course-lead{border-radius:10px;background:#f0f9f6;color:#2b6370;padding:11px 14px;font-weight:700;font-size:16px}
+.course-chapter{padding:14px 16px;margin:14px 0;border-radius:12px;border:1px solid #e1ebe9;background:#fcfefe}
+.course-chapter h3{font-size:17px!important;color:#0a7c73!important;margin:0 0 8px}
+.course-chapter p{font-size:15px;line-height:2.1;margin:0;color:#284352}
+.course-memory{background:#e6f7ee;border:1px solid #b9dfce;padding:15px;border-radius:12px}
+.course-memory p{margin:6px 0 0}
+.course-source{margin:16px 0;padding:10px;background:#f3f7f9;color:#607985;font-size:13px;border-radius:10px}
+.course-source summary{font-weight:700;cursor:pointer}
+.course-source a{display:inline-block;margin-top:6px}
+.course-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:17px}
+.course-actions button{border-radius:10px;padding:10px 13px;font-weight:800}
+@media(max-width:720px){.course-library-grid{grid-template-columns:1fr}.course-hero,.course-detail{padding:15px!important}.course-chapter{padding:12px}.course-hero h2{font-size:22px}}
