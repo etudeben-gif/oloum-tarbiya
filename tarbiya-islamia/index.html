@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123f4a">
+<meta name="description" content="التحضير لمباراة التعليم في مادة التربية الإسلامية: امتحانات أصلية، الديداكتيك، الدروس ومصادر المراجعة">
+<title>التربية الإسلامية | مسار التحضير لمباراة التعليم</title>
+<style>
+:root{font:15px/1.85 Tahoma,"Segoe UI",Arial,sans-serif;color:#193d48;background:#f4f7f7}
+*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button{border:0;cursor:pointer}a{color:#056d79}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #ddad61;outline-offset:2px}
+header{background:#103e48;color:#fff;padding:16px}.wrap{max-width:1100px;margin:0 auto}header .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}header strong{font-size:20px}header a{color:#fff;text-decoration:none;border:1px solid #ffffff50;border-radius:9px;padding:5px 10px}
+main{max-width:1100px;padding:23px 14px 54px;margin:auto}h1{font-size:clamp(26px,4vw,36px);margin:5px 0}h2{font-size:20px;margin:0 0 12px}h3{font-size:17px;margin:0 0 7px}.sub{color:#53727b;margin:0 0 21px}
+.meter{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0 24px}.metric{background:#e9f2f1;border:1px solid #d5e7e3;border-radius:10px;padding:7px 13px;font-size:13px}
+nav{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid #d6e1e4;margin-bottom:20px}nav button{background:transparent;color:#43656f;border-radius:9px 9px 0 0;padding:10px 15px;font-weight:bold}nav button.active{background:#126c72;color:white}
+.card{background:white;border:1px solid #dfe9ea;border-radius:14px;padding:20px;margin-bottom:14px;box-shadow:0 3px 12px #123f4910}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.filter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 16px}.filter input,.filter select{padding:11px;border:1px solid #d0dfe3;border-radius:10px;background:white;color:#2c5660;flex:1;min-width:165px}
+.meta{font-size:13px;color:#5c7b83;margin:4px 0 11px}.tag{display:inline-block;background:#e8f6ef;color:#136352;font-size:12px;border-radius:8px;padding:2px 9px}.mini{font-size:13px;color:#5c767b}.link{display:inline-block;background:#146e75;color:white;text-decoration:none;border-radius:9px;padding:7px 14px;font-weight:bold;margin-top:7px}.link:hover{background:#0a5960}.course{border-right:4px solid #208c79}.course p{margin:0 0 12px}.course .head{display:flex;justify-content:space-between;align-items:start;gap:12px}.course small{color:#5b777c}.course button{padding:6px 12px;border-radius:8px;background:#e9f3f0;color:#0e6f5e}.course button.done{color:white;background:#158273}
+.notice{background:#fff8e8;border:1px solid #edddb0;border-radius:10px;padding:13px;font-size:13px;margin-bottom:15px}.ref{border-right:4px solid #a6cbc9}
+.status{margin-top:13px;color:#4b7774;font-size:13px}.empty{background:white;border-radius:12px;padding:20px}
+footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{color:white}
+@media(max-width:700px){.grid{grid-template-columns:1fr}main{padding:16px 10px 35px}.card{padding:15px}header strong{font-size:17px}.filter{display:grid;grid-template-columns:1fr 1fr}.filter input{grid-column:1/-1}}
+</style></head><body>
+<header><div class="wrap"><strong>مسار | التربية الإسلامية</strong><a href="../">علوم التربية</a></div></header>
+<main>
+<h1>التربية الإسلامية</h1>
+<p class="sub">التحضير لمباراة التعليم الثانوي الإعدادي والتأهيلي — دروس، ديداكتيك المادة، وامتحانات الدورات السابقة.</p>
+<div class="meter"><span class="metric">التخصص والديداكتيك</span><span class="metric">نماذج 2018–2025</span><span class="metric">مراجع الوزارة وملفات المراجعة</span><span class="metric" id="progress">تقدّمك: 0</span></div>
+<nav aria-label="أقسام الصفحة"><button type="button" class="active" data-tab="exams">الامتحانات</button><button type="button" data-tab="courses">الدروس</button><button type="button" data-tab="library">الوثائق والمراجع</button></nav>
+<section id="exams" class="screen">
+<div class="notice">الأسئلة الأصلية كتفتح من مصادرها كما هي، بلا إعادة صياغة. التصحيحات اللي فالمواقع الخارجية غالباً مقترحة وليست وزارية. ما زدناش أسئلة أو أجوبة من عندنا.</div>
+<div class="filter"><input id="exam-search" type="search" placeholder="قلب على دورة أو موضوع..." aria-label="ابحث عن امتحان"><select id="exam-type" aria-label="نوع الاختبار"><option value="all">جميع الاختبارات</option><option value="speciality">مادة التخصص</option><option value="didactics">ديداكتيك المادة</option></select><select id="exam-year" aria-label="السنة"><option value="all">جميع السنوات</option></select></div>
+<div id="exam-items" class="grid"></div>
+<div class="card" style="margin-top:15px"><h3>أرشيف إضافي للامتحانات الأصلية</h3><p>يمكنك تصفح نماذج أخرى من 2013 إلى 2025، بما فيها امتحانات الكفاءة المهنية.</p><a class="link" href="https://www.wadifa-info.com/نماذج-مباريات/مباراة-التعليم/التربية-الإسلامية" target="_blank" rel="noopener noreferrer">فتح الأرشيف الواسع</a></div>
+</section>
+<section id="courses" class="screen" hidden>
+<div class="notice">الدروس هنا ملخصات تنظيمية لمجالات المراجعة، وليست بدائل عن الوثائق الرسمية. كل موضوع فيه رابط مرجعه، ويمكن حفظ تقدّم القراءة على الجهاز.</div>
+<div id="course-items" class="grid"></div>
+</section>
+<section id="library" class="screen" hidden>
+<div class="notice">هنا روابط الوثائق اللي كاينة فمجلدات Drive اللي شاركتي. صلاحية فتحها عند أي زائر كتتوقف على إعدادات المشاركة ديال Google Drive. المصادر العامة البديلة متاحة كذلك.</div>
+<div id="library-items" class="grid"></div>
+</section>
+</main>
+<footer><div class="wrap">مسار — موقع مستقل للتحضير لمباراة التعليم. لا يجمع بيانات شخصية. <a href="https://www.men.gov.ma/" target="_blank" rel="noopener noreferrer">وزارة التربية الوطنية المغربية</a></div></footer>
+<script>
+(function(){
+"use strict";
+const archive="https://mesconcours.ma/ar/concours/enseignement/college-lycee/education-islamique/";
+const exams=[
+{year:"2025",type:"speciality",title:"نونبر 2025 — اختبار مادة التخصص",q:"80 سؤالاً · خمسة اختيارات",topics:"القرآن وعلومه، الحديث، الفقه وأصوله، العقيدة، السيرة",url:"https://mesconcours.ma/ar/concours/enseignement/2025-651/",source:"نموذج كامل مع تصحيح مقترح",direct:true},
+{year:"2024",type:"speciality",title:"أكتوبر 2024 — اختبار مادة التخصص",q:"80 سؤالاً · خمسة اختيارات",topics:"القرآن والتجويد، العقيدة، الفكر التربوي الإسلامي",url:archive,source:"اختر دورة أكتوبر 2024 من الأرشيف",direct:false},
+{year:"2023",type:"didactics",title:"دورة 2023 — ديداكتيك التربية الإسلامية",q:"60 سؤالاً · أربعة اختيارات",topics:"المداخل الخمسة، المنهاج، الكفايات، التدبير والتقويم",url:"https://mesconcours.ma/ar/concours/enseignement/2023-494/",source:"نموذج كامل مع تصحيح مقترح",direct:true},
+{year:"2022",type:"speciality",title:"نونبر 2022 — اختبار مادة التخصص",q:"100 سؤال · أربعة اختيارات",topics:"القرآن والحديث، العقيدة، الفقه وأصوله",url:archive,source:"اختر اختبار التخصص 2022 من الأرشيف",direct:false},
+{year:"2022",type:"didactics",title:"نونبر 2022 — ديداكتيك المادة",q:"60 سؤالاً · أربعة اختيارات",topics:"منهاج التربية الإسلامية، الكفايات، موارد التدريس",url:archive,source:"اختر ديداكتيك 2022 من الأرشيف",direct:false},
+{year:"2021",type:"speciality",title:"دجنبر 2021 — مادة التخصص",q:"أسئلة موضوعية ومقالية",topics:"القرآن والحديث والسيرة والفقه",url:archive,source:"من الأرشيف",direct:false},
+{year:"2021",type:"didactics",title:"دجنبر 2021 — ديداكتيك المادة",q:"أسئلة موضوعية ومقالية",topics:"الكفايات والموارد الديداكتيكية",url:archive,source:"من الأرشيف",direct:false},
+{year:"2020",type:"speciality",title:"نونبر 2020 — مادة التخصص والديداكتيك",q:"أسئلة موضوعية ومقالية",topics:"معارف شرعية وطرائق تدريس المادة",url:archive,source:"من الأرشيف",direct:false},
+{year:"2019",type:"speciality",title:"نونبر 2019 — مادة التخصص",q:"60 سؤالاً",topics:"علوم القرآن والحديث والسيرة والعقيدة",url:archive,source:"من الأرشيف",direct:false},
+{year:"2018",type:"speciality",title:"يناير 2018 — مادة التخصص",q:"58 سؤالاً",topics:"الحديث والتجويد وأصول الفقه والعقيدة",url:archive,source:"من الأرشيف",direct:false}
+];
+const courses=[
+{title:"القرآن الكريم وعلومه",desc:"مراجعة علوم القرآن، الرسم والضبط، أحكام التجويد والرواية، وفهم النص القرآني واستثماره. ركز على المصطلحات والنصوص المستشهد بها في الامتحان.",ref:"أرشيف امتحانات التخصص",url:archive},
+{title:"الحديث النبوي وعلومه",desc:"مراجعة أنواع الحديث ومراتب الصحة والضعف، مصطلحات الإسناد والمتن، وطرق الاستدلال بالحديث ضمن الأسئلة.",ref:"امتحان 2025 الأصلي",url:"https://www.wadifa-info.com/نموذج-مباراة/1315"},
+{title:"العقيدة والفكر الإسلامي",desc:"ضبط مباحث العقيدة وعلم الكلام والثوابت الدينية المغربية، مع التمييز بين المفاهيم والاتجاهات عند ورود أسماء المؤلفين والعلماء.",ref:"نماذج التخصص السابقة",url:archive},
+{title:"الفقه وأصوله ومقاصد الشريعة",desc:"مراجعة الأحكام والمصطلحات الأصولية والقواعد الفقهية والمقاصد العامة، مع الانتباه لصياغة السؤال والمذهب المشار إليه.",ref:"نماذج التخصص",url:archive},
+{title:"السيرة النبوية والتاريخ الإسلامي",desc:"بناء تسلسل الأحداث والمواقف، وربط الروايات الصحيحة بدلالاتها التربوية والقيمية، وعدم الاكتفاء بحفظ تواريخ منفصلة.",ref:"أرشيف الامتحانات",url:archive},
+{title:"منهاج التربية الإسلامية: المداخل الخمسة",desc:"ينظم منهاج المادة التعلمات وفق مداخل: التزكية، والاقتداء، والاستجابة، والقسط، والحكمة. راجع وظيفة كل مدخل والقيم الناظمة للمنهاج من وثيقة المنهاج.",ref:"اختبار ديداكتيك 2023 ومرجعية المنهاج",url:"https://mesconcours.ma/ar/concours/enseignement/2023-494/"},
+{title:"ديداكتيك التربية الإسلامية",desc:"العلاقة بين المدرس والمتعلم والمعرفة، التخطيط والتدبير، بناء الوضعيات، تنويع الموارد، وتقويم التعلمات والدعم بما يلائم طبيعة المادة.",ref:"التوجيهات التربوية للثانوي وملفات الديداكتيك",url:"https://drive.google.com/drive/folders/1M-P3HIjuL-F7aWAlmUqIqa4a_ZBAwmph"},
+{title:"المقاربة بالكفايات والتقويم",desc:"فهم توظيف الموارد في وضعيات دالة، والتمييز بين التقويم التشخيصي والتكويني والإجمالي، وعلاقة الأهداف الإجرائية بالكفايات.",ref:"ملخصات علوم التربية المرفوعة وأرشيف ديداكتيك 2023",url:"https://mesconcours.ma/ar/concours/enseignement/2023-494/"}
+];
+const docs=[
+{title:"التوجيهات التربوية — الثانوي التأهيلي",type:"وثيقة منهجية",url:"https://drive.google.com/file/d/1h-UM8eMfXPWTEctJgisimKsoKw5RTdHw/view",group:"الإسلامية"},
+{title:"التوجيهات التربوية — الثانوي الإعدادي",type:"وثيقة منهجية",url:"https://drive.google.com/file/d/1sgRHfZiHx1M1cL1nTiXffPjYJNRZY6ee/view",group:"الإسلامية"},
+{title:"ديداكتيك التربية الإسلامية",type:"ملخص ديداكتيك المادة",url:"https://drive.google.com/file/d/1V0LAR9wF-2zb35aSBjIk1Te9e3CPwsaK/view",group:"الإسلامية"},
+{title:"نواظم ديداكتيك التربية الإسلامية — هشام الرافعي",type:"مرجع تخصصي",url:"https://drive.google.com/file/d/1N2IFBswIxr4jlEznQyZcil74ldxiCC4n/view",group:"الإسلامية"},
+{title:"قضايا ومفاهيم في ديداكتيك المادة",type:"دروس في الديداكتيك",url:"https://drive.google.com/file/d/1NjUaW4j-oCg-Fg4w_0_ty3l5QmSaEHyt/view",group:"الإسلامية"},
+{title:"تصحيح امتحانات سابقة",type:"تصحيحات تحتاج مراجعة المصدر",url:"https://drive.google.com/file/d/1AZnKsW68PIltc8Czu5AnY04BKxuJwfBr/view",group:"الإسلامية"},
+{title:"معجم علوم التربية",type:"مصطلحات التربية والديداكتيك",url:"https://drive.google.com/file/d/1yT8oPs2XMOmNi9glCTdu4odDQaQeMePu/view",group:"علوم التربية"},
+{title:"مجزوءة علوم التربية",type:"مرجع مشترك بين الأسلاك",url:"https://drive.google.com/file/d/1FyOAl-NjPNQE19L1nhyYlLkrqZx_Ze56/view",group:"علوم التربية"},
+{title:"الدليل المختصر في علوم التربية",type:"ملخص للمراجعة",url:"https://drive.google.com/file/d/1v0RSpzwWLLl-bdc2_qfCOiJjShe1-A1L/view",group:"علوم التربية"},
+{title:"المراجع والامتحانات — Google Drive",type:"المجلد الأصلي للتربية الإسلامية",url:"https://drive.google.com/drive/folders/1M-P3HIjuL-F7aWAlmUqIqa4a_ZBAwmph",group:"الإسلامية"},
+{title:"مراجع علوم التربية — Google Drive",type:"المجلد الأصلي المشترك",url:"https://drive.google.com/drive/folders/10AjDV05SdPhkscblIYfXdpC3pHjge1R7",group:"علوم التربية"},
+{title:"التوجيهات الرسمية للسلك التأهيلي — فهرس المجلس الأعلى",type:"فهرس الوثيقة الوزارية لسنة 2007",url:"https://cdpt.csefrs.ma/opac_css/index.php?id=1410&lvl=notice_display",group:"مصدر رسمي"},
+{title:"وزارة التربية الوطنية",type:"بوابة المؤسسات والوثائق الرسمية",url:"https://www.men.gov.ma/",group:"مصدر رسمي"}
+];
+const $=id=>document.getElementById(id);
+const escape=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const card=(t,m,p,l,href)=>'<article class="card"><h3>'+escape(t)+'</h3><div class="meta">'+escape(m)+'</div><p>'+escape(p)+'</p><a class="link" target="_blank" rel="noopener noreferrer" href="'+escape(href)+'">'+escape(l)+'</a></article>';
+for(const yr of [...new Set(exams.map(x=>x.year))]){const o=document.createElement("option");o.value=yr;o.textContent=yr;$("exam-year").appendChild(o)}
+function showExams(){const q=$("exam-search").value.trim(),type=$("exam-type").value,year=$("exam-year").value;const list=exams.filter(x=>(type==="all"||x.type===type)&&(year==="all"||x.year===year)&&(!q||(x.title+" "+x.topics+" "+x.year).includes(q)));$("exam-items").innerHTML=list.map(x=>card(x.title,(x.type==="speciality"?"مادة التخصص":"ديداكتيك")+" · "+x.q,x.topics,x.direct?"فتح الامتحان الأصلي والتصحيح":"اختيار الدورة من الأرشيف",x.url)).join("")||'<p class="empty">ما لقيتش امتحانات بهاد المعايير.</p>'}
+$("exam-search").oninput=showExams;$("exam-type").onchange=showExams;$("exam-year").onchange=showExams;
+let completed={};try{completed=JSON.parse(localStorage.getItem("masar-islam-lessons-v1")||"{}")}catch(e){completed={}}
+function renderCourses(){$("course-items").innerHTML=courses.map((c,i)=>'<article class="card course"><div class="head"><h3>'+escape(c.title)+'</h3><button type="button" data-complete="'+i+'" class="'+(completed[i]?"done":"")+'">'+(completed[i]?"تمت المراجعة ✓":"تحديد كمراجع")+'</button></div><p>'+escape(c.desc)+'</p><div class="mini">المرجع: '+escape(c.ref)+'</div><a class="link" href="'+escape(c.url)+'" target="_blank" rel="noopener noreferrer">فتح المرجع</a></article>').join("");$("progress").textContent="تقدّمك: "+Object.values(completed).filter(Boolean).length+" / "+courses.length+" محاور";document.querySelectorAll('[data-complete]').forEach(b=>b.onclick=function(){const i=this.dataset.complete;completed[i]=!completed[i];try{localStorage.setItem("masar-islam-lessons-v1",JSON.stringify(completed))}catch(e){}renderCourses()})}
+$("library-items").innerHTML=docs.map(d=>card(d.title,d.group,d.type,"فتح الوثيقة",d.url)).join("");
+document.querySelectorAll("nav button").forEach(b=>b.onclick=function(){document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".screen").forEach(x=>x.hidden=(x.id!==b.dataset.tab))});
+showExams();renderCourses();
+})();
+</script>
+</body></html>
