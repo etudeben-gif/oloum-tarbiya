@@ -42,7 +42,24 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 .grade-feedback.wrong{background:#fff4eb;border-color:#ebc6af}.grade-feedback.pending{background:#f1f4f7;border-color:#dae3e8}
 .grade-feedback strong{display:block;font-size:17px}.mistake-button{display:block;text-align:right;width:100%;margin:7px 0}
 @media(max-width:760px){.quiz-layout{grid-template-columns:1fr}.quiz-menu{position:static}.quiz-menu select{width:100%}.quiz-paper{padding:13px}.scan-frame{max-height:65vh}}
-</style><link rel="stylesheet" href="../assets/masar-premium.css"><link rel="stylesheet" href="courses.css"><link rel="stylesheet" href="reading-passages.css"></head><body>
+</style><link rel="stylesheet" href="../assets/masar-premium.css"><link rel="stylesheet" href="courses.css"><style>
+#intro-live{background:linear-gradient(115deg,#eefaf5,#edf5fc);border:2px solid #9bcfc1;border-radius:15px;margin:0 0 24px;padding:16px;box-shadow:0 5px 18px #124b4b0f}
+#intro-live[hidden],#intro-live-images[hidden],#intro-live-empty[hidden]{display:none!important}
+.intro-live-heading{display:flex;gap:12px;align-items:center;margin-bottom:10px}
+.intro-step{width:38px;height:38px;display:grid;place-items:center;background:#0e8071;color:white;border-radius:12px;font-weight:900}
+.intro-live-heading h3{font-size:19px;color:#103f4a;margin:2px 0}
+.intro-live-note{color:#355f69;line-height:1.85;margin:8px 0 14px}
+.intro-live-images{display:grid;grid-template-columns:1fr;gap:12px}
+.intro-figure{margin:0;background:white;padding:8px;border-radius:12px;border:1px solid #cedee2;overflow:auto}
+.intro-figure img{display:block;width:100%;max-width:none;height:auto;border-radius:6px}
+.intro-figure figcaption{font-size:12px;color:#5c7681;padding:5px}
+.intro-live-images.enlarged .intro-figure img{width:170%}
+.intro-live-empty{padding:14px;background:white;border:1px dashed #b4cbd4;border-radius:11px;color:#496a76}
+.intro-live-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:13px}
+.intro-live-actions button{background:#126e6b;color:white;border-radius:9px;padding:9px 14px;font-weight:750}
+.intro-live-actions button[hidden]{display:none!important}
+@media(max-width:700px){#intro-live{padding:11px}.intro-live-heading h3{font-size:17px}.intro-live-images.enlarged .intro-figure img{width:190%}}
+</style></head><body>
 <header><div class="wrap"><strong>مسار | التربية الإسلامية</strong><a href="../">علوم التربية</a></div></header>
 <main>
 <div class="section-eyebrow">مادة التخصص · الديداكتيك</div><h1>التربية الإسلامية</h1>
@@ -62,6 +79,13 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 <div id="source-status" class="status"></div>
 </div>
 <div class="card quiz-paper">
+<section class="intro-live" id="intro-live" aria-label="نص الانطلاق أو السند قبل أسئلة الامتحان">
+<div class="intro-live-heading"><span class="intro-step">01</span><div><div class="section-eyebrow">اقرأ قبل ما تجاوب</div><h3 id="intro-live-title">نص الانطلاق الأصلي</h3></div></div>
+<p class="intro-live-note" id="intro-live-note">نص الانطلاق من الصورة الأصلية ديال الامتحان، بلا تغيير.</p>
+<div class="intro-live-images" id="intro-live-images"></div>
+<p id="intro-live-empty" class="intro-live-empty" hidden>هذه الدورة تبدأ بالأسئلة مباشرة في النسخة المتوفرة؛ إذا ورد سند داخل السؤال فستجده في صورة ورقة الامتحان أسفله.</p>
+<div class="intro-live-actions"><button type="button" id="intro-live-zoom" hidden>تكبير النص</button><button type="button" id="intro-live-toggle">إخفاء نص الانطلاق</button></div>
+</section>
 <div class="quiz-head"><h2 id="exam-heading">الامتحان الأصلي</h2><span class="tag" id="q-tag">Q1</span></div>
 <div class="mini" id="paper-tip">الورقة الأصلية كما هي، بلا تعديل.</div>
 <div class="scan-tools"><button type="button" id="page-back">→ صفحة سابقة</button><span id="shown-page">الصفحة 1</span><button type="button" id="page-forward">صفحة تالية ←</button><button type="button" id="zoom-down">−</button><span id="zoom-ratio">100%</span><button type="button" id="zoom-up">+</button></div>
@@ -98,6 +122,37 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 (function(){
 "use strict";
 const archive="https://mesconcours.ma/ar/concours/enseignement/college-lycee/education-islamique/";
+const readingContext={
+ "2021-specialty":{pages:[2],title:"النص الأصلي الذي يسبق قسم QCM — دورة 2021",note:"الصفحة الثانية من موضوع 2021 فيها نص ووضعيات قبل الأسئلة الموضوعية. هذه مقدمة الورقة، وماشي بالضرورة سند لجميع أسئلة QCM."},
+ "2021-didactics":{pages:[2],title:"نص الانطلاق: ديداكتيك التربية الإسلامية 2021",note:"اقرأ نص الوضعية الأصلية قبل بداية الأسئلة. الصورة كما وردت في الورقة، وما بدّلنا حتى كلمة."},
+ "2022-specialty":{pages:[2],title:"السند القرآني وأسئلة البداية — دورة 2022",note:"الصفحة الأولى للأسئلة فيها نصوص قرآنية. اقرأ السند المرتبط برقم السؤال قبل اختيار الجواب."},
+ "2023-specialty":{pages:[1],title:"النص القرآني قبل الاختيارات — دورة 2023",note:"تبدأ ورقة التخصص بمقطع قرآني وأسئلة مرتبطة به. النص معروض كما ورد في صورة الامتحان."},
+ "2025-specialty":{pages:[2],title:"نص الانطلاق القرآني — دورة 2025",note:"بداية ورقة التخصص فيها آيات قرآنية تُستخدم في أسئلة البداية. المرجع هو صورة النص الأصلي."}
+};
+let introductionZoomed=false,introductionHidden=false;
+function renderReadingContext(ex){
+ const row=readingContext[ex.id],el=document.getElementById("intro-live");
+ const box=document.getElementById("intro-live-images");
+ const empty=document.getElementById("intro-live-empty");
+ const zoom=document.getElementById("intro-live-zoom");
+ const toggle=document.getElementById("intro-live-toggle");
+ if(!el||!box||!empty||!zoom||!toggle)return;
+ el.hidden=false;box.replaceChildren();introductionZoomed=false;introductionHidden=false;
+ document.getElementById("intro-live-title").textContent=row?row.title:"نص الانطلاق قبل السؤال";
+ document.getElementById("intro-live-note").textContent=row?row.note:"تحقّقنا من بداية الورقة المصورة: ما فيهاش نص انطلاق مستقل قبل السؤال الأول. أي آية أو سند مرتبط بسؤال معين كيبان داخل صورة السؤال الأصلية أسفله.";
+ empty.hidden=!!row;box.hidden=!row;
+ zoom.hidden=!row;toggle.hidden=!row;
+ zoom.textContent="تكبير النص";toggle.textContent="إخفاء النص";
+ if(row){for(const page of row.pages){
+  const figure=document.createElement("figure");figure.className="intro-figure";
+  const img=document.createElement("img");img.loading="eager";img.decoding="async";
+  img.alt=row.title+"، الصفحة "+page;img.src="images/"+ex.id+"-"+String(page).padStart(2,"0")+".webp";
+  img.onerror=()=>{figure.replaceChildren();const warning=document.createElement("p");warning.textContent="تعذر تحميل صورة النص الأصلي. ارجع لصفحة "+page+" من الورقة أسفله.";figure.append(warning)};
+  const caption=document.createElement("figcaption");caption.textContent="صورة أصلية · الصفحة "+page;
+  figure.append(img,caption);box.append(figure);
+ }}
+}
+
 const exams=[
 {id:"2025-specialty",year:"2025",type:"speciality",title:"2025 · مادة التخصص",count:80,pages:18,start:2,letters:5},
 {id:"2025-didactics",year:"2025",type:"didactics",title:"2025 · ديداكتيك المادة",count:60,pages:16,start:2,letters:5},
@@ -207,6 +262,7 @@ function feedback(){const box=$("grade-feedback");box.replaceChildren();let ans=
  const small=document.createElement("div");small.className="mini";small.textContent="التنقيط هنا للتدريب (1 للصحيح، 0 للخطأ) والتصحيح غير وزاري. ماشي بالضرورة نفس تنقيط المباراة.";box.appendChild(small)
 }
 function renderQuiz(resetPage=true){const ex=activeExam;
+ renderReadingContext(ex);
  $("exam-sel").value=ex.id;$("exam-heading").textContent=ex.title;$("q-tag").textContent="Q"+qno;
  $("active-q").textContent="Q"+qno;$("source-status").textContent="الورقة الأصلية: "+ex.pages+" صفحة · "+ex.count+" رقم سؤال للاختيار · "+(proposed[ex.id]?"يوجد تصحيح مقترح":"التصحيح قيد التحقق");
  $("question-sel").replaceChildren();for(let q=1;q<=ex.count;q++){const op=document.createElement("option");op.value=q;op.textContent="Q"+q+(qanswers[ex.id+"-"+q]?" ✓":"");$("question-sel").append(op)}$("question-sel").value=String(qno);
@@ -222,6 +278,15 @@ for(const ex of exams){const o=document.createElement("option");o.value=ex.id;o.
 $("exam-sel").onchange=function(){activeExam=exams.find(x=>x.id===this.value)||exams[0];qno=1;zoom=100;renderQuiz()};
 $("question-sel").onchange=function(){changeQuestion(Number(this.value))};
 $("page-sel").onchange=function(){setPage(Number(this.value))};
+$("intro-live-toggle").onclick=()=>{
+ const box=$("intro-live-images");introductionHidden=!introductionHidden;box.hidden=introductionHidden;
+ $("intro-live-toggle").textContent=introductionHidden?"عرض النص الأصلي":"إخفاء النص";
+};
+$("intro-live-zoom").onclick=()=>{
+ const box=$("intro-live-images");introductionZoomed=!introductionZoomed;
+ box.classList.toggle("enlarged",introductionZoomed);
+ $("intro-live-zoom").textContent=introductionZoomed?"تصغير النص":"تكبير النص";
+};
 $("page-back").onclick=()=>setPage(page-1);$("page-forward").onclick=()=>setPage(page+1);
 $("zoom-up").onclick=function(){zoom=Math.min(240,zoom+35);showScan()};
 $("zoom-down").onclick=function(){zoom=Math.max(100,zoom-35);showScan()};
@@ -252,4 +317,4 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=function(){showTab(
 renderQuiz();renderMistakes();
 })();
 </script>
-<script src="courses-full.js"></script><script src="courses-ui.js"></script><script src="reading-passages.js"></script></body></html>
+<script src="courses-full.js"></script><script src="courses-ui.js"></script></body></html>
