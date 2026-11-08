@@ -123,13 +123,10 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 "use strict";
 const archive="https://mesconcours.ma/ar/concours/enseignement/college-lycee/education-islamique/";
 const readingContext={
- "2021-specialty":{pages:[2],title:"النص الأصلي الذي يسبق قسم QCM — دورة 2021",note:"الصفحة الثانية من موضوع 2021 فيها نص ووضعيات قبل الأسئلة الموضوعية. هذه مقدمة الورقة، وماشي بالضرورة سند لجميع أسئلة QCM."},
- "2021-didactics":{pages:[2],title:"نص الانطلاق: ديداكتيك التربية الإسلامية 2021",note:"اقرأ نص الوضعية الأصلية قبل بداية الأسئلة. الصورة كما وردت في الورقة، وما بدّلنا حتى كلمة."},
- "2022-specialty":{pages:[2],title:"السند القرآني وأسئلة البداية — دورة 2022",note:"الصفحة الأولى للأسئلة فيها نصوص قرآنية. اقرأ السند المرتبط برقم السؤال قبل اختيار الجواب."},
- "2023-specialty":{pages:[1],title:"النص القرآني قبل الاختيارات — دورة 2023",note:"تبدأ ورقة التخصص بمقطع قرآني وأسئلة مرتبطة به. النص معروض كما ورد في صورة الامتحان."},
- "2025-specialty":{pages:[2],title:"نص الانطلاق القرآني — دورة 2025",note:"بداية ورقة التخصص فيها آيات قرآنية تُستخدم في أسئلة البداية. المرجع هو صورة النص الأصلي."}
+ "2021-specialty":{pages:[2],title:"الوثيقة السابقة لقسم الأسئلة الموضوعية – 2021",note:"في الورقة الأصلية نص وأسئلة إنشائية قبل قسم QCM. ما تأكدناش أنه مرتبط بسؤال QCM معيّن؛ يمكنك الاطلاع عليه إذا احتجتي."},
+ "2021-didactics":{pages:[2],title:"الوثيقة التمهيدية من امتحان ديداكتيك 2021",note:"الصفحة الثانية فيها وضعيات وأسئلة تسبق QCM. ما كنقدموهاش على أنها سند مباشر لكل أسئلة الاختيار."}
 };
-let introductionZoomed=false,introductionHidden=false;
+let introductionZoomed=false,introductionHidden=true;
 function renderReadingContext(ex){
  const row=readingContext[ex.id],el=document.getElementById("intro-live");
  const box=document.getElementById("intro-live-images");
@@ -137,20 +134,22 @@ function renderReadingContext(ex){
  const zoom=document.getElementById("intro-live-zoom");
  const toggle=document.getElementById("intro-live-toggle");
  if(!el||!box||!empty||!zoom||!toggle)return;
- el.hidden=false;box.replaceChildren();introductionZoomed=false;introductionHidden=false;
- document.getElementById("intro-live-title").textContent=row?row.title:"نص الانطلاق قبل السؤال";
- document.getElementById("intro-live-note").textContent=row?row.note:"تحقّقنا من بداية الورقة المصورة: ما فيهاش نص انطلاق مستقل قبل السؤال الأول. أي آية أو سند مرتبط بسؤال معين كيبان داخل صورة السؤال الأصلية أسفله.";
- empty.hidden=!!row;box.hidden=!row;
- zoom.hidden=!row;toggle.hidden=!row;
- zoom.textContent="تكبير النص";toggle.textContent="إخفاء النص";
- if(row){for(const page of row.pages){
+ // Text embedded in the same QCM page is not a separate introduction.
+ el.hidden=!row;box.replaceChildren();introductionZoomed=false;introductionHidden=true;
+ if(!row)return;
+ document.getElementById("intro-live-title").textContent=row.title;
+ document.getElementById("intro-live-note").textContent=row.note;
+ empty.hidden=true;box.hidden=true;
+ zoom.hidden=false;toggle.hidden=false;
+ zoom.textContent="تكبير الوثيقة";toggle.textContent="عرض الوثيقة السابقة للأسئلة";
+ for(const page of row.pages){
   const figure=document.createElement("figure");figure.className="intro-figure";
-  const img=document.createElement("img");img.loading="eager";img.decoding="async";
+  const img=document.createElement("img");img.loading="lazy";img.decoding="async";
   img.alt=row.title+"، الصفحة "+page;img.src="images/"+ex.id+"-"+String(page).padStart(2,"0")+".webp";
-  img.onerror=()=>{figure.replaceChildren();const warning=document.createElement("p");warning.textContent="تعذر تحميل صورة النص الأصلي. ارجع لصفحة "+page+" من الورقة أسفله.";figure.append(warning)};
-  const caption=document.createElement("figcaption");caption.textContent="صورة أصلية · الصفحة "+page;
+  img.onerror=()=>{figure.replaceChildren();const warning=document.createElement("p");warning.textContent="تعذر تحميل الوثيقة. راجع الصفحة "+page+" في عارض الامتحان.";figure.append(warning)};
+  const caption=document.createElement("figcaption");caption.textContent="من الورقة الأصلية · الصفحة "+page;
   figure.append(img,caption);box.append(figure);
- }}
+ }
 }
 
 const exams=[
@@ -271,7 +270,7 @@ function renderQuiz(resetPage=true){const ex=activeExam;
  showScan();letterUI();feedback();countScores();
  $("q-prev").disabled=qno<=1;$("q-next").disabled=qno>=ex.count;
  $("submit-answer").textContent=qanswers[ex.id+"-"+qno]?"غيّر الجواب وصححو":"صحّح الجواب";
- $("paper-tip").textContent="السؤال من صورة الامتحان الأصلية؛ ما بدلنا حتى كلمة. الصورة يمكن تكبيرها. توزيع الأسئلة على الصفحات تقديري، بدّل الصفحة إلا احتجتي.";
+ $("paper-tip").textContent="Q"+qno+": نص السؤال والآيات والاختيارات كيبانو مرة وحدة فالصورة الأصلية. تقدر تكبّرها. تحديد الصفحة تقريبي فبعض الأسئلة، ويمكن تبديلها من الأعلى.";
 }
 function changeQuestion(v){qno=Math.min(activeExam.count,Math.max(1,v));renderQuiz();}
 for(const ex of exams){const o=document.createElement("option");o.value=ex.id;o.textContent=ex.title;$("exam-sel").append(o)}
@@ -280,7 +279,7 @@ $("question-sel").onchange=function(){changeQuestion(Number(this.value))};
 $("page-sel").onchange=function(){setPage(Number(this.value))};
 $("intro-live-toggle").onclick=()=>{
  const box=$("intro-live-images");introductionHidden=!introductionHidden;box.hidden=introductionHidden;
- $("intro-live-toggle").textContent=introductionHidden?"عرض النص الأصلي":"إخفاء النص";
+ $("intro-live-toggle").textContent=introductionHidden?"عرض الوثيقة السابقة للأسئلة":"إخفاء الوثيقة";
 };
 $("intro-live-zoom").onclick=()=>{
  const box=$("intro-live-images");introductionZoomed=!introductionZoomed;
