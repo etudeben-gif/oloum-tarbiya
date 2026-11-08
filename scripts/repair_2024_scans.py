@@ -21,7 +21,7 @@ for session,fileid,expected in DOCS:
     url=f"https://drive.google.com/uc?id={fileid}"
     print("Retrieving",session,url)
     try:
-        data=gdown.download(url,output=None,quiet=False,fuzzy=True)
+        data=gdown.download(url,output=None,quiet=False)
         if not data:raise RuntimeError("gdown returned no file")
         pdf=fitz.open(data)
         print("source page count",len(pdf))
