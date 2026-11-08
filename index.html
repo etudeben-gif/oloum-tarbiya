@@ -28,7 +28,7 @@ select{background:#fff;border:1px solid #cbdce1;border-radius:10px;padding:10px;
 <section class="card"><h3>الأسئلة</h3><div id="q-grid" class="gridnum"></div></section>
 </aside>
 <div class="content">
-<section class="card lesson" id="lesson-card"><div class="step"><b>1</b> الدرس</div><h2 id="lesson-title"></h2><p id="lesson-text"></p><div id="lesson-tip" class="keypoint" hidden></div><p class="info"><a id="lesson-source" target="_blank" rel="noopener noreferrer" hidden></a></p></section>
+<section class="card lesson" id="lesson-card"><div class="step"><b>1</b> فهم السؤال</div><h2 id="lesson-title"></h2><p id="lesson-text"></p></section>
 <section class="card original" id="question-card"><div class="titleline"><div class="step" style="margin:0"><b>2</b> السؤال الأصلي</div><span id="q-code" class="question-code">Q61</span></div>
 <div class="source-view"><div class="toolbar"><span class="small" id="sheet-label">الصفحة</span><div class="toolbox"><button id="zoom-out" type="button" aria-label="تصغير">−</button><span id="zoom-label" class="small">100%</span><button id="zoom-in" type="button" aria-label="تكبير">+</button><button id="page-toggle" type="button">الصفحة كاملة</button></div></div><div class="frame" id="canvas-frame"><div class="loader" id="loading">تحميل صورة السؤال الأصلي...</div><canvas id="question-canvas" aria-label="السؤال والاختيارات كما وردا في ورقة الامتحان الأصلية"></canvas></div></div>
 <div class="info">تُعرض صورة السؤال والاختيارات كما وردت في الوثيقة المصورة، دون تغيير النص أو الصياغة. يمكن تكبير الصورة أو فتح الصفحة كاملة.</div>
@@ -36,7 +36,7 @@ select{background:#fff;border:1px solid #cbdce1;border-radius:10px;padding:10px;
 <div class="buttons"><button type="button" class="primary" id="check">تصحيح الجواب</button><button type="button" class="secondary" id="skip">تخطي السؤال</button></div><div class="result" id="feedback" hidden></div>
 <div class="nav"><button type="button" id="prev">→ السابق</button><button type="button" id="next">التالي ←</button></div></section>
 </div></div></main>
-<script src="lessons-sourced.js"></script>
+<script src="question-guides.js"></script>
 <script>
 (function(){
 'use strict';
@@ -71,10 +71,9 @@ const top=full?0:Math.max(0,rawTop-.016),bottom=full?1:Math.min(1,rawBottom+.02)
 if(cache[src]&&cache[src].complete){paint(cache[src]);return}
 const im=new Image();cache[src]=im;im.onload=()=>paint(im);im.onerror=()=>{if(token!==showImage.token)return;$('loading').hidden=false;$('loading').textContent='تعذر تحميل الصورة. افتح الموقع من رابط GitHub Pages وتأكد من الاتصال بالإنترنت.'};im.src=src}
 showImage.token=0;
-function lessonFor(e,i){
-const db=window.MASAR_SOURCE_COURSES;
-if(!db||!db.questionTopics||!db.questionTopics[e.id])return null;
-const t=db.questionTopics[e.id][i];return t&&db.topics[t]?db.topics[t]:null;
+function guideFor(e,i){
+ const guides=window.MASAR_QUESTION_GUIDES;
+ return guides&&guides[e.id]&&guides[e.id][i+61]?guides[e.id][i+61]:null;
 }
 const correctionPages={"2022":"https://mesconcours.ma/ar/concours/enseignement/2022/","2023":"https://mesconcours.ma/ar/concours/enseignement/2023/","2025":"https://mesconcours.ma/ar/concours/enseignement/2025-584/","2024f":"https://mesconcours.ma/ar/concours/enseignement/2024/","2024a":"https://mesconcours.ma/ar/concours/enseignement/2024-538/","2024o":"https://mesconcours.ma/ar/concours/enseignement/2024-539/"};
 function updateScore(){let attempted=0,eligible=0,correct=0;for(const e of exams){for(let i=0;i<e.count;i++){const chosen=answers[id(e,i+61)];if(!chosen)continue;attempted++;const key=e.keys[i];if(key&&key!=='-'){eligible++;if(key===chosen)correct++}}}$('score').textContent=correct+' / '+eligible;$('completed').textContent=attempted+' من 354 سؤالاً';$('progress-bar').style.width=(attempted/354*100)+'%'}
@@ -95,22 +94,15 @@ function showFeedback(){
  }
  const correction=document.createElement('a');correction.href=correctionPages[e.id];correction.target='_blank';
  correction.rel='noopener noreferrer';correction.textContent='مراجعة التصحيح المقترح للسؤال Q'+(qi+61)+' ↗';box.appendChild(correction);
- const lesson=lessonFor(e,qi);
- if(lesson){
-  const p=document.createElement('p');p.textContent='المعلومة المرتبطة بالسؤال من المرجع: '+lesson.summary;box.appendChild(p);
-  const a=document.createElement('a');a.href=lesson.url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='المصدر: '+lesson.publisher+' ↗';box.appendChild(a);
- }
+
 }
-function render(){const e=exams[examIndex],n=qi+61,lesson=lessonFor(e,qi);$('exam-select').value=e.id;$('number-select').innerHTML='';for(let i=0;i<e.count;i++){const o=document.createElement('option');o.value=String(i);o.textContent='Q'+(i+61);$('number-select').appendChild(o)}$('number-select').value=String(qi);$('exam-meta').textContent=e.count+' سؤالاً · من Q61 إلى Q'+(60+e.count);
-if(lesson){
-  $('lesson-title').textContent=lesson.title;
-  $('lesson-text').textContent=lesson.summary;
-  $('lesson-tip').hidden=true;
-  const link=$('lesson-source');link.hidden=false;link.href=lesson.url;link.textContent='الدرس الأصلي في المصدر: '+lesson.publisher+' ↗';
+function render(){const e=exams[examIndex],n=qi+61,guide=guideFor(e,qi);$('exam-select').value=e.id;$('number-select').innerHTML='';for(let i=0;i<e.count;i++){const o=document.createElement('option');o.value=String(i);o.textContent='Q'+(i+61);$('number-select').appendChild(o)}$('number-select').value=String(qi);$('exam-meta').textContent=e.count+' سؤالاً · من Q61 إلى Q'+(60+e.count);
+if(guide){
+  $('lesson-card').hidden=false;
+  $('lesson-title').textContent=guide[0];
+  $('lesson-text').textContent=guide[1];
 }else{
-  $('lesson-title').textContent='درس هذا السؤال قيد التحقق';
-  $('lesson-text').textContent='لم نتحقق بعد من مرجع يطابق هذا السؤال تحديداً. لن نعرض درساً عاماً غير مرتبط به.';
-  $('lesson-tip').hidden=true;$('lesson-source').hidden=true;
+  $('lesson-card').hidden=true;
 }
 $('q-code').textContent='Q'+n;
 $('answers').innerHTML='';const selected=answers[id(e,n)]||'';for(let i=0;i<e.choices;i++){const letter='ABCDE'[i],label=document.createElement('label');label.className='option';const input=document.createElement('input');input.type='radio';input.name='answer';input.value=letter;input.checked=selected===letter;label.append(input,document.createTextNode(letter));$('answers').appendChild(label)}
