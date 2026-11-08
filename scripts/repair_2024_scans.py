@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Replace misfiled October 2024 scans using the 15-page original Arabic examination.
-Also add April 2024's original introductory text as a separate image.
+Do not create an April intro image when the source begins directly with questions.
 Sources: public Google Drive references linked by WadifaPrepa's education-exam index.
 Never reconstruct question text or use OCR.
 """
@@ -13,7 +13,6 @@ import gdown
 
 DOCS=[
   ("2024o","1GdA9JQYJdgoRxwpw14tKaPiMnn9YQJoQ",15),
-  ("2024a","1S4u-s1Ezqh0qTa892bX6G9DrH991bdph",12)
 ]
 out=Path("images");out.mkdir(exist_ok=True)
 total=0
@@ -26,12 +25,7 @@ for session,fileid,expected in DOCS:
         pdf=fitz.open(data)
         print("source page count",len(pdf))
         if len(pdf)!=expected:raise ValueError(f"{session}: expected {expected} pages, got {len(pdf)}")
-        if session=="2024o":
-            pages=[(i,f"{session}-{i+1:02d}.webp") for i in range(15)]
-        else:
-            # April first original PDF page contains the source reading passage,
-            # existing exam images start on PDF page 2; do not overwrite them.
-            pages=[(0,"2024a-intro-01.webp")]
+        pages=[(i,f"{session}-{i+1:02d}.webp") for i in range(15)]
         for i,name in pages:
             pix=pdf[i].get_pixmap(matrix=fitz.Matrix(1.45,1.45),alpha=False,colorspace=fitz.csRGB)
             im=Image.frombytes("RGB",(pix.width,pix.height),pix.samples)
