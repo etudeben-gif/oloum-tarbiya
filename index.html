@@ -73,7 +73,10 @@ const originalIntro={
   {src:"images/2024o-03.webp",label:"نص الانطلاق – أكتوبر 2024، تتمة النص"}
  ]
 };
-const $=s=>document.getElementById(s);let examIndex=0,qi=0,zoom=100,full=false,cache={},answers={};
+const $=s=>document.getElementById(s);
+let proposals={},examIndex=0,qi=0,zoom=100,full=false,cache={},answers={};
+function answerKey(e,i){return e.keys[i]||proposals[e.id]?.keys?.[String(i+61)]||''}
+function isOfficialKey(e){return e.id==='2023'||e.id==='2024a'}
 try{answers=JSON.parse(localStorage.getItem('masar-original-exams-v1')||'{}')||{}}catch(_){}
 function id(e,n){return e.id+'-'+n}
 function save(){try{localStorage.setItem('masar-original-exams-v1',JSON.stringify(answers))}catch(_){}}
@@ -101,9 +104,9 @@ function guideFor(e,i){
  return guides&&guides[e.id]&&guides[e.id][i+61]?guides[e.id][i+61]:null;
 }
 const correctionPages={"2022":"https://mesconcours.ma/ar/concours/enseignement/2022/","2023":"https://mesconcours.ma/ar/concours/enseignement/2023/","2025":"https://mesconcours.ma/ar/concours/enseignement/2025-584/","2024f":"https://mesconcours.ma/ar/concours/enseignement/2024/","2024a":"https://mesconcours.ma/ar/concours/enseignement/2024-538/","2024o":"https://mesconcours.ma/ar/concours/enseignement/2024-539/"};
-function updateScore(){let attempted=0,eligible=0,correct=0;for(const e of exams){for(let i=0;i<e.count;i++){const chosen=answers[id(e,i+61)];if(!chosen)continue;attempted++;const key=e.keys[i];if(key&&key!=='-'){eligible++;if(key===chosen)correct++}}}$('score').textContent=correct+' / '+eligible;$('completed').textContent=attempted+' من 354 سؤالاً';$('progress-bar').style.width=(attempted/354*100)+'%'}
+function updateScore(){let attempted=0,eligible=0,correct=0;for(const e of exams){for(let i=0;i<e.count;i++){const chosen=answers[id(e,i+61)];if(!chosen)continue;attempted++;const key=answerKey(e,i);if(key&&key!=='-'){eligible++;if(key===chosen)correct++}}}$('score').textContent=correct+' / '+eligible;$('completed').textContent=attempted+' من 354 سؤالاً';$('progress-bar').style.width=(attempted/354*100)+'%'}
 function showFeedback(){
- const e=exams[examIndex],key=e.keys[qi],chosen=answers[id(e,qi+61)],box=$('feedback');
+ const e=exams[examIndex],key=answerKey(e,qi),chosen=answers[id(e,qi+61)],box=$('feedback');
  box.replaceChildren();box.hidden=!chosen;if(!chosen)return;
  if(!key){
    box.className='result neutral';
@@ -117,9 +120,9 @@ function showFeedback(){
   const correct=document.createElement('p');correct.textContent='الجواب الصحيح: '+key;box.appendChild(correct);
  }
  const note=document.createElement('p');note.className='source-meta';
- note.textContent=['2023','2024a'].includes(e.id)
+ note.textContent=isOfficialKey(e)
  ?'التوثيق: شبكة التصحيح الصادرة عن المركز الوطني للامتحانات المدرسية وتقييم التعلمات.'
- :'التوثيق: مفتاح إجابة متداول للمراجعة، لا يُنسب للوزارة.';
+ :proposals[e.id]?'التوثيق: تصحيح تدريبي مقترح من MesConcours؛ غير صادر عن الوزارة، وقد يحتوي على اجتهادات.':'التوثيق: مفتاح إجابة متداول للمراجعة، لا يُنسب للوزارة.';
  box.appendChild(note);
 }
 function renderIntro(){
@@ -160,5 +163,9 @@ $('page-toggle').onclick=function(){full=!full;this.textContent=full?'قصّ ا�
 $('zoom-in').onclick=()=>setZoom(zoom+40);$('zoom-out').onclick=()=>setZoom(zoom-40);
 $('reset').onclick=function(){if(confirm('هل تريد حذف الإجابات المسجلة على هذا الجهاز؟')){answers={};save();render()}};
 render();
+fetch('science-proposed-keys.json',{cache:'no-store'})
+ .then(r=>r.ok?r.json():{})
+ .then(data=>{proposals=data||{};render()})
+ .catch(()=>{proposals={};updateScore()});
 })();
 </script></body></html>
