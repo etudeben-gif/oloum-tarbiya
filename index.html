@@ -130,7 +130,8 @@ function renderIntro(){
  $("intro-description").textContent=e.id==="2024o"?"نص فيليب ميريو مرتبط بالأسئلة Q61–Q69، اقراه قبل اختيار الجواب.":"اقرأ النص الأصلي قبل الأسئلة التي تحيل إليه، ويمكنك الرجوع إليه في أي وقت.";
  const area=$("intro-imgs");area.replaceChildren();
  arr.forEach(row=>{const img=document.createElement("img");img.loading="lazy";img.alt=row.label;img.src=row.src;img.onerror=()=>{img.alt="صورة نص الانطلاق غير متاحة حالياً"};area.appendChild(img)});
- $("intro-preview").hidden=true;$("intro-toggle").textContent="عرض نص الانطلاق";
+ const autoOpen=(e.id==="2024o"&&qi<9)||(e.id==="2024f"&&qi<5)||(e.id==="2023"&&qi<5);
+ $("intro-preview").hidden=!autoOpen;$("intro-toggle").textContent=autoOpen?"إخفاء النص":"عرض نص الانطلاق";
 }
 $("intro-toggle").onclick=function(){
  const box=$("intro-preview");box.hidden=!box.hidden;
