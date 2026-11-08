@@ -1,0 +1,32 @@
+name: Repair authentic 2024 Sciences of Education scans
+on:
+  push:
+    paths:
+      - 'scripts/repair_2024_scans.py'
+      - '.github/workflows/repair-2024-scans.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install PDF renderer
+        run: pip install pymupdf pillow gdown requests
+      - name: Replace unrelated 2024 exam images
+        run: python scripts/repair_2024_scans.py
+      - name: Commit corrected pages
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add images/2024o-*.webp images/2024a-intro-*.webp
+          if ! git diff --cached --quiet; then
+            git commit -m "Replace October 2024 misfiled subject images and restore April reading passage"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
