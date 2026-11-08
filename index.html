@@ -67,7 +67,7 @@ const exams=[
 ];
 const originalIntro={
  "2023":[{src:"images/2023-02.webp",label:"نص الانطلاق – دجنبر 2023"}],
- "2024a":[{src:"images/2024a-intro-01.webp",label:"نص الانطلاق – أبريل 2024"}],
+ "2024f":[{src:"images/2024f-01.webp",label:"نص الانطلاق – فبراير 2024"}],
  "2024o":[
   {src:"images/2024o-02.webp",label:"نص الانطلاق – أكتوبر 2024، الصفحة الأولى"},
   {src:"images/2024o-03.webp",label:"نص الانطلاق – أكتوبر 2024، تتمة النص"}
@@ -104,27 +104,28 @@ const correctionPages={"2022":"https://mesconcours.ma/ar/concours/enseignement/2
 function updateScore(){let attempted=0,eligible=0,correct=0;for(const e of exams){for(let i=0;i<e.count;i++){const chosen=answers[id(e,i+61)];if(!chosen)continue;attempted++;const key=e.keys[i];if(key&&key!=='-'){eligible++;if(key===chosen)correct++}}}$('score').textContent=correct+' / '+eligible;$('completed').textContent=attempted+' من 354 سؤالاً';$('progress-bar').style.width=(attempted/354*100)+'%'}
 function showFeedback(){
  const e=exams[examIndex],key=e.keys[qi],chosen=answers[id(e,qi+61)],box=$('feedback');
- box.hidden=false;box.replaceChildren();
+ box.replaceChildren();box.hidden=!chosen;if(!chosen)return;
  if(!key){
    box.className='result neutral';
- box.textContent='سُجّلت الإجابة. لم نتحقق من مفتاح التصحيح لهذه الدورة.';
- const link=document.createElement('a');link.href=correctionPages[e.id];link.target='_blank';link.rel='noopener noreferrer';
- link.textContent='اطّلع على التصحيح المقترح المنشور للسؤال Q'+(qi+61)+' ↗';box.appendChild(document.createElement('br'));box.appendChild(link);return;
+   box.textContent='تم حفظ إجابتك. مفتاح التصحيح لهذه الدورة غير متحقق منه، ولا تُحتسب نقطة حتى تتأكد الإجابة.';
+   return;
  }
  const good=(chosen===key);
  box.className='result'+(good?'':' bad');
- const strong=document.createElement('strong');strong.className='answer-title';strong.textContent=good?'✓ صحيح':'✗ خطأ';box.appendChild(strong);
+ const title=document.createElement('strong');title.className='answer-title';title.textContent=good?'✓ صحيح':'✗ خطأ';box.appendChild(title);
  if(!good){
-  const p=document.createElement('p');p.textContent='الاختيار في مفتاح التصحيح المتوفر: '+key;box.appendChild(p);
+  const correct=document.createElement('p');correct.textContent='الجواب الصحيح: '+key;box.appendChild(correct);
  }
- const correction=document.createElement('a');correction.href=correctionPages[e.id];correction.target='_blank';
- correction.rel='noopener noreferrer';correction.textContent='مراجعة التصحيح المقترح للسؤال Q'+(qi+61)+' ↗';box.appendChild(correction);
-
+ const note=document.createElement('p');note.className='source-meta';
+ note.textContent=['2023','2024a'].includes(e.id)
+ ?'التوثيق: شبكة التصحيح الصادرة عن المركز الوطني للامتحانات المدرسية وتقييم التعلمات.'
+ :'التوثيق: مفتاح إجابة متداول للمراجعة، لا يُنسب للوزارة.';
+ box.appendChild(note);
 }
 function renderIntro(){
  const e=exams[examIndex],arr=originalIntro[e.id]||[],card=$("intro-card");
  card.hidden=!arr.length;if(!arr.length)return;
- const head=qi<9&&e.id==="2024o"?"اقرأ نص الانطلاق قبل الأسئلة التسعة الأولى":"نص الانطلاق الخاص بالدورة";
+ const head=e.id==="2024o"&&qi<9?"نص الانطلاق: فيليب ميريو":e.id==="2024f"?"نص الانطلاق: القيم في التربية":"نص الانطلاق الخاص بالدورة";
  $("intro-title").textContent=head;
  $("intro-description").textContent=e.id==="2024o"?"نص فيليب ميريو مرتبط بالأسئلة Q61–Q69، اقراه قبل اختيار الجواب.":"اقرأ النص الأصلي قبل الأسئلة التي تحيل إليه، ويمكنك الرجوع إليه في أي وقت.";
  const area=$("intro-imgs");area.replaceChildren();
