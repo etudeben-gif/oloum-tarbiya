@@ -10,6 +10,7 @@ out={}
 for name,url in URLS.items():
  try:
   r=S.get(url,timeout=40);r.raise_for_status()
+  r.encoding="utf-8"
   soup=bs4.BeautifulSoup(r.text,"html.parser")
   for tag in soup(["script","style","noscript","header","footer","nav"]): tag.decompose()
   txt=soup.get_text("\n",strip=True)
