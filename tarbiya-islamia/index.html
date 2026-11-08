@@ -42,7 +42,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 .grade-feedback.wrong{background:#fff4eb;border-color:#ebc6af}.grade-feedback.pending{background:#f1f4f7;border-color:#dae3e8}
 .grade-feedback strong{display:block;font-size:17px}.mistake-button{display:block;text-align:right;width:100%;margin:7px 0}
 @media(max-width:760px){.quiz-layout{grid-template-columns:1fr}.quiz-menu{position:static}.quiz-menu select{width:100%}.quiz-paper{padding:13px}.scan-frame{max-height:65vh}}
-</style><link rel="stylesheet" href="../assets/masar-premium.css"><link rel="stylesheet" href="courses.css"></head><body>
+</style><link rel="stylesheet" href="../assets/masar-premium.css"><link rel="stylesheet" href="courses.css"><link rel="stylesheet" href="reading-passages.css"></head><body>
 <header><div class="wrap"><strong>مسار | التربية الإسلامية</strong><a href="../">علوم التربية</a></div></header>
 <main>
 <div class="section-eyebrow">مادة التخصص · الديداكتيك</div><h1>التربية الإسلامية</h1>
@@ -157,7 +157,34 @@ function countScores(){let n=0,scored=0,correct=0,errors=0;
  $("progress-fill").style.width=Math.min(100,100*n/exams.reduce((sum,e)=>sum+e.count,0))+"%";
  $("progress").textContent="تقدّمك: "+n+" سؤالاً";
 }
-function estimatedPage(ex,q){let pages=Math.max(1,ex.pages-ex.start+1);let fraction=(q-1)/Math.max(1,ex.count);return Math.min(ex.pages,Math.max(ex.start,ex.start+Math.floor(fraction*pages)))}
+function estimatedPage(ex,q){
+ // Directly checked against the original scanned image pages, for initial QCM blocks.
+ if(ex.id==="2021-didactics"){
+   if(q<=4)return 3;if(q<=9)return 4;if(q<=13)return 5;if(q<=18)return 6;
+   if(q<=22)return 7;if(q<=26)return 8;return 9;
+ }
+ if(ex.id==="2021-specialty"){
+   if(q<=3)return 3;if(q<=7)return 4;if(q<=12)return 5;
+   if(q<=17)return 6;if(q<=78)return Math.min(19,7+Math.floor((q-18)/5));return 20;
+ }
+ if(ex.id==="2025-specialty"){
+   if(q<=4)return 2;if(q<=9)return 3;
+ }
+ if(ex.id==="2025-didactics"){
+   if(q<=5)return 2;if(q<=14)return 3;
+ }
+ if(ex.id==="2022-specialty"){
+   if(q<=4)return 2;if(q<=10)return 3;
+ }
+ if(ex.id==="2023-specialty"){
+   if(q<=2)return 1;if(q<=8)return 2;if(q<=13)return 3;
+ }
+ if(ex.id==="2022-didactics")return Math.min(11,2+Math.floor((q-1)/6));
+ if(ex.id==="2023-didactics")return Math.min(10,1+Math.floor((q-1)/6));
+ const numPages=Math.max(1,ex.pages-ex.start+1);
+ const fraction=(q-1)/Math.max(1,ex.count);
+ return Math.min(ex.pages,Math.max(ex.start,ex.start+Math.floor(fraction*numPages)));
+}
 function showScan(){const img=$("scan"),src="images/"+activeExam.id+"-"+String(page).padStart(2,"0")+".webp";
  img.hidden=false;$("img-status").hidden=true;img.onerror=function(){$("img-status").hidden=false;img.hidden=true;$("img-status").textContent="صورة الصفحة غير متاحة. جرّب تغيير الصفحة."};
  img.onload=function(){$("img-status").hidden=true;img.hidden=false};img.src=src;
@@ -225,4 +252,4 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=function(){showTab(
 renderQuiz();renderMistakes();
 })();
 </script>
-<script src="courses-full.js"></script><script src="courses-ui.js"></script></body></html>
+<script src="courses-full.js"></script><script src="courses-ui.js"></script><script src="reading-passages.js"></script></body></html>
