@@ -19,16 +19,33 @@ select{background:#fff;border:1px solid #cbdce1;border-radius:10px;padding:10px;
 .info{font-size:12px;color:#667d86;margin-top:9px}.inline-link{font-size:12px;color:#1c6e7d}
 @media(max-width:740px){.layout{grid-template-columns:1fr}.side{display:grid;grid-template-columns:1fr 1fr;gap:10px}.side .card{margin-bottom:0}.side .mainselector{grid-column:1/-1}.wrap{margin-top:12px}.card{padding:14px}.frame{max-height:66vh}.meta{display:none}}
 @media(max-width:440px){.side{grid-template-columns:1fr}.side .mainselector{grid-column:auto}.options{grid-template-columns:repeat(5,1fr)}.toolbar button{padding:7px}.brand{font-size:16px}}
-</style></head><body>
+</style><link rel="stylesheet" href="assets/masar-premium.css"></head><body>
 <header><div class="inner"><div class="brand">مسار | علوم التربية</div><a href="./tarbiya-islamia/" style="color:#fff;background:#147b76;border-radius:9px;padding:7px 14px;font-weight:bold;text-decoration:none">التربية الإسلامية</a></div></header>
 <main class="wrap"><div class="layout">
 <aside class="side">
 <section class="card mainselector"><h3>الامتحانات</h3><label class="field" for="exam-select">الدورة</label><select id="exam-select"></select><label class="field" for="number-select">رقم السؤال</label><select id="number-select"></select><div class="info" id="exam-meta"></div></section>
 <section class="card"><h3>النتيجة</h3><div class="counter" id="score">0 / 0</div><div class="small" id="completed">0 من 354 سؤالاً</div><div class="progress"><div id="progress-bar"></div></div><button id="reset" class="clear" type="button">مسح الإجابات</button></section>
-<section class="card"><h3>الأسئلة</h3><div id="q-grid" class="gridnum"></div></section>
+<section class="card"><h3>التوزيع الرسمي للمراجعة</h3>
+ <p class="small">وفق توصيف علوم التربية الصادر عن المركز الوطني للامتحانات المدرسية وتقييم التعلمات:</p>
+ <div class="subject-program">
+  <div class="program-row"><div class="program-top"><strong>علم النفس التربوي</strong><span>40%</span></div><div class="progress"><div style="width:40%"></div></div><p class="mini">النمو 20% · التعلم 20%</p></div>
+  <div class="program-row"><div class="program-top"><strong>المقاربات وطرائق التدريس</strong><span>30%</span></div><div class="progress"><div style="width:30%"></div></div><p class="mini">الأهداف والكفايات 15% · الطرائق 15%</p></div>
+  <div class="program-row"><div class="program-top"><strong>سوسيولوجيا التربية</strong><span>30%</span></div><div class="progress"><div style="width:30%"></div></div><p class="mini">سوسيولوجيا التربية 15% · دينامية الجماعات 15%</p></div>
+ </div></section><section class="card"><h3>الأسئلة</h3><div id="q-grid" class="gridnum"></div></section>
 </aside>
 <div class="content">
 <section class="card lesson" id="lesson-card"><div class="step"><b>1</b> فهم السؤال</div><h2 id="lesson-title"></h2><p id="lesson-text"></p></section>
+
+<section class="card" id="intro-card" hidden>
+ <div class="step"><b>2</b> نص الانطلاق الأصلي</div>
+ <h2 id="intro-title">اقرأ النص قبل الإجابة</h2>
+ <p class="small" id="intro-description">هذا النص جزء من ورقة الامتحان الأصلية، والأسئلة التالية مبنية عليه.</p>
+ <div class="intro-preview" id="intro-preview" hidden>
+  <p class="small">النص كما ورد في النسخة المصورة؛ يمكنك تكبيره من الهاتف.</p>
+  <div class="intro-imgs" id="intro-imgs"></div>
+ </div>
+ <button type="button" class="primary" id="intro-toggle">عرض نص الانطلاق</button>
+</section>
 <section class="card original" id="question-card"><div class="titleline"><div class="step" style="margin:0"><b>2</b> السؤال الأصلي</div><span id="q-code" class="question-code">Q61</span></div>
 <div class="source-view"><div class="toolbar"><span class="small" id="sheet-label">الصفحة</span><div class="toolbox"><button id="zoom-out" type="button" aria-label="تصغير">−</button><span id="zoom-label" class="small">100%</span><button id="zoom-in" type="button" aria-label="تكبير">+</button><button id="page-toggle" type="button">الصفحة كاملة</button></div></div><div class="frame" id="canvas-frame"><div class="loader" id="loading">تحميل صورة السؤال الأصلي...</div><canvas id="question-canvas" aria-label="السؤال والاختيارات كما وردا في ورقة الامتحان الأصلية"></canvas></div></div>
 <div class="info">تُعرض صورة السؤال والاختيارات كما وردت في الوثيقة المصورة، دون تغيير النص أو الصياغة. يمكن تكبير الصورة أو فتح الصفحة كاملة.</div>
@@ -48,6 +65,14 @@ const exams=[
 {id:'2024o',name:'أكتوبر 2024',count:60,first:4,groups:null,per:5,choices:5,keys:'AADACACBBDAACBCBCADBACAACBBDBCECBACDCBADABACBBBABDEABDCACBDC',map:'egdg55g5gg5gg1ggggggggggggdgg5gggdggggggggggggg3d6ggg6gg1ggg',range:[.10,.78]},
 {id:'2025',name:'نونبر 2025',count:60,first:1,groups:null,per:5,choices:5,keys:'',map:'',range:[.10,.91]}
 ];
+const originalIntro={
+ "2023":[{src:"images/2023-02.webp",label:"نص الانطلاق – دجنبر 2023"}],
+ "2024a":[{src:"images/2024a-intro-01.webp",label:"نص الانطلاق – أبريل 2024"}],
+ "2024o":[
+  {src:"images/2024o-02.webp",label:"نص الانطلاق – أكتوبر 2024، الصفحة الأولى"},
+  {src:"images/2024o-03.webp",label:"نص الانطلاق – أكتوبر 2024، تتمة النص"}
+ ]
+};
 const $=s=>document.getElementById(s);let examIndex=0,qi=0,zoom=100,full=false,cache={},answers={};
 try{answers=JSON.parse(localStorage.getItem('masar-original-exams-v1')||'{}')||{}}catch(_){}
 function id(e,n){return e.id+'-'+n}
@@ -96,7 +121,22 @@ function showFeedback(){
  correction.rel='noopener noreferrer';correction.textContent='مراجعة التصحيح المقترح للسؤال Q'+(qi+61)+' ↗';box.appendChild(correction);
 
 }
-function render(){const e=exams[examIndex],n=qi+61,guide=guideFor(e,qi);$('exam-select').value=e.id;$('number-select').innerHTML='';for(let i=0;i<e.count;i++){const o=document.createElement('option');o.value=String(i);o.textContent='Q'+(i+61);$('number-select').appendChild(o)}$('number-select').value=String(qi);$('exam-meta').textContent=e.count+' سؤالاً · من Q61 إلى Q'+(60+e.count);
+function renderIntro(){
+ const e=exams[examIndex],arr=originalIntro[e.id]||[],card=$("intro-card");
+ card.hidden=!arr.length;if(!arr.length)return;
+ const head=qi<9&&e.id==="2024o"?"اقرأ نص الانطلاق قبل الأسئلة التسعة الأولى":"نص الانطلاق الخاص بالدورة";
+ $("intro-title").textContent=head;
+ $("intro-description").textContent=e.id==="2024o"?"نص فيليب ميريو مرتبط بالأسئلة Q61–Q69، اقراه قبل اختيار الجواب.":"اقرأ النص الأصلي قبل الأسئلة التي تحيل إليه، ويمكنك الرجوع إليه في أي وقت.";
+ const area=$("intro-imgs");area.replaceChildren();
+ arr.forEach(row=>{const img=document.createElement("img");img.loading="lazy";img.alt=row.label;img.src=row.src;img.onerror=()=>{img.alt="صورة نص الانطلاق غير متاحة حالياً"};area.appendChild(img)});
+ $("intro-preview").hidden=true;$("intro-toggle").textContent="عرض نص الانطلاق";
+}
+$("intro-toggle").onclick=function(){
+ const box=$("intro-preview");box.hidden=!box.hidden;
+ this.textContent=box.hidden?"عرض نص الانطلاق":"إخفاء النص";
+};
+function render(){const e=exams[examIndex],n=qi+61,guide=guideFor(e,qi);
+ renderIntro();$('exam-select').value=e.id;$('number-select').innerHTML='';for(let i=0;i<e.count;i++){const o=document.createElement('option');o.value=String(i);o.textContent='Q'+(i+61);$('number-select').appendChild(o)}$('number-select').value=String(qi);$('exam-meta').textContent=e.count+' سؤالاً · من Q61 إلى Q'+(60+e.count);
 if(guide){
   $('lesson-card').hidden=false;
   $('lesson-title').textContent=guide[0];
