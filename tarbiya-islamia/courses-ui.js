@@ -61,5 +61,13 @@ function showList(){
 }
 search.addEventListener("input",showList);select.addEventListener("change",showList);
 showList();openCourse(current,false);
-const courseTab=document.querySelector('nav button[data-tab="courses"]');if(courseTab)courseTab.click();
+// Keep exam tab active on entry so the authentic pre-question text is visible immediately.
+const quickStart=node("button","primary","افتح امتحان QCM ونص الانطلاق");
+quickStart.type="button";
+quickStart.onclick=()=>{
+ const tab=document.querySelector('nav button[data-tab="exams"]');
+ if(tab)tab.click();
+ document.getElementById("intro-live")?.scrollIntoView({behavior:"smooth",block:"start"});
+};
+header.append(quickStart);
 })();
