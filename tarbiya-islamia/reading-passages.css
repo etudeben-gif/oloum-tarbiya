@@ -1,0 +1,8 @@
+.islam-intro-block{border-radius:14px;border:1px solid #b8dccf;background:linear-gradient(120deg,#effaf3,#f5fafc);padding:15px;margin:0 0 17px}
+.islam-intro-header{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.islam-intro-header h3{margin:0;color:#126953;font-size:18px}
+.islam-intro-header button{border:0;background:#147c73;color:white;border-radius:10px;font-weight:800;padding:9px 13px}
+.islam-intro-images{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,330px),1fr));gap:10px;margin-top:12px}
+.islam-intro-images img{width:100%;height:auto;display:block;background:white;border:1px solid #d3e1e5;border-radius:10px}
+.islam-intro-block .mini{line-height:1.85;margin:7px 0}
+@media(max-width:640px){.islam-intro-block{padding:11px}.islam-intro-images{grid-template-columns:1fr}}
