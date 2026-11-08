@@ -1,0 +1,87 @@
+/* Masar – coordinated desktop/mobile design for both subjects */
+:root{
+  --page:#f4f7fb;--ink:#14283c;--muted:#647a8a;--navy:#12314b;
+  --teal:#067e77;--teal2:#0ea18b;--line:#dce6ef;--shadow:0 10px 32px rgba(13,42,67,.07);
+  font-family:"Segoe UI",Tahoma,Arial,sans-serif!important;color:var(--ink)!important;
+  background:var(--page)!important;font-size:15px
+}
+html{scroll-behavior:smooth}
+body{background:var(--page)!important;color:var(--ink)!important;line-height:1.85!important}
+a{color:#097a82}
+button,select,input{font-family:inherit!important;transition:border-color .18s,background .18s,box-shadow .18s,transform .15s}
+button:active{transform:translateY(1px)}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #edb24c!important;outline-offset:3px}
+header{background:linear-gradient(120deg,#112d46,#176679)!important;border-bottom:0!important;box-shadow:0 7px 25px rgba(21,55,79,.14)}
+header .brand,header strong{font-size:20px!important;letter-spacing:-.4px}
+header a{border:1px solid #ffffff50!important;background:#ffffff17!important;color:#fff!important;text-decoration:none!important;border-radius:11px!important;padding:8px 16px!important;font-weight:700}
+header a:hover{background:#ffffff30!important}
+main.wrap,main{max-width:1190px!important;margin-left:auto!important;margin-right:auto!important}
+.wrap{max-width:1190px!important}
+.card{background:#fff!important;border:1px solid var(--line)!important;border-radius:18px!important;
+  box-shadow:var(--shadow)!important;overflow:hidden}
+.card h2,.card h3{color:var(--navy)!important}
+.card h3{font-weight:800}
+select,input[type=search]{border:1px solid #cedce5!important;border-radius:11px!important;background:#fff!important;color:#264459!important}
+select:hover,input:hover{border-color:#88c8c2!important}
+.small,.info,.mini,.meta{color:var(--muted)!important}
+.primary,.main-btn,.link{background:var(--teal)!important;color:white!important;border-radius:11px!important}
+.primary:hover,.main-btn:hover,.link:hover{background:#065e5b!important}
+.secondary,.clear,.quiet-button,.scan-tools button,.nav button,.toolbar button{background:#eaf2f5!important;color:#235568!important;border-radius:10px!important}
+.secondary:hover,.clear:hover,.quiet-button:hover,.scan-tools button:hover,.toolbar button:hover{background:#dbeeea!important}
+.lesson{border-top:4px solid #25a98f!important}
+.original{border-top:4px solid #2188a0!important}
+.step{color:#087b73!important}.step b{background:#e0f5ec!important;color:#05766b!important}
+.source-view{background:#f7fafc!important;border-color:#e0e9f0!important;border-radius:13px!important}
+.frame,.scan-frame{background:#fff!important;box-shadow:inset 0 0 0 1px #e7edf2}
+#question-canvas,#scan{image-rendering:auto}
+.option,.letter-grid label{border-color:#cee1e5!important;border-radius:12px!important}
+.option:has(input:checked),.letter-grid label:has(input:checked){background:#daf4e9!important;border-color:#14a17c!important;box-shadow:0 0 0 2px #159c8220}
+#score,.counter,#total-score{font-variant-numeric:tabular-nums;font-weight:850!important;color:#08776d!important;font-size:26px}
+.gridnum button{border-radius:8px!important;background:#eef4f7!important}
+.gridnum button.now{background:#11687e!important;color:white!important}
+.gridnum button.done{box-shadow:inset 0 -4px #24a889!important}
+.result,.grade-feedback{font-size:15px}
+.knowledge-block{margin:0 0 15px;padding:16px 18px;background:linear-gradient(115deg,#eef8f3,#eff5fc);border:1px solid #d5e8e6;border-radius:14px}
+.knowledge-block h3{margin:0 0 5px;font-size:17px}.knowledge-block p{margin:6px 0;color:#39566a}
+.intro-trigger{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin:10px 0 14px;padding:12px 15px;border:1px solid #a9d7ce;border-radius:12px;background:#e8f7f1}
+.intro-trigger button{background:#147f76;color:white;border-radius:9px;padding:8px 13px;font-weight:700}
+.intro-preview{background:#f2f6fa;border:1px solid #d7e4ec;border-radius:13px;padding:12px;margin:0 0 15px}
+.intro-preview .intro-imgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:13px}
+.intro-preview img{width:100%;height:auto;display:block;border:1px solid #dae4e9;border-radius:11px;background:white}
+.intro-preview .small{margin:0 0 10px}
+.source-meta{font-size:12px;color:#56747d;background:#eff7f4;border-radius:9px;padding:7px 12px;margin:8px 0}
+.pill-choice{display:inline-block;background:#e2f3ee;color:#08786c;border-radius:50px;padding:4px 11px;font-size:12px;font-weight:700}
+.subject-program{margin-top:14px;display:grid;gap:9px}
+.program-row{border:1px solid #dde8eb;border-radius:11px;padding:12px 13px;background:#fcfefe}
+.program-row .program-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.program-row strong{font-size:13px;color:#184e60}.program-row span{font-size:13px;font-weight:800;color:#0c8a77}
+.program-row .progress{height:6px;margin:9px 0 3px;background:#e7efee}
+.program-row .progress>div{background:linear-gradient(90deg,#0b827a,#45b79b);width:var(--pct)}
+.program-row .mini{font-size:12px}
+#exams .quiz-menu{border-top:4px solid #20a18c!important}
+#exams .quiz-paper{border-top:4px solid #2188a0!important}
+nav[aria-label="أقسام الصفحة"]{gap:9px;border-bottom:0!important;margin-bottom:18px}
+nav[aria-label="أقسام الصفحة"] button{border-radius:12px!important;background:#e5edf2!important;color:#2a5365!important}
+nav[aria-label="أقسام الصفحة"] button.active{background:#137a79!important;color:white!important;box-shadow:0 5px 14px #0f78782f}
+.meter .metric{border-radius:10px!important;background:#fff!important;border-color:#d8e8e7!important}
+.sub{color:#607985!important}
+.section-eyebrow{color:#318c84;letter-spacing:.2px;text-transform:uppercase;font-weight:800;font-size:12px;margin:6px 0}
+@media(max-width:760px){
+ .card{border-radius:15px!important;padding:14px!important}
+ .layout,.quiz-layout{gap:12px!important}
+ .wrap{padding:0 11px!important}
+ header{padding:14px 11px!important}
+ header .inner,header .wrap{gap:8px}
+ header .brand,header strong{font-size:17px!important}
+ .intro-preview .intro-imgs{grid-template-columns:1fr}
+ .source-view,.scan-frame{padding:5px}
+ .gridnum{grid-template-columns:repeat(8,minmax(0,1fr))!important}
+ .scan-tools{gap:5px!important}
+ .scan-tools button{padding:7px 9px!important}
+ .options,.letter-grid{gap:5px}
+}
+@media(max-width:400px){
+ .gridnum{grid-template-columns:repeat(6,minmax(0,1fr))!important}
+ .toolbar{align-items:flex-start!important}
+ .lesson h2{font-size:19px!important}
+}
