@@ -1,0 +1,32 @@
+name: Integrate original Islamic Education exam scans
+on:
+  push:
+    paths:
+      - 'tarbiya-islamia/scripts/build_original_images.py'
+      - '.github/workflows/islamic-images.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  publish-exams:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install source PDF renderer
+        run: pip install --disable-pip-version-check pymupdf pillow requests
+      - name: Render original exam pages
+        run: python tarbiya-islamia/scripts/build_original_images.py
+      - name: Publish onsite exam images
+        run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add tarbiya-islamia/images/
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish Islamic Education original exam images"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
