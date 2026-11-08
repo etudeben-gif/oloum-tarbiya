@@ -1,0 +1,28 @@
+name: Verify published proposed corrections for ungraded education exams
+on:
+  push:
+    paths:
+      - 'scripts/parse_science_keys.py'
+      - '.github/workflows/science-proposals.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests beautifulsoup4
+      - run: python scripts/parse_science_keys.py
+      - run: |
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add science-proposed-keys.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Add explicitly nonofficial proposed answer keys for February 2024 and November 2025"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
