@@ -3,10 +3,23 @@
 import re,json,pathlib,requests,bs4
 URLS={
  "2025-specialty":"https://mesconcours.ma/ar/concours/enseignement/2025-651/",
- "2023-didactics":"https://mesconcours.ma/ar/concours/enseignement/2023-494/"
+ "2023-didactics":"https://mesconcours.ma/ar/concours/enseignement/2023-494/",
+ "2021-didactics":"https://mesconcours.ma/ar/concours/enseignement/2021-652/",
+ "2021-specialty":"https://mesconcours.ma/ar/concours/enseignement/2021-653/"
 }
 S=requests.Session();S.headers.update({"User-Agent":"Mozilla/5.0","Accept-Language":"ar,en;q=0.8"})
 out={}
+try:
+  test=S.get("https://mesconcours.ma/ar/concours/enseignement/college-lycee/education-islamique/",timeout=25)
+  test.encoding="utf-8"
+  menu=bs4.BeautifulSoup(test.text,"html.parser")
+  matches={}
+  for a in menu.find_all("a",href=True):
+    m=re.search(r"/ar/concours/enseignement/(2022-\\d+)/",a["href"])
+    if m:
+      matches[m.group(1)]=a.parent.parent.get_text(" ",strip=True)[:180]
+  print("2022 options",json.dumps(matches,ensure_ascii=False))
+except Exception as e:print("List archive error",str(e)[:200])
 for name,url in URLS.items():
  try:
   r=S.get(url,timeout=40);r.raise_for_status()
