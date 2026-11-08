@@ -19,24 +19,67 @@ nav{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid #d6e1e4;margin-b
 .status{margin-top:13px;color:#4b7774;font-size:13px}.empty{background:white;border-radius:12px;padding:20px}
 footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{color:white}
 @media(max-width:700px){.grid{grid-template-columns:1fr}main{padding:16px 10px 35px}.card{padding:15px}header strong{font-size:17px}.filter{display:grid;grid-template-columns:1fr 1fr}.filter input{grid-column:1/-1}}
+
+/* Integrated exam reader and QCM */
+.quiz-layout{display:grid;grid-template-columns:minmax(230px,270px) minmax(0,1fr);gap:13px;align-items:start}
+.quiz-menu{position:sticky;top:10px}.quiz-menu label{font-weight:700;font-size:13px;color:#446773;display:block;margin:10px 0 5px}
+.quiz-menu select{width:100%;padding:10px;border:1px solid #c8dcdc;border-radius:10px;background:#fff;color:#1b4953}
+.score-box{margin:18px 0;padding:14px;background:#eef6f3;border-radius:11px}.score-box strong{font-size:26px;color:#086f65}
+.fill-track{height:7px;border-radius:7px;background:#dce9e7;overflow:hidden;margin-top:8px}.fill-in{height:100%;width:0;background:#1a9d8b}
+.quiet-button{background:#e9f1f2;color:#245e65;border-radius:9px;padding:8px 11px;font-weight:700;margin:4px}.quiz-menu .quiet-button{width:100%;margin:4px 0}
+.quiz-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.scan-tools{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;margin:15px 0 8px}
+.scan-tools button,.quiz-controls button{border-radius:9px;padding:8px 12px;background:#e8f1f2;color:#275d65;font-weight:700}.scan-tools button:disabled,.quiz-controls button:disabled{opacity:.4}
+.scan-frame{overflow:auto;border:1px solid #dae3e6;border-radius:11px;background:#fff;max-height:71vh;text-align:center}
+.scan-frame img{display:block;width:100%;height:auto;max-width:none;margin:0 auto}
+.quiz-form{border-top:1px solid #e2eded;margin-top:16px;padding-top:16px}.quiz-form h3{margin-bottom:6px}
+.letter-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:13px 0}
+.letter-grid label{border:1px solid #bed7da;border-radius:10px;background:#fafcfc;text-align:center;padding:12px 2px;font-size:18px;font-weight:800;cursor:pointer}
+.letter-grid label:has(input:checked){background:#d5f3e8;border-color:#16876d}
+.letter-grid input{accent-color:#13886d;margin-left:5px}
+.quiz-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.quiz-controls .main-btn{background:#10736d;color:#fff}
+.grade-feedback{border:1px solid #a9dfc8;background:#ecfaf2;border-radius:11px;padding:14px;margin-top:15px}
+.grade-feedback.wrong{background:#fff4eb;border-color:#ebc6af}.grade-feedback.pending{background:#f1f4f7;border-color:#dae3e8}
+.grade-feedback strong{display:block;font-size:17px}.mistake-button{display:block;text-align:right;width:100%;margin:7px 0}
+@media(max-width:760px){.quiz-layout{grid-template-columns:1fr}.quiz-menu{position:static}.quiz-menu select{width:100%}.quiz-paper{padding:13px}.scan-frame{max-height:65vh}}
 </style></head><body>
 <header><div class="wrap"><strong>مسار | التربية الإسلامية</strong><a href="../">علوم التربية</a></div></header>
 <main>
 <h1>التربية الإسلامية</h1>
 <p class="sub">التحضير لمباراة التعليم الثانوي الإعدادي والتأهيلي — دروس، ديداكتيك المادة، وامتحانات الدورات السابقة.</p>
 <div class="meter"><span class="metric">التخصص والديداكتيك</span><span class="metric">نماذج 2018–2025</span><span class="metric">مراجع الوزارة وملفات المراجعة</span><span class="metric" id="progress">تقدّمك: 0</span></div>
-<nav aria-label="أقسام الصفحة"><button type="button" class="active" data-tab="exams">الامتحانات</button><button type="button" data-tab="courses">الدروس</button><button type="button" data-tab="library">الوثائق والمراجع</button></nav>
+<nav aria-label="أقسام الصفحة"><button type="button" class="active" data-tab="exams">الامتحانات</button><button type="button" data-tab="courses">الدروس</button><button type="button" data-tab="review">أخطائي ونقطي</button><button type="button" data-tab="library">الوثائق والمراجع</button></nav>
 <section id="exams" class="screen">
-<div class="notice">الأسئلة الأصلية كتفتح من مصادرها كما هي، بلا إعادة صياغة. التصحيحات اللي فالمواقع الخارجية غالباً مقترحة وليست وزارية. ما زدناش أسئلة أو أجوبة من عندنا.</div>
-<div class="filter"><input id="exam-search" type="search" placeholder="قلب على دورة أو موضوع..." aria-label="ابحث عن امتحان"><select id="exam-type" aria-label="نوع الاختبار"><option value="all">جميع الاختبارات</option><option value="speciality">مادة التخصص</option><option value="didactics">ديداكتيك المادة</option></select><select id="exam-year" aria-label="السنة"><option value="all">جميع السنوات</option></select></div>
-<div id="exam-items" class="grid"></div>
-<div class="card" style="margin-top:15px"><h3>أرشيف إضافي للامتحانات الأصلية</h3><p>يمكنك تصفح نماذج أخرى من 2013 إلى 2025، بما فيها امتحانات الكفاءة المهنية.</p><a class="link" href="https://www.wadifa-info.com/نماذج-مباريات/مباراة-التعليم/التربية-الإسلامية" target="_blank" rel="noopener noreferrer">فتح الأرشيف الواسع</a></div>
-</section>
+<div class="quiz-layout">
+<div class="card quiz-menu">
+<h3>اختار الاختبار</h3>
+<label for="exam-sel">السنة والاختبار</label><select id="exam-sel"></select>
+<label for="question-sel">رقم السؤال</label><select id="question-sel"></select>
+<label for="page-sel">صفحة الورقة الأصلية</label><select id="page-sel"></select>
+<div class="score-box"><div class="mini">النقطة التدريبية</div><strong id="total-score">— / 0</strong><div class="mini" id="answered-total">0 سؤال مجاب عليه</div><div class="fill-track"><div class="fill-in" id="progress-fill"></div></div></div>
+<button type="button" class="quiet-button" id="reset-answers">مسح الإجابات</button>
+<button type="button" class="quiet-button" id="to-review">مراجعة الأخطاء</button>
+<div id="source-status" class="status"></div>
+</div>
+<div class="card quiz-paper">
+<div class="quiz-head"><h2 id="exam-heading">الامتحان الأصلي</h2><span class="tag" id="q-tag">Q1</span></div>
+<div class="mini" id="paper-tip">الورقة الأصلية كما هي، بلا تعديل.</div>
+<div class="scan-tools"><button type="button" id="page-back">→ صفحة سابقة</button><span id="shown-page">الصفحة 1</span><button type="button" id="page-forward">صفحة تالية ←</button><button type="button" id="zoom-down">−</button><span id="zoom-ratio">100%</span><button type="button" id="zoom-up">+</button></div>
+<div id="scan-frame" class="scan-frame"><img id="scan" alt="صورة الصفحة الأصلية من امتحان التربية الإسلامية، تشمل السؤال والاختيارات دون تغيير"><div id="img-status" class="mini" hidden>تعذر تحميل صورة الصفحة.</div></div>
+<div class="quiz-form">
+<h3>الجواب ديالك على السؤال <span id="active-q">Q1</span></h3>
+<p class="mini">اقرا السؤال والاختيارات من الصورة الأصلية، ومن بعد اختار الحرف. إلا ما بانش السؤال، تنقل بين الصفحات من الفوق.</p>
+<div id="answer-letters" class="letter-grid"></div>
+<div class="quiz-controls"><button type="button" class="main-btn" id="submit-answer">صحّح الجواب</button><button type="button" id="q-prev">→ السابق</button><button type="button" id="q-next">الموالي ←</button></div>
+<div id="grade-feedback" class="grade-feedback" hidden></div>
+</div>
+</div>
+</div></section>
 <section id="courses" class="screen" hidden>
 <div class="notice">الدروس هنا ملخصات تنظيمية لمجالات المراجعة، وليست بدائل عن الوثائق الرسمية. كل موضوع فيه رابط مرجعه، ويمكن حفظ تقدّم القراءة على الجهاز.</div>
 <div id="course-items" class="grid"></div>
 </section>
-<section id="library" class="screen" hidden>
+<section id="review" class="screen" hidden><div class="card"><h2>الأخطاء اللي خاصك تراجع</h2><p class="mini">الأسئلة اللي كتجاوب عليها غلط حسب التصحيح المقترح. تقدر ترجع لأي سؤال وتعاود تختبر راسك.</p><div id="mistake-list"></div></div></section><section id="library" class="screen" hidden>
 <div class="notice">هنا روابط الوثائق اللي كاينة فمجلدات Drive اللي شاركتي. صلاحية فتحها عند أي زائر كتتوقف على إعدادات المشاركة ديال Google Drive. المصادر العامة البديلة متاحة كذلك.</div>
 <div id="library-items" class="grid"></div>
 </section>
@@ -47,16 +90,14 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 "use strict";
 const archive="https://mesconcours.ma/ar/concours/enseignement/college-lycee/education-islamique/";
 const exams=[
-{year:"2025",type:"speciality",title:"نونبر 2025 — اختبار مادة التخصص",q:"80 سؤالاً · خمسة اختيارات",topics:"القرآن وعلومه، الحديث، الفقه وأصوله، العقيدة، السيرة",url:"https://mesconcours.ma/ar/concours/enseignement/2025-651/",source:"نموذج كامل مع تصحيح مقترح",direct:true},
-{year:"2024",type:"speciality",title:"أكتوبر 2024 — اختبار مادة التخصص",q:"80 سؤالاً · خمسة اختيارات",topics:"القرآن والتجويد، العقيدة، الفكر التربوي الإسلامي",url:archive,source:"اختر دورة أكتوبر 2024 من الأرشيف",direct:false},
-{year:"2023",type:"didactics",title:"دورة 2023 — ديداكتيك التربية الإسلامية",q:"60 سؤالاً · أربعة اختيارات",topics:"المداخل الخمسة، المنهاج، الكفايات، التدبير والتقويم",url:"https://mesconcours.ma/ar/concours/enseignement/2023-494/",source:"نموذج كامل مع تصحيح مقترح",direct:true},
-{year:"2022",type:"speciality",title:"نونبر 2022 — اختبار مادة التخصص",q:"100 سؤال · أربعة اختيارات",topics:"القرآن والحديث، العقيدة، الفقه وأصوله",url:archive,source:"اختر اختبار التخصص 2022 من الأرشيف",direct:false},
-{year:"2022",type:"didactics",title:"نونبر 2022 — ديداكتيك المادة",q:"60 سؤالاً · أربعة اختيارات",topics:"منهاج التربية الإسلامية، الكفايات، موارد التدريس",url:archive,source:"اختر ديداكتيك 2022 من الأرشيف",direct:false},
-{year:"2021",type:"speciality",title:"دجنبر 2021 — مادة التخصص",q:"أسئلة موضوعية ومقالية",topics:"القرآن والحديث والسيرة والفقه",url:archive,source:"من الأرشيف",direct:false},
-{year:"2021",type:"didactics",title:"دجنبر 2021 — ديداكتيك المادة",q:"أسئلة موضوعية ومقالية",topics:"الكفايات والموارد الديداكتيكية",url:archive,source:"من الأرشيف",direct:false},
-{year:"2020",type:"speciality",title:"نونبر 2020 — مادة التخصص والديداكتيك",q:"أسئلة موضوعية ومقالية",topics:"معارف شرعية وطرائق تدريس المادة",url:archive,source:"من الأرشيف",direct:false},
-{year:"2019",type:"speciality",title:"نونبر 2019 — مادة التخصص",q:"60 سؤالاً",topics:"علوم القرآن والحديث والسيرة والعقيدة",url:archive,source:"من الأرشيف",direct:false},
-{year:"2018",type:"speciality",title:"يناير 2018 — مادة التخصص",q:"58 سؤالاً",topics:"الحديث والتجويد وأصول الفقه والعقيدة",url:archive,source:"من الأرشيف",direct:false}
+{id:"2025-specialty",year:"2025",type:"speciality",title:"2025 · مادة التخصص",count:80,pages:18,start:2,letters:5},
+{id:"2025-didactics",year:"2025",type:"didactics",title:"2025 · ديداكتيك المادة",count:60,pages:16,start:2,letters:5},
+{id:"2023-specialty",year:"2023",type:"speciality",title:"2023 · مادة التخصص",count:100,pages:19,start:1,letters:4},
+{id:"2023-didactics",year:"2023",type:"didactics",title:"2023 · ديداكتيك المادة",count:60,pages:10,start:1,letters:4},
+{id:"2022-specialty",year:"2022",type:"speciality",title:"2022 · مادة التخصص",count:100,pages:19,start:2,letters:4},
+{id:"2022-didactics",year:"2022",type:"didactics",title:"2022 · ديداكتيك المادة",count:60,pages:12,start:2,letters:4},
+{id:"2021-specialty",year:"2021",type:"speciality",title:"2021 · مادة التخصص",count:50,pages:23,start:3,letters:4},
+{id:"2021-didactics",year:"2021",type:"didactics",title:"2021 · ديداكتيك المادة",count:60,pages:13,start:3,letters:4}
 ];
 const courses=[
 {title:"القرآن الكريم وعلومه",desc:"مراجعة علوم القرآن، الرسم والضبط، أحكام التجويد والرواية، وفهم النص القرآني واستثماره. ركز على المصطلحات والنصوص المستشهد بها في الامتحان.",ref:"أرشيف امتحانات التخصص",url:archive},
@@ -86,14 +127,85 @@ const docs=[
 const $=id=>document.getElementById(id);
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const card=(t,m,p,l,href)=>'<article class="card"><h3>'+escape(t)+'</h3><div class="meta">'+escape(m)+'</div><p>'+escape(p)+'</p><a class="link" target="_blank" rel="noopener noreferrer" href="'+escape(href)+'">'+escape(l)+'</a></article>';
-for(const yr of [...new Set(exams.map(x=>x.year))]){const o=document.createElement("option");o.value=yr;o.textContent=yr;$("exam-year").appendChild(o)}
-function showExams(){const q=$("exam-search").value.trim(),type=$("exam-type").value,year=$("exam-year").value;const list=exams.filter(x=>(type==="all"||x.type===type)&&(year==="all"||x.year===year)&&(!q||(x.title+" "+x.topics+" "+x.year).includes(q)));$("exam-items").innerHTML=list.map(x=>card(x.title,(x.type==="speciality"?"مادة التخصص":"ديداكتيك")+" · "+x.q,x.topics,x.direct?"فتح الامتحان الأصلي والتصحيح":"اختيار الدورة من الأرشيف",x.url)).join("")||'<p class="empty">ما لقيتش امتحانات بهاد المعايير.</p>'}
-$("exam-search").oninput=showExams;$("exam-type").onchange=showExams;$("exam-year").onchange=showExams;
+let activeExam=exams[0],qno=1,page=2,zoom=100,onlyMistakes=false,proposed={};
+let qanswers={};try{qanswers=JSON.parse(localStorage.getItem("masar-islam-qcm-v2")||"{}")||{}}catch(e){qanswers={}}
+function save(){try{localStorage.setItem("masar-islam-qcm-v2",JSON.stringify(qanswers))}catch(e){}}
+function getKey(e,q){const obj=proposed[e.id];return obj?.keys?.[String(q)]||null}
+function countScores(){let n=0,scored=0,correct=0,errors=0;
+ for(const e of exams){for(let q=1;q<=e.count;q++){const answer=qanswers[e.id+"-"+q];if(!answer)continue;n++;
+ const key=getKey(e,q);if(key){scored++;if(answer===key)correct++;else errors++}
+ }}
+ $("total-score").textContent=scored?correct+" / "+scored:"— / 0";
+ $("answered-total").textContent=n+" إجابة محفوظة · "+errors+" أخطاء قابلة للمراجعة";
+ $("progress-fill").style.width=Math.min(100,100*n/exams.reduce((sum,e)=>sum+e.count,0))+"%";
+ $("progress").textContent="تقدّمك: "+n+" سؤالاً";
+}
+function estimatedPage(ex,q){let pages=Math.max(1,ex.pages-ex.start+1);let fraction=(q-1)/Math.max(1,ex.count);return Math.min(ex.pages,Math.max(ex.start,ex.start+Math.floor(fraction*pages)))}
+function showScan(){const img=$("scan"),src="images/"+activeExam.id+"-"+String(page).padStart(2,"0")+".webp";
+ img.hidden=false;$("img-status").hidden=true;img.onerror=function(){$("img-status").hidden=false;img.hidden=true;$("img-status").textContent="صورة الصفحة غير متاحة. جرّب تغيير الصفحة."};
+ img.onload=function(){$("img-status").hidden=true;img.hidden=false};img.src=src;
+ $("page-sel").value=String(page);$("shown-page").textContent=page+" / "+activeExam.pages;
+ img.style.width=zoom+"%";$("zoom-ratio").textContent=zoom+"%";
+ $("page-back").disabled=page<=1;$("page-forward").disabled=page>=activeExam.pages;
+}
+function setPage(p){page=Math.min(activeExam.pages,Math.max(1,p));showScan()}
+function letterUI(){const container=$("answer-letters");container.replaceChildren();
+ const saved=qanswers[activeExam.id+"-"+qno]||"";
+ for(let i=0;i<activeExam.letters;i++){const v="ABCDE"[i],lab=document.createElement("label"),inp=document.createElement("input");inp.type="radio";inp.name="answer";inp.value=v;inp.checked=saved===v;lab.append(inp,document.createTextNode(v));container.append(lab)}
+}
+function feedback(){const box=$("grade-feedback");box.replaceChildren();let ans=qanswers[activeExam.id+"-"+qno];
+ if(!ans){box.hidden=true;return}box.hidden=false;
+ const key=getKey(activeExam,qno);
+ if(!key){box.className="grade-feedback pending";box.textContent="تسجلات الإجابة ديالك. التصحيح ديال هاد السؤال مازال ما تأكدناش منو، لذلك ما غاديش نحسبو نقطة خاطئة.";return}
+ const good=ans===key;box.className="grade-feedback"+(good?"":" wrong");
+ const title=document.createElement("strong");title.textContent=good?"✓ صحيح":"✗ خطأ";box.appendChild(title);
+ if(!good){const p=document.createElement("p");p.textContent="الجواب حسب التصحيح المقترح: "+key;box.appendChild(p)}
+ const small=document.createElement("div");small.className="mini";small.textContent="التنقيط هنا للتدريب (1 للصحيح، 0 للخطأ) والتصحيح غير وزاري. ماشي بالضرورة نفس تنقيط المباراة.";box.appendChild(small)
+}
+function renderQuiz(resetPage=true){const ex=activeExam;
+ $("exam-sel").value=ex.id;$("exam-heading").textContent=ex.title;$("q-tag").textContent="Q"+qno;
+ $("active-q").textContent="Q"+qno;$("source-status").textContent="الورقة الأصلية: "+ex.pages+" صفحة · "+ex.count+" رقم سؤال للاختيار · "+(proposed[ex.id]?"يوجد تصحيح مقترح":"التصحيح قيد التحقق");
+ $("question-sel").replaceChildren();for(let q=1;q<=ex.count;q++){const op=document.createElement("option");op.value=q;op.textContent="Q"+q+(qanswers[ex.id+"-"+q]?" ✓":"");$("question-sel").append(op)}$("question-sel").value=String(qno);
+ $("page-sel").replaceChildren();for(let p=1;p<=ex.pages;p++){const op=document.createElement("option");op.value=p;op.textContent="الصفحة "+p;$("page-sel").append(op)}
+ if(resetPage)page=estimatedPage(ex,qno);
+ showScan();letterUI();feedback();countScores();
+ $("q-prev").disabled=qno<=1;$("q-next").disabled=qno>=ex.count;
+ $("submit-answer").textContent=qanswers[ex.id+"-"+qno]?"غيّر الجواب وصححو":"صحّح الجواب";
+ $("paper-tip").textContent="السؤال من صورة الامتحان الأصلية؛ ما بدلنا حتى كلمة. الصورة يمكن تكبيرها. توزيع الأسئلة على الصفحات تقديري، بدّل الصفحة إلا احتجتي.";
+}
+function changeQuestion(v){qno=Math.min(activeExam.count,Math.max(1,v));renderQuiz();}
+for(const ex of exams){const o=document.createElement("option");o.value=ex.id;o.textContent=ex.title;$("exam-sel").append(o)}
+$("exam-sel").onchange=function(){activeExam=exams.find(x=>x.id===this.value)||exams[0];qno=1;zoom=100;renderQuiz()};
+$("question-sel").onchange=function(){changeQuestion(Number(this.value))};
+$("page-sel").onchange=function(){setPage(Number(this.value))};
+$("page-back").onclick=()=>setPage(page-1);$("page-forward").onclick=()=>setPage(page+1);
+$("zoom-up").onclick=function(){zoom=Math.min(240,zoom+35);showScan()};
+$("zoom-down").onclick=function(){zoom=Math.max(100,zoom-35);showScan()};
+$("q-prev").onclick=()=>changeQuestion(qno-1);$("q-next").onclick=()=>changeQuestion(qno+1);
+$("submit-answer").onclick=function(){
+ const selected=document.querySelector('input[name="answer"]:checked');
+ if(!selected){const box=$("grade-feedback");box.hidden=false;box.className="grade-feedback pending";box.textContent="اختار حرفاً من A إلى "+("ABCDE"[activeExam.letters-1])+" باش نسجلوه.";return}
+ qanswers[activeExam.id+"-"+qno]=selected.value;save();renderQuiz(false);
+};
+$("reset-answers").onclick=function(){if(confirm("تمسح جميع الأجوبة المسجلة فالتربية الإسلامية على هاد الجهاز؟")){qanswers={};save();renderQuiz(false);renderMistakes()}};
+function renderMistakes(){let mistakes=[];
+ for(const ex of exams){for(let q=1;q<=ex.count;q++){let a=qanswers[ex.id+"-"+q],key=getKey(ex,q);if(a&&key&&a!==key)mistakes.push({ex,q,a,key})}}
+ const target=$("mistake-list");target.replaceChildren();
+ if(!mistakes.length){const p=document.createElement("p");p.textContent="ما كاين حتى خطأ متحقق منه دابا. الأسئلة بلا تصحيح ما كندخلوهاش هنا.";target.append(p);return}
+ mistakes.forEach(({ex,q,a,key})=>{let b=document.createElement("button");b.type="button";b.className="quiet-button mistake-button";b.textContent=ex.title+" · Q"+q+" · جوابك "+a+" / المقترح "+key;b.onclick=function(){activeExam=ex;qno=q;showTab("exams");renderQuiz()};target.append(b)})
+}
+function showTab(tab){document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));
+ document.querySelectorAll(".screen").forEach(x=>x.hidden=x.id!==tab);
+ if(tab==="review")renderMistakes();if(tab==="exams")showScan();}
+$("to-review").onclick=()=>showTab("review");
+fetch("proposed-keys.json",{cache:"no-store"}).then(r=>r.ok?r.json():{}).then(data=>{
+ proposed=data||{};renderQuiz(false);renderMistakes();
+}).catch(()=>{proposed={};renderQuiz(false)});
 let completed={};try{completed=JSON.parse(localStorage.getItem("masar-islam-lessons-v1")||"{}")}catch(e){completed={}}
-function renderCourses(){$("course-items").innerHTML=courses.map((c,i)=>'<article class="card course"><div class="head"><h3>'+escape(c.title)+'</h3><button type="button" data-complete="'+i+'" class="'+(completed[i]?"done":"")+'">'+(completed[i]?"تمت المراجعة ✓":"تحديد كمراجع")+'</button></div><p>'+escape(c.desc)+'</p><div class="mini">المرجع: '+escape(c.ref)+'</div><a class="link" href="'+escape(c.url)+'" target="_blank" rel="noopener noreferrer">فتح المرجع</a></article>').join("");$("progress").textContent="تقدّمك: "+Object.values(completed).filter(Boolean).length+" / "+courses.length+" محاور";document.querySelectorAll('[data-complete]').forEach(b=>b.onclick=function(){const i=this.dataset.complete;completed[i]=!completed[i];try{localStorage.setItem("masar-islam-lessons-v1",JSON.stringify(completed))}catch(e){}renderCourses()})}
+function renderCourses(){$("course-items").innerHTML=courses.map((c,i)=>'<article class="card course"><div class="head"><h3>'+escape(c.title)+'</h3><button type="button" data-complete="'+i+'" class="'+(completed[i]?"done":"")+'">'+(completed[i]?"تمت المراجعة ✓":"تحديد كمراجع")+'</button></div><p>'+escape(c.desc)+'</p><div class="mini">مرجع الموضوع: '+escape(c.ref)+'</div></article>').join("");$("progress").textContent="تقدّمك: "+Object.values(completed).filter(Boolean).length+" / "+courses.length+" محاور";document.querySelectorAll('[data-complete]').forEach(b=>b.onclick=function(){const i=this.dataset.complete;completed[i]=!completed[i];try{localStorage.setItem("masar-islam-lessons-v1",JSON.stringify(completed))}catch(e){}renderCourses()})}
 $("library-items").innerHTML=docs.map(d=>card(d.title,d.group,d.type,"فتح الوثيقة",d.url)).join("");
-document.querySelectorAll("nav button").forEach(b=>b.onclick=function(){document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");document.querySelectorAll(".screen").forEach(x=>x.hidden=(x.id!==b.dataset.tab))});
-showExams();renderCourses();
+document.querySelectorAll("nav button").forEach(b=>b.onclick=function(){showTab(b.dataset.tab)});
+renderQuiz();renderMistakes();
 })();
 </script>
 </body></html>
