@@ -33,7 +33,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 .scan-tools button,.quiz-controls button{border-radius:9px;padding:8px 12px;background:#e8f1f2;color:#275d65;font-weight:700}.scan-tools button:disabled,.quiz-controls button:disabled{opacity:.4}
 .scan-frame{overflow:auto;border:1px solid #dae3e6;border-radius:11px;background:#fff;max-height:71vh;text-align:center}
 .scan-frame img{display:block;width:100%;height:auto;max-width:none;margin:0 auto}
-.quiz-form{border-top:1px solid #e2eded;margin-top:16px;padding-top:16px}.quiz-form h3{margin-bottom:6px}
+.quiz-form{border:2px solid #9acbbf;background:#fbfffd;border-radius:14px;margin:14px 0 18px;padding:18px}.quiz-form #question-verbatim{background:#f0f8f5;border-right:4px solid #13866d;color:#173b44;padding:15px;border-radius:10px;line-height:2.1}.quiz-form .letter-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.quiz-form h3{margin-bottom:6px}
 .letter-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:13px 0}
 .letter-grid label{border:1px solid #bed7da;border-radius:10px;background:#fafcfc;text-align:center;padding:12px 2px;font-size:18px;font-weight:800;cursor:pointer}
 .letter-grid label:has(input:checked){background:#d5f3e8;border-color:#16876d}
@@ -98,7 +98,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 <div id="scan-frame" class="scan-frame"><img id="scan" alt="صورة الصفحة الأصلية من امتحان التربية الإسلامية، تشمل السؤال والاختيارات دون تغيير"><div id="img-status" class="mini" hidden>تعذر تحميل صورة الصفحة.</div></div>
 <div class="quiz-form">
 <div id="question-verbatim" class="knowledge-block" style="font-size:19px;font-weight:800;line-height:2;white-space:pre-wrap" aria-live="polite">نص السؤال الأصلي سيظهر هنا عندما يكون منقولاً من الورقة.</div>
-<h3>الجواب ديالك على السؤال <span id="active-q">Q1</span></h3>
+<h3>السؤال الأصلي والاختيارات — <span id="active-q">Q1</span></h3>
 <p class="mini">اقرأ السؤال والاختيارات المكتوبة هنا، واختار جوابك باش يبان التصحيح والتعليل مباشرة. الصورة الأصلية متاحة للمقارنة.</p>
 <div id="original-options-note" class="mini" role="status"></div><div id="answer-letters" class="letter-grid"></div>
 <div class="quiz-controls"><button type="button" class="main-btn" id="submit-answer">صحّح الجواب</button><button type="button" id="q-prev">→ السابق</button><button type="button" id="q-next">الموالي ←</button></div>
@@ -140,6 +140,8 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 (function(){
 "use strict";
 const archive="https://mesconcours.ma/ar/concours/enseignement/college-lycee/education-islamique/";
+const quizForm=document.querySelector(".quiz-form"),scanTools=document.querySelector(".quiz-paper .scan-tools");
+if(quizForm&&scanTools&&scanTools.parentNode)scanTools.parentNode.insertBefore(quizForm,scanTools);
 const readingContext={
  "2021-specialty":{pages:[2],title:"الوثيقة السابقة لقسم الأسئلة الموضوعية – 2021",note:"في الورقة الأصلية نص وأسئلة إنشائية قبل قسم QCM. ما تأكدناش أنه مرتبط بسؤال QCM معيّن؛ يمكنك الاطلاع عليه إذا احتجتي."},
  "2021-didactics":{pages:[2],title:"الوثيقة التمهيدية من امتحان ديداكتيك 2021",note:"الصفحة الثانية فيها وضعيات وأسئلة تسبق QCM. ما كنقدموهاش على أنها سند مباشر لكل أسئلة الاختيار."}
@@ -307,9 +309,9 @@ function renderQuiz(resetPage=true){const ex=activeExam;
  showScan();letterUI();feedback();countScores();
  const v=window.MASAR_ISLAM_TRANSCRIPT?.[ex.id]||{};const onlyVerified=$("only-transcribed").checked&&Object.keys(v).length>0;const ids=Object.keys(v).map(Number).sort((a,b)=>a-b);$("q-prev").disabled=onlyVerified?qno<=ids[0]:qno<=1;$("q-next").disabled=onlyVerified?qno>=ids[ids.length-1]:qno>=ex.count;
  $("submit-answer").textContent=qanswers[ex.id+"-"+qno]?"غيّر الجواب وصححو":"صحّح الجواب";
- $("paper-tip").textContent="Q"+qno+": نص السؤال والآيات والاختيارات كيبانو مرة وحدة فالصورة الأصلية. تقدر تكبّرها. تحديد الصفحة تقريبي فبعض الأسئلة، ويمكن تبديلها من الأعلى.";
+ $("paper-tip").textContent="Q"+qno+": اقرأ السؤال والاختيارات المكتوبة أولاً، ثم قارنها بصورة الورقة الأصلية الموجودة أسفل التمرين. يمكنك تكبير الصورة وتغيير الصفحة.";
 }
-function changeQuestion(v){let n=Math.min(activeExam.count,Math.max(1,v));const verified=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]||{};if($("only-transcribed").checked&&Object.keys(verified).length&& !verified[String(n)]){const direction=v>qno?1:-1;while(n>=1&&n<=activeExam.count&&!verified[String(n)])n+=direction;if(n<1||n>activeExam.count)return}qno=n;renderQuiz();}
+function changeQuestion(v){let n=Math.min(activeExam.count,Math.max(1,v));const verified=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]||{};if($("only-transcribed").checked&&Object.keys(verified).length&& !verified[String(n)]){const direction=v>qno?1:-1;while(n>=1&&n<=activeExam.count&&!verified[String(n)])n+=direction;if(n<1||n>activeExam.count)return}qno=n;renderQuiz();document.getElementById("question-verbatim")?.scrollIntoView({behavior:"smooth",block:"start"});}
 for(const ex of exams){const o=document.createElement("option");o.value=ex.id;o.textContent=ex.title;$("exam-sel").append(o)}
 $("exam-sel").onchange=function(){activeExam=exams.find(x=>x.id===this.value)||exams[0];const verified=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]||{};qno=$("only-transcribed").checked&&Object.keys(verified).length?Number(Object.keys(verified).sort((a,b)=>Number(a)-Number(b))[0]):1;zoom=100;renderQuiz()};
 $("question-sel").onchange=function(){changeQuestion(Number(this.value))};
