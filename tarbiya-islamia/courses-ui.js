@@ -61,6 +61,7 @@ function showList(){
 }
 search.addEventListener("input",showList);select.addEventListener("change",showList);
 showList();openCourse(current,false);
+const staticFallback=document.getElementById("masar-static-course");if(staticFallback)staticFallback.hidden=true;
 // Keep exam tab active on entry so the authentic pre-question text is visible immediately.
 const quickStart=node("button","primary","افتح امتحان QCM ونص الانطلاق");
 quickStart.type="button";
