@@ -236,7 +236,9 @@ function estimatedPage(ex,q){
  }
  if(ex.id==="2021-specialty"){
    if(q<=3)return 3;if(q<=7)return 4;if(q<=12)return 5;
-   if(q<=17)return 6;if(q<=78)return Math.min(19,7+Math.floor((q-18)/5));return 20;
+   if(q<=17)return 6;
+   if(q<=22)return 7;if(q<=25)return 8;if(q<=30)return 9;if(q<=34)return 10;if(q<=38)return 11;
+   if(q<=78)return Math.min(19,12+Math.floor((q-39)/5));return 20;
  }
  if(ex.id==="2025-specialty"){
    if(q<=4)return 2;if(q<=9)return 3;
@@ -287,7 +289,7 @@ function feedback(){const box=$("grade-feedback");box.replaceChildren();let ans=
  const expl=document.createElement("div");expl.className="knowledge-block";expl.style.marginTop="12px";
  const label=document.createElement("strong");label.textContent="التعليل والمراجعة";expl.appendChild(label);
  const msg=document.createElement("p");
- const checked=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]?.[String(qno)];msg.textContent=checked?.reason?"الجواب: "+key+" — "+checked.reason+" (تعليل تعليمي تمت مراجعته مع نص الورقة، وليس تصحيحاً وزارياً).":"الجواب "+key+" حسب مفتاح مقترح غير رسمي. لم يتم بعد توثيق التعليل التفصيلي لهذا السؤال من نصه واختياراته، لذلك لا نعطي تفسيراً مؤلفاً على أنه يقين. راجع الصورة الأصلية والدرس المرتبط بالمفهوم.";
+ const checked=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]?.[String(qno)];msg.textContent=checked?.reason?"الجواب: "+key+" — "+checked.reason+" ("+(checked.confidence==="اجتهادي"?"ترجيح اجتهادي يحتاج مراجعة متخصصة":"تعليل تعليمي تمت مراجعته مع نص الورقة") +"؛ ليس تصحيحاً وزارياً).":"الجواب "+key+" حسب مفتاح مقترح غير رسمي. لم يتم بعد توثيق التعليل التفصيلي لهذا السؤال من نصه واختياراته، لذلك لا نعطي تفسيراً مؤلفاً على أنه يقين. راجع الصورة الأصلية والدرس المرتبط بالمفهوم.";
  expl.appendChild(msg);
  const back=document.createElement("button");back.type="button";back.className="quiet-button";back.textContent="رجع للدرس وراجع المفاهيم";back.onclick=()=>{const tab=document.querySelector('nav button[data-tab="courses"]');if(tab)tab.click();document.getElementById("masar-current-course")?.scrollIntoView({behavior:"smooth",block:"start"})};expl.appendChild(back);box.appendChild(expl);
  const small=document.createElement("div");small.className="mini";small.textContent="التنقيط هنا للتدريب (1 للصحيح، 0 للخطأ) والتصحيح غير وزاري. ماشي بالضرورة نفس تنقيط المباراة.";box.appendChild(small)
