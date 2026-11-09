@@ -76,7 +76,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 <div class="card quiz-menu">
 <h3>اختار الاختبار</h3>
 <label for="exam-sel">السنة والاختبار</label><select id="exam-sel"></select>
-<label for="question-sel">رقم السؤال</label><select id="question-sel"></select>
+<label for="question-sel">رقم السؤال</label><label class="mini" style="display:flex;gap:7px;align-items:center"><input id="only-transcribed" type="checkbox" checked> عرض الأسئلة المكتوبة كاملة فقط</label><select id="question-sel"></select>
 <label for="page-sel">صفحة الورقة الأصلية</label><select id="page-sel"></select>
 <div class="score-box"><div class="mini">النقطة التدريبية</div><strong id="total-score">— / 0</strong><div class="mini" id="answered-total">0 سؤال مجاب عليه</div><div class="fill-track"><div class="fill-in" id="progress-fill"></div></div></div>
 <button type="button" class="quiet-button" id="reset-answers">مسح الإجابات</button>
@@ -98,7 +98,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 <div class="quiz-form">
 <div id="question-verbatim" class="knowledge-block" style="font-size:19px;font-weight:800;line-height:2;white-space:pre-wrap" aria-live="polite">نص السؤال الأصلي سيظهر هنا عندما يكون منقولاً من الورقة.</div>
 <h3>الجواب ديالك على السؤال <span id="active-q">Q1</span></h3>
-<p class="mini">اقرا السؤال والاختيارات من الصورة الأصلية، ومن بعد اختار الحرف. إلا ما بانش السؤال، تنقل بين الصفحات من الفوق.</p>
+<p class="mini">اقرأ السؤال والاختيارات المكتوبة هنا، واختار جوابك باش يبان التصحيح والتعليل مباشرة. الصورة الأصلية متاحة للمقارنة.</p>
 <div id="original-options-note" class="mini" role="status"></div><div id="answer-letters" class="letter-grid"></div>
 <div class="quiz-controls"><button type="button" class="main-btn" id="submit-answer">صحّح الجواب</button><button type="button" id="q-prev">→ السابق</button><button type="button" id="q-next">الموالي ←</button></div>
 <div id="grade-feedback" class="grade-feedback" hidden></div>
@@ -134,7 +134,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 </section>
 </main>
 <footer><div class="wrap">مسار — موقع مستقل للتحضير لمباراة التعليم. لا يجمع بيانات شخصية. <a href="https://www.men.gov.ma/" target="_blank" rel="noopener noreferrer">وزارة التربية الوطنية المغربية</a></div></footer>
-<script src="transcribed-questions.js?v=20261109a"></script>
+<script src="transcribed-questions.js?v=20261109b"></script>
 <script>
 (function(){
 "use strict";
@@ -268,7 +268,7 @@ function letterUI(){const container=$("answer-letters");container.replaceChildre
  const saved=qanswers[activeExam.id+"-"+qno]||"";
  const item=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]?.[String(qno)];
  const options=item?.options;
- const prompt=document.getElementById("question-verbatim");prompt.textContent=item?.question||"هذا السؤال مازال ما تفرغش حرفياً. اقرأه من صورة الورقة الأصلية الموجودة أعلاه.";
+ const prompt=document.getElementById("question-verbatim");prompt.textContent=item?.question?(item.question+(item.context?"\n\n"+item.context:"")):"هذا السؤال مازال ما تفرغش حرفياً. اقرأه من صورة الورقة الأصلية الموجودة أعلاه.";
  const verified=Array.isArray(options)&&options.length===activeExam.letters&&options.every(x=>typeof x==="string"&&x.trim());
  const note=$("original-options-note");
  note.textContent=verified?"الاختيارات أدناه منقولة من الورقة الأصلية. يمكنك مقارنتها بالصورة أعلاه.":"الاختيارات مكتوبة داخل صورة الورقة الأصلية أعلاه. لم تُنسخ بعد إلى نص قابل للنقر، لذلك تظهر الحروف هنا فقط. لا نريد اختراع اقتراحات غير موجودة في PDF.";
@@ -283,7 +283,7 @@ function feedback(){const box=$("grade-feedback");box.replaceChildren();let ans=
  if(!key){box.className="grade-feedback pending";box.textContent="تسجلات الإجابة ديالك. التصحيح ديال هاد السؤال مازال ما تأكدناش منو، لذلك ما غاديش نحسبو نقطة خاطئة.";return}
  const good=ans===key;box.className="grade-feedback"+(good?"":" wrong");
  const title=document.createElement("strong");title.textContent=good?"✓ صحيح":"✗ خطأ";box.appendChild(title);
- if(!good){const p=document.createElement("p");p.textContent="الجواب حسب التصحيح المقترح: "+key;box.appendChild(p)}
+ if(!good){const p=document.createElement("p");const checked=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]?.[String(qno)];p.textContent="الجواب المقترح: "+key+(checked?.options?.["ABCDE".indexOf(key)]?" — "+checked.options["ABCDE".indexOf(key)]:"");box.appendChild(p)}
  const expl=document.createElement("div");expl.className="knowledge-block";expl.style.marginTop="12px";
  const label=document.createElement("strong");label.textContent="التعليل والمراجعة";expl.appendChild(label);
  const msg=document.createElement("p");
@@ -296,18 +296,21 @@ function renderQuiz(resetPage=true){const ex=activeExam;
  renderReadingContext(ex);
  $("exam-sel").value=ex.id;$("exam-heading").textContent=ex.title;$("q-tag").textContent="Q"+qno;
  $("active-q").textContent="Q"+qno;$("source-status").textContent="الورقة الأصلية: "+ex.pages+" صفحة · "+ex.count+" رقم سؤال للاختيار · "+(proposed[ex.id]?"يوجد تصحيح مقترح":"التصحيح قيد التحقق");
- $("question-sel").replaceChildren();for(let q=1;q<=ex.count;q++){const op=document.createElement("option");op.value=q;op.textContent="Q"+q+(qanswers[ex.id+"-"+q]?" ✓":"");$("question-sel").append(op)}$("question-sel").value=String(qno);
+ $("question-sel").replaceChildren();const transcribed=window.MASAR_ISLAM_TRANSCRIPT?.[ex.id]||{};const verifiedCount=Object.keys(transcribed).length;const only=$("only-transcribed").checked&&verifiedCount>0;
+ for(let q=1;q<=ex.count;q++){if(only&&!transcribed[String(q)])continue;const op=document.createElement("option");op.value=q;op.textContent="Q"+q+(transcribed[String(q)]?" · النص كامل":"")+(qanswers[ex.id+"-"+q]?" ✓":"");$("question-sel").append(op)}$("question-sel").value=String(qno);
+ $("source-status").textContent=ex.title+" · "+verifiedCount+" سؤالاً مكتوباً مع الاختيارات من أصل "+ex.count+" · الباقي موجود في الصور الأصلية ويحتاج تفريغاً";
  $("page-sel").replaceChildren();for(let p=1;p<=ex.pages;p++){const op=document.createElement("option");op.value=p;op.textContent="الصفحة "+p;$("page-sel").append(op)}
  if(resetPage)page=estimatedPage(ex,qno);
  showScan();letterUI();feedback();countScores();
- $("q-prev").disabled=qno<=1;$("q-next").disabled=qno>=ex.count;
+ const v=window.MASAR_ISLAM_TRANSCRIPT?.[ex.id]||{};const onlyVerified=$("only-transcribed").checked&&Object.keys(v).length>0;const ids=Object.keys(v).map(Number).sort((a,b)=>a-b);$("q-prev").disabled=onlyVerified?qno<=ids[0]:qno<=1;$("q-next").disabled=onlyVerified?qno>=ids[ids.length-1]:qno>=ex.count;
  $("submit-answer").textContent=qanswers[ex.id+"-"+qno]?"غيّر الجواب وصححو":"صحّح الجواب";
  $("paper-tip").textContent="Q"+qno+": نص السؤال والآيات والاختيارات كيبانو مرة وحدة فالصورة الأصلية. تقدر تكبّرها. تحديد الصفحة تقريبي فبعض الأسئلة، ويمكن تبديلها من الأعلى.";
 }
-function changeQuestion(v){qno=Math.min(activeExam.count,Math.max(1,v));renderQuiz();}
+function changeQuestion(v){let n=Math.min(activeExam.count,Math.max(1,v));const verified=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]||{};if($("only-transcribed").checked&&Object.keys(verified).length&& !verified[String(n)]){const direction=v>qno?1:-1;while(n>=1&&n<=activeExam.count&&!verified[String(n)])n+=direction;if(n<1||n>activeExam.count)return}qno=n;renderQuiz();}
 for(const ex of exams){const o=document.createElement("option");o.value=ex.id;o.textContent=ex.title;$("exam-sel").append(o)}
-$("exam-sel").onchange=function(){activeExam=exams.find(x=>x.id===this.value)||exams[0];qno=1;zoom=100;renderQuiz()};
+$("exam-sel").onchange=function(){activeExam=exams.find(x=>x.id===this.value)||exams[0];const verified=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]||{};qno=$("only-transcribed").checked&&Object.keys(verified).length?Number(Object.keys(verified).sort((a,b)=>Number(a)-Number(b))[0]):1;zoom=100;renderQuiz()};
 $("question-sel").onchange=function(){changeQuestion(Number(this.value))};
+$("only-transcribed").onchange=function(){const verified=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]||{};if(this.checked&&Object.keys(verified).length&&!verified[String(qno)])qno=Number(Object.keys(verified).sort((a,b)=>Number(a)-Number(b))[0]);renderQuiz()};
 $("page-sel").onchange=function(){setPage(Number(this.value))};
 $("intro-live-toggle").onclick=()=>{
  const box=$("intro-live-images");introductionHidden=!introductionHidden;box.hidden=introductionHidden;
@@ -327,6 +330,7 @@ $("submit-answer").onclick=function(){
  if(!selected){const box=$("grade-feedback");box.hidden=false;box.className="grade-feedback pending";box.textContent="اختار حرفاً من A إلى "+("ABCDE"[activeExam.letters-1])+" باش نسجلوه.";return}
  qanswers[activeExam.id+"-"+qno]=selected.value;save();renderQuiz(false);
 };
+$("answer-letters").addEventListener("change",()=>{$("submit-answer").click()});
 $("reset-answers").onclick=function(){if(confirm("تمسح جميع الأجوبة المسجلة فالتربية الإسلامية على هاد الجهاز؟")){qanswers={};save();renderQuiz(false);renderMistakes()}};
 function renderMistakes(){let mistakes=[];
  for(const ex of exams){for(let q=1;q<=ex.count;q++){let a=qanswers[ex.id+"-"+q],key=getKey(ex,q);if(a&&key&&a!==key)mistakes.push({ex,q,a,key})}}
@@ -348,4 +352,4 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=function(){showTab(
 renderQuiz();renderMistakes();
 })();
 </script>
-<script src="courses-full.js?v=20261109a"></script><script src="courses-ui.js?v=20261109a"></script></body></html>
+<script src="courses-full.js?v=20261109b"></script><script src="courses-ui.js?v=20261109b"></script></body></html>
