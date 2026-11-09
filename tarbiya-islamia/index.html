@@ -207,7 +207,7 @@ const card=(t,m,p,l,href)=>'<article class="card"><h3>'+escape(t)+'</h3><div cla
 let activeExam=exams[0],qno=1,page=2,zoom=100,onlyMistakes=false,proposed={};
 let qanswers={};try{qanswers=JSON.parse(localStorage.getItem("masar-islam-qcm-v2")||"{}")||{}}catch(e){qanswers={}}
 function save(){try{localStorage.setItem("masar-islam-qcm-v2",JSON.stringify(qanswers))}catch(e){}}
-function getKey(e,q){const obj=proposed[e.id];return obj?.keys?.[String(q)]||null}
+function getKey(e,q){const verified=window.MASAR_ISLAM_TRANSCRIPT?.[e.id]?.[String(q)]?.answer;if(verified)return verified;const obj=proposed[e.id];return obj?.keys?.[String(q)]||null}
 function countScores(){let n=0,scored=0,correct=0,errors=0;
  for(const e of exams){for(let q=1;q<=e.count;q++){const answer=qanswers[e.id+"-"+q];if(!answer)continue;n++;
  const key=getKey(e,q);if(key){scored++;if(answer===key)correct++;else errors++}
@@ -275,7 +275,7 @@ function feedback(){const box=$("grade-feedback");box.replaceChildren();let ans=
  const expl=document.createElement("div");expl.className="knowledge-block";expl.style.marginTop="12px";
  const label=document.createElement("strong");label.textContent="التعليل والمراجعة";expl.appendChild(label);
  const msg=document.createElement("p");
- msg.textContent="الجواب "+key+" حسب مفتاح مقترح غير رسمي. لم يتم بعد توثيق التعليل التفصيلي لهذا السؤال من نصه واختياراته، لذلك لا نعطي تفسيراً مؤلفاً على أنه يقين. راجع الصورة الأصلية والدرس المرتبط بالمفهوم.";
+ const checked=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]?.[String(qno)];msg.textContent=checked?.reason?"الجواب: "+key+" — "+checked.reason+" (تعليل تعليمي تمت مراجعته مع نص الورقة، وليس تصحيحاً وزارياً).":"الجواب "+key+" حسب مفتاح مقترح غير رسمي. لم يتم بعد توثيق التعليل التفصيلي لهذا السؤال من نصه واختياراته، لذلك لا نعطي تفسيراً مؤلفاً على أنه يقين. راجع الصورة الأصلية والدرس المرتبط بالمفهوم.";
  expl.appendChild(msg);
  const back=document.createElement("button");back.type="button";back.className="quiet-button";back.textContent="رجع للدرس وراجع المفاهيم";back.onclick=()=>{const tab=document.querySelector('nav button[data-tab="courses"]');if(tab)tab.click();document.getElementById("masar-current-course")?.scrollIntoView({behavior:"smooth",block:"start"})};expl.appendChild(back);box.appendChild(expl);
  const small=document.createElement("div");small.className="mini";small.textContent="التنقيط هنا للتدريب (1 للصحيح، 0 للخطأ) والتصحيح غير وزاري. ماشي بالضرورة نفس تنقيط المباراة.";box.appendChild(small)
