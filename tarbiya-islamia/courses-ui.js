@@ -2,6 +2,8 @@
 (function(){
 "use strict";
 const data=window.MASAR_ISLAM_COURSES||[];
+const priority=["الأولى إعدادي","الثانية إعدادي","الثالثة إعدادي","التخصص","الديداكتيك","المنهاج الرسمي","المقالات الرسمية","منهجية"];
+data.sort((a,b)=>priority.indexOf(a.group)-priority.indexOf(b.group));
 const section=document.getElementById("courses");
 const originalGrid=document.getElementById("course-items");
 if(!section||!originalGrid||!data.length)return;
@@ -9,12 +11,12 @@ originalGrid.hidden=true;
 const description=section.querySelector(".notice");if(description)description.hidden=true;
 const app=document.createElement("div");app.id="masar-course-app";section.insertBefore(app,section.firstChild);
 let done={};try{done=JSON.parse(localStorage.getItem("masar-islam-lessons-v2")||"{}")||{}}catch(e){}
-let current=data[0].id;
+let current=(data.find(c=>c.id==="g1-qaf")||data[0]).id;
 function node(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n}
 const header=node("div","course-hero");
 header.append(node("div","section-eyebrow","افهم الدرس ثم طبق في الامتحان"),node("h2",null,"دروس التربية الإسلامية ومراجعة المنهاج داخل الموقع"),node("p",null,"مكتبة موسعة: "+data.length+" درساً ومحوراً، تشمل دروس السنوات الثلاث للإعدادي وعلوم التخصص والديداكتيك. كل درس فيه شرح مفصل وأدلة وتطبيقات، ثم أسئلة المباريات الأصلية دون اختراع أسئلة جديدة."));
 const filters=node("div","course-filters");
-const search=node("input");search.type="search";search.placeholder="قلب على درس أو مفهوم...";search.setAttribute("aria-label","البحث في الدروس");
+const search=node("input");search.type="search";search.placeholder="قلب على درس أو آية أو مفهوم داخل الشرح...";search.setAttribute("aria-label","البحث في الدروس");
 const select=node("select");select.setAttribute("aria-label","اختيار مجال الدروس");
 for(const opt of [["all","جميع الدروس"],["التخصص","مادة التخصص"],["الديداكتيك","ديداكتيك المادة"],["المنهاج الرسمي","خرائط المنهاج الرسمي"],["الأولى إعدادي","دروس الأولى إعدادي بالتفصيل"],["الثانية إعدادي","دروس الثانية إعدادي بالتفصيل"],["الثالثة إعدادي","دروس الثالثة إعدادي بالتفصيل"],["المقالات الرسمية","أسئلة مقالية 2021 مع الأجوبة"],["منهجية","منهجية QCM"]]){const o=node("option",null,opt[1]);o.value=opt[0];select.append(o)}
 const progress=node("p","mini");
@@ -31,7 +33,7 @@ function openCourse(id,scroll){
  details.append(head,node("p","course-lead",c.summary));
  for(const [j,p] of c.parts.entries()){const sec=node("section","course-chapter");sec.append(node("h3",null,(j+1)+". "+p[0]),node("p",null,p[1]));details.append(sec)}
  const memory=node("div","course-memory");memory.append(node("strong",null,"الخلاصة للحفظ"),node("p",null,c.memorize));details.append(memory);
- const cite=node("details","course-source");const summary=node("summary",null,"المصادر والمراجع التي بُني عليها الدرس");const a=node("a",null,"مراجعة المصدر");a.href=c.url;a.target="_blank";a.rel="noopener noreferrer";cite.append(summary,node("p",null,c.source),a);details.append(cite);
+ const cite=node("details","course-source");cite.open=true;const summary=node("summary",null,"المصادر والمراجع التي بُني عليها الدرس");const a=node("a",null,"مراجعة المصدر");a.href=c.url;a.target="_blank";a.rel="noopener noreferrer";cite.append(summary,node("p",null,c.source),a);details.append(cite);
  const official=node("p","mini",c.group==="المقالات الرسمية"?"هذه أسئلة أصلية من امتحان 2021، وعناصر الإجابة مستندة إلى دليل التصحيح المرفق بملف PDF.":"عناوين الدروس وبرنامج الإعدادي مؤطرة بمنهاج يونيو 2016؛ أما الشرح والأمثلة فهي مادة تعليمية محررة للمراجعة وليست اقتباساً وزارياً حرفياً. راجع النصوص الشرعية والمراجع الأصلية عند الاستدلال.");const officialLink=node("a",null,"الاطلاع على وثيقة المنهاج");officialLink.href="https://ampei.ma/?page_id=18221";officialLink.target="_blank";officialLink.rel="noopener noreferrer";details.append(official,officialLink);
  const actions=node("div","course-actions");
  const mark=node("button","primary",done[id]?"✓ تمت مراجعة الدرس":"✓ أنهيت الدرس");
