@@ -16,7 +16,7 @@ header.append(node("div","section-eyebrow","افهم الدرس ثم طبق في
 const filters=node("div","course-filters");
 const search=node("input");search.type="search";search.placeholder="قلب على درس أو مفهوم...";search.setAttribute("aria-label","البحث في الدروس");
 const select=node("select");select.setAttribute("aria-label","اختيار مجال الدروس");
-for(const opt of [["all","جميع الدروس"],["التخصص","مادة التخصص"],["الديداكتيك","ديداكتيك المادة"],["منهجية","منهجية QCM"]]){const o=node("option",null,opt[1]);o.value=opt[0];select.append(o)}
+for(const opt of [["all","جميع الدروس"],["التخصص","مادة التخصص"],["الديداكتيك","ديداكتيك المادة"],["المنهاج الرسمي","المنهاج الرسمي للإعدادي"],["منهجية","منهجية QCM"]]){const o=node("option",null,opt[1]);o.value=opt[0];select.append(o)}
 const progress=node("p","mini");
 filters.append(search,select);header.append(filters,progress);
 const details=node("article","card course-detail");details.id="masar-current-course";
