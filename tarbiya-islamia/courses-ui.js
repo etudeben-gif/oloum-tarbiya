@@ -32,6 +32,7 @@ function openCourse(id,scroll){
  for(const [j,p] of c.parts.entries()){const sec=node("section","course-chapter");sec.append(node("h3",null,(j+1)+". "+p[0]),node("p",null,p[1]));details.append(sec)}
  const memory=node("div","course-memory");memory.append(node("strong",null,"الخلاصة للحفظ"),node("p",null,c.memorize));details.append(memory);
  const cite=node("details","course-source");const summary=node("summary",null,"مصدر الدرس (اختياري)");const a=node("a",null,"مراجعة المصدر");a.href=c.url;a.target="_blank";a.rel="noopener noreferrer";cite.append(summary,node("p",null,c.source),a);details.append(cite);
+ const official=node("p","mini","مرجع المنهاج: وزارة التربية الوطنية، منهاج التربية الإسلامية لسلكي الإعدادي والتأهيلي (يونيو 2016). هذا الشرح مادة مراجعة تعليمية وليس نصاً وزارياً حرفياً.");const officialLink=node("a",null,"الاطلاع على وثيقة المنهاج");officialLink.href="https://ampei.ma/?page_id=18221";officialLink.target="_blank";officialLink.rel="noopener noreferrer";details.append(official,officialLink);
  const actions=node("div","course-actions");
  const mark=node("button","primary",done[id]?"✓ تمت مراجعة الدرس":"✓ أنهيت الدرس");
  mark.type="button";mark.onclick=()=>{done[id]=!done[id];try{localStorage.setItem("masar-islam-lessons-v2",JSON.stringify(done))}catch(e){}openCourse(id,false);showList();};
@@ -61,7 +62,7 @@ function showList(){
 }
 search.addEventListener("input",showList);select.addEventListener("change",showList);
 showList();openCourse(current,false);
-const staticFallback=document.getElementById("masar-static-course");if(staticFallback)staticFallback.hidden=true;
+/* The source-checked lesson remains visible as a no-JS-safe reference. */
 // Keep exam tab active on entry so the authentic pre-question text is visible immediately.
 const quickStart=node("button","primary","افتح امتحان QCM ونص الانطلاق");
 quickStart.type="button";
