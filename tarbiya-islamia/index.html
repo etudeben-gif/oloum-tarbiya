@@ -135,7 +135,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 </section>
 </main>
 <footer><div class="wrap">مسار — موقع مستقل للتحضير لمباراة التعليم. لا يجمع بيانات شخصية. <a href="https://www.men.gov.ma/" target="_blank" rel="noopener noreferrer">وزارة التربية الوطنية المغربية</a></div></footer>
-<script src="transcribed-questions.js?v=20261109d"></script>
+<script src="transcribed-questions.js?v=20261109e"></script>
 <script>
 (function(){
 "use strict";
@@ -288,14 +288,14 @@ function feedback(){const box=$("grade-feedback");box.replaceChildren();let ans=
  if(!key){box.className="grade-feedback pending";box.textContent="تسجلات الإجابة ديالك. التصحيح ديال هاد السؤال مازال ما تأكدناش منو، لذلك ما غاديش نحسبو نقطة خاطئة.";return}
  const good=ans===key;box.className="grade-feedback"+(good?"":" wrong");
  const title=document.createElement("strong");title.textContent=good?"✓ اختيارك صحيح":"✗ اختيارك غير صحيح";box.appendChild(title);
- if(!good){const p=document.createElement("p");const checked=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]?.[String(qno)];p.textContent=(checked?.task?"الاختيار الخاطئ المطلوب: ":"الجواب المقترح: ")+key+(checked?.options?.["ABCDE".indexOf(key)]?" — "+checked.options["ABCDE".indexOf(key)]:"");box.appendChild(p)}
+ if(!good){const p=document.createElement("p");const checked=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]?.[String(qno)];p.textContent=(checked?.task?"الاختيار الخاطئ المطلوب: ":"الجواب الصحيح: ")+key+(checked?.options?.["ABCDE".indexOf(key)]?" — "+checked.options["ABCDE".indexOf(key)]:"");box.appendChild(p)}
  const expl=document.createElement("div");expl.className="knowledge-block";expl.style.marginTop="12px";
  const label=document.createElement("strong");label.textContent="التعليل والمراجعة";expl.appendChild(label);
  const msg=document.createElement("p");
- const checked=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]?.[String(qno)];msg.textContent=checked?.reason?(checked?.task?"الاختيار الخاطئ: ":"الجواب: ")+key+" — "+checked.reason+" ("+(checked.confidence==="اجتهادي"?"ترجيح اجتهادي يحتاج مراجعة متخصصة":"تعليل تعليمي تمت مراجعته مع نص الورقة") +"؛ ليس تصحيحاً وزارياً).":"الجواب "+key+" حسب مفتاح مقترح غير رسمي. لم يتم بعد توثيق التعليل التفصيلي لهذا السؤال من نصه واختياراته، لذلك لا نعطي تفسيراً مؤلفاً على أنه يقين. راجع الصورة الأصلية والدرس المرتبط بالمفهوم.";
+ const checked=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]?.[String(qno)];msg.textContent=checked?.reason?(checked?.task?"الاختيار الخاطئ: ":"الجواب: ")+key+" — "+checked.reason+" ("+(checked.keySource?"مفتاح الجواب مطابق لدليل التصحيح الوزاري المرفق بالورقة؛ التعليل شرح تعليمي":checked.confidence==="اجتهادي"?"ترجيح اجتهادي يحتاج مراجعة متخصصة":"تعليل تعليمي تمت مراجعته مع نص الورقة") +").":"الجواب "+key+" حسب مفتاح مقترح غير رسمي. لم يتم بعد توثيق التعليل التفصيلي لهذا السؤال من نصه واختياراته، لذلك لا نعطي تفسيراً مؤلفاً على أنه يقين. راجع الصورة الأصلية والدرس المرتبط بالمفهوم.";
  expl.appendChild(msg);
  const back=document.createElement("button");back.type="button";back.className="quiet-button";back.textContent="رجع للدرس وراجع المفاهيم";back.onclick=()=>{const tab=document.querySelector('nav button[data-tab="courses"]');if(tab)tab.click();document.getElementById("masar-current-course")?.scrollIntoView({behavior:"smooth",block:"start"})};expl.appendChild(back);box.appendChild(expl);
- const small=document.createElement("div");small.className="mini";small.textContent="التنقيط هنا للتدريب (1 للصحيح، 0 للخطأ) والتصحيح غير وزاري. ماشي بالضرورة نفس تنقيط المباراة.";box.appendChild(small)
+ const small=document.createElement("div");small.className="mini";small.textContent=checked?.keySource?"الجواب مأخوذ من دليل التصحيح المرفق بملف الامتحان الأصلي؛ التنقيط المعروض هنا تدريبي.":"التنقيط هنا للتدريب، والتصحيح اجتهادي غير وزاري.";box.appendChild(small);if(checked?.keySourceUrl){const a=document.createElement("a");a.href=checked.keySourceUrl;a.target="_blank";a.rel="noopener noreferrer";a.textContent="شاهد PDF الأصلي ودليل التصحيح";box.appendChild(a)}
 }
 function renderQuiz(resetPage=true){const ex=activeExam;
  renderReadingContext(ex);
@@ -303,7 +303,7 @@ function renderQuiz(resetPage=true){const ex=activeExam;
  $("active-q").textContent="Q"+qno;$("source-status").textContent="الورقة الأصلية: "+ex.pages+" صفحة · "+ex.count+" سؤالاً؛ لا نعتمد مفاتيح غير مراجعة";
  $("question-sel").replaceChildren();const transcribed=window.MASAR_ISLAM_TRANSCRIPT?.[ex.id]||{};const verifiedCount=Object.keys(transcribed).length;const only=$("only-transcribed").checked&&verifiedCount>0;
  for(let q=1;q<=ex.count;q++){if(only&&!transcribed[String(q)])continue;const op=document.createElement("option");op.value=q;op.textContent="Q"+q+(transcribed[String(q)]?" · النص كامل":"")+(qanswers[ex.id+"-"+q]?" ✓":"");$("question-sel").append(op)}$("question-sel").value=String(qno);
- $("source-status").textContent=ex.title+" · "+verifiedCount+" سؤالاً مكتوباً مع الاختيارات من أصل "+ex.count+" · الباقي موجود في الصور الأصلية ويحتاج تفريغاً";
+ $("source-status").textContent=ex.title+" · "+verifiedCount+" سؤالاً مكتوباً مع الاختيارات من أصل "+ex.count+(ex.id.startsWith("2021-")?" · الأجوبة مطابقة لدليل التصحيح الوزاري المرفق بالـ PDF":" · باقي الأسئلة موجودة في الصور الأصلية");
  $("page-sel").replaceChildren();for(let p=1;p<=ex.pages;p++){const op=document.createElement("option");op.value=p;op.textContent="الصفحة "+p;$("page-sel").append(op)}
  if(resetPage)page=estimatedPage(ex,qno);
  showScan();letterUI();feedback();countScores();
