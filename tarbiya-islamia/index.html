@@ -96,6 +96,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 <div class="scan-tools"><button type="button" id="page-back">→ صفحة سابقة</button><span id="shown-page">الصفحة 1</span><button type="button" id="page-forward">صفحة تالية ←</button><button type="button" id="zoom-down">−</button><span id="zoom-ratio">100%</span><button type="button" id="zoom-up">+</button></div>
 <div id="scan-frame" class="scan-frame"><img id="scan" alt="صورة الصفحة الأصلية من امتحان التربية الإسلامية، تشمل السؤال والاختيارات دون تغيير"><div id="img-status" class="mini" hidden>تعذر تحميل صورة الصفحة.</div></div>
 <div class="quiz-form">
+<div id="question-verbatim" class="knowledge-block" style="font-size:19px;font-weight:800;line-height:2;white-space:pre-wrap" aria-live="polite">نص السؤال الأصلي سيظهر هنا عندما يكون منقولاً من الورقة.</div>
 <h3>الجواب ديالك على السؤال <span id="active-q">Q1</span></h3>
 <p class="mini">اقرا السؤال والاختيارات من الصورة الأصلية، ومن بعد اختار الحرف. إلا ما بانش السؤال، تنقل بين الصفحات من الفوق.</p>
 <div id="original-options-note" class="mini" role="status"></div><div id="answer-letters" class="letter-grid"></div>
@@ -105,6 +106,16 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 </div>
 </div></section>
 <section id="courses" class="screen">
+<article id="masar-static-course" class="card course-detail" style="margin-bottom:18px">
+<h2>الدرس الأول: القرآن الكريم وعلومه — شرح موثق</h2>
+<p>القرآن الكريم هو المصدر الأول في التربية الإسلامية. عند مراجعة سؤال قرآني، نميز بين نص الآية، معناها، حكم التلاوة، والسياق الذي وردت فيه.</p>
+<h3>أحكام الميم الساكنة</h3>
+<p>الإخفاء الشفوي يكون إذا جاءت الميم الساكنة قبل الباء، مع الغنة. ومثاله «هُم بِمُعْجِزِينَ» في سؤال الامتحان الأصلي لسنة 2021. أما الإدغام الشفوي فيكون عند ميم مثلها، والإظهار الشفوي مع بقية الحروف.</p>
+<h3>فهم الآيات من سياقها</h3>
+<p>ورد «قَالَ رَبِّ اشْرَحْ لِي صَدْرِي» في سورة طه، الآية 25، وهو دعاء موسى عليه السلام. كما أن «وَعَجِلْتُ إِلَيْكَ رَبِّ لِتَرْضَىٰ» في الآية 84 من السورة نفسها. تنبيه: وردت أرقام آيات غير دقيقة في صياغة بعض أسئلة ورقة 2021؛ نحتفظ بالنص الأصلي للسؤال ونوضح التصويب في التعليل.</p>
+<h3>المراجع</h3>
+<p><a href="https://quran.ksu.edu.sa/tafseer/katheer/sura20-aya25.htm" target="_blank" rel="noopener">تفسير ابن كثير لسورة طه: 25</a> · <a href="https://quran.com/ar/taha/84" target="_blank" rel="noopener">سورة طه: 84</a> · <a href="https://ampei.ma/?page_id=18221" target="_blank" rel="noopener">وثيقة منهاج التربية الإسلامية 2016</a></p>
+</article>
 <div class="knowledge-block">
  <h3>التوزيع المرجعي لديداكتيك التربية الإسلامية</h3>
  <p>حسب توصيف اختبار ديداكتيك التخصص الصادر عن المركز الوطني للامتحانات المدرسية وتقييم التعلمات، راجع المحاور حسب وزنها:</p>
@@ -123,7 +134,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 </section>
 </main>
 <footer><div class="wrap">مسار — موقع مستقل للتحضير لمباراة التعليم. لا يجمع بيانات شخصية. <a href="https://www.men.gov.ma/" target="_blank" rel="noopener noreferrer">وزارة التربية الوطنية المغربية</a></div></footer>
-<script src="transcribed-questions.js"></script>
+<script src="transcribed-questions.js?v=20261109a"></script>
 <script>
 (function(){
 "use strict";
@@ -204,7 +215,7 @@ const docs=[
 const $=id=>document.getElementById(id);
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const card=(t,m,p,l,href)=>'<article class="card"><h3>'+escape(t)+'</h3><div class="meta">'+escape(m)+'</div><p>'+escape(p)+'</p><a class="link" target="_blank" rel="noopener noreferrer" href="'+escape(href)+'">'+escape(l)+'</a></article>';
-let activeExam=exams[0],qno=1,page=2,zoom=100,onlyMistakes=false,proposed={};
+let activeExam=exams.find(e=>e.id==="2021-specialty")||exams[0],qno=4,page=4,zoom=100,onlyMistakes=false,proposed={};
 let qanswers={};try{qanswers=JSON.parse(localStorage.getItem("masar-islam-qcm-v2")||"{}")||{}}catch(e){qanswers={}}
 function save(){try{localStorage.setItem("masar-islam-qcm-v2",JSON.stringify(qanswers))}catch(e){}}
 function getKey(e,q){const verified=window.MASAR_ISLAM_TRANSCRIPT?.[e.id]?.[String(q)]?.answer;if(verified)return verified;const obj=proposed[e.id];return obj?.keys?.[String(q)]||null}
@@ -257,6 +268,7 @@ function letterUI(){const container=$("answer-letters");container.replaceChildre
  const saved=qanswers[activeExam.id+"-"+qno]||"";
  const item=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]?.[String(qno)];
  const options=item?.options;
+ const prompt=document.getElementById("question-verbatim");prompt.textContent=item?.question||"هذا السؤال مازال ما تفرغش حرفياً. اقرأه من صورة الورقة الأصلية الموجودة أعلاه.";
  const verified=Array.isArray(options)&&options.length===activeExam.letters&&options.every(x=>typeof x==="string"&&x.trim());
  const note=$("original-options-note");
  note.textContent=verified?"الاختيارات أدناه منقولة من الورقة الأصلية. يمكنك مقارنتها بالصورة أعلاه.":"الاختيارات مكتوبة داخل صورة الورقة الأصلية أعلاه. لم تُنسخ بعد إلى نص قابل للنقر، لذلك تظهر الحروف هنا فقط. لا نريد اختراع اقتراحات غير موجودة في PDF.";
@@ -336,4 +348,4 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=function(){showTab(
 renderQuiz();renderMistakes();
 })();
 </script>
-<script src="courses-full.js"></script><script src="courses-ui.js"></script></body></html>
+<script src="courses-full.js?v=20261109a"></script><script src="courses-ui.js?v=20261109a"></script></body></html>
