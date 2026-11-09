@@ -12,7 +12,7 @@ let done={};try{done=JSON.parse(localStorage.getItem("masar-islam-lessons-v2")||
 let current=data[0].id;
 function node(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n}
 const header=node("div","course-hero");
-header.append(node("div","section-eyebrow","افهم الدرس ثم طبق في الامتحان"),node("h2",null,"دروس التربية الإسلامية كاملة داخل الموقع"),node("p",null,"دروس منظمة مع الأمثلة والمفاهيم الأساسية، ثم QCM من أوراق المباريات الأصلية. ما تحتاجش تخرج من الموقع باش تقرا."));
+header.append(node("div","section-eyebrow","افهم الدرس ثم طبق في الامتحان"),node("h2",null,"دروس التربية الإسلامية ومراجعة المنهاج داخل الموقع"),node("p",null,"23 درساً ومحوراً للمراجعة، مع خرائط المنهاج الرسمي للإعدادي، ثم أسئلة أصلية من أوراق المباريات. جميع أسئلة 2021 للتخصص والديداكتيك مكتوبة مع الاختيارات."));
 const filters=node("div","course-filters");
 const search=node("input");search.type="search";search.placeholder="قلب على درس أو مفهوم...";search.setAttribute("aria-label","البحث في الدروس");
 const select=node("select");select.setAttribute("aria-label","اختيار مجال الدروس");
