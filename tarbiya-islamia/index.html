@@ -65,8 +65,8 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 <div class="section-eyebrow">مادة التخصص · الديداكتيك</div><h1>التربية الإسلامية</h1>
 <p class="sub">التحضير لمباراة التعليم الثانوي الإعدادي والتأهيلي — دروس، ديداكتيك المادة، وامتحانات الدورات السابقة.</p>
 <div class="meter"><span class="metric">التخصص والديداكتيك</span><span class="metric">امتحانات 2021–2025</span><span class="metric">مراجع الوزارة وملفات المراجعة</span><span class="metric" id="progress">تقدّمك: 0</span></div>
-<nav aria-label="أقسام الصفحة"><button type="button" class="active" data-tab="exams">الامتحانات وQCM</button><button type="button" data-tab="courses">الدروس المفصلة</button><button type="button" data-tab="review">أخطائي ونقطي</button><button type="button" data-tab="library">الوثائق والمراجع</button></nav>
-<section id="exams" class="screen">
+<nav aria-label="أقسام الصفحة"><button type="button" data-tab="exams">الامتحانات وQCM</button><button type="button" class="active" data-tab="courses">الدروس المفصلة</button><button type="button" data-tab="review">أخطائي ونقطي</button><button type="button" data-tab="library">الوثائق والمراجع</button></nav>
+<section id="exams" class="screen" hidden>
 <div class="quiz-layout">
 <div class="card quiz-menu">
 <h3>اختار الاختبار</h3>
@@ -99,7 +99,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 </div>
 </div>
 </div></section>
-<section id="courses" class="screen" hidden>
+<section id="courses" class="screen">
 <div class="knowledge-block">
  <h3>التوزيع المرجعي لديداكتيك التربية الإسلامية</h3>
  <p>حسب توصيف اختبار ديداكتيك التخصص الصادر عن المركز الوطني للامتحانات المدرسية وتقييم التعلمات، راجع المحاور حسب وزنها:</p>
@@ -258,6 +258,12 @@ function feedback(){const box=$("grade-feedback");box.replaceChildren();let ans=
  const good=ans===key;box.className="grade-feedback"+(good?"":" wrong");
  const title=document.createElement("strong");title.textContent=good?"✓ صحيح":"✗ خطأ";box.appendChild(title);
  if(!good){const p=document.createElement("p");p.textContent="الجواب حسب التصحيح المقترح: "+key;box.appendChild(p)}
+ const expl=document.createElement("div");expl.className="knowledge-block";expl.style.marginTop="12px";
+ const label=document.createElement("strong");label.textContent="التعليل والمراجعة";expl.appendChild(label);
+ const msg=document.createElement("p");
+ msg.textContent="الجواب "+key+" حسب مفتاح مقترح غير رسمي. لم يتم بعد توثيق التعليل التفصيلي لهذا السؤال من نصه واختياراته، لذلك لا نعطي تفسيراً مؤلفاً على أنه يقين. راجع الصورة الأصلية والدرس المرتبط بالمفهوم.";
+ expl.appendChild(msg);
+ const back=document.createElement("button");back.type="button";back.className="quiet-button";back.textContent="رجع للدرس وراجع المفاهيم";back.onclick=()=>{const tab=document.querySelector('nav button[data-tab="courses"]');if(tab)tab.click();document.getElementById("masar-current-course")?.scrollIntoView({behavior:"smooth",block:"start"})};expl.appendChild(back);box.appendChild(expl);
  const small=document.createElement("div");small.className="mini";small.textContent="التنقيط هنا للتدريب (1 للصحيح، 0 للخطأ) والتصحيح غير وزاري. ماشي بالضرورة نفس تنقيط المباراة.";box.appendChild(small)
 }
 function renderQuiz(resetPage=true){const ex=activeExam;
