@@ -37,6 +37,11 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 .letter-grid label{border:1px solid #bed7da;border-radius:10px;background:#fafcfc;text-align:center;padding:12px 2px;font-size:18px;font-weight:800;cursor:pointer}
 .letter-grid label:has(input:checked){background:#d5f3e8;border-color:#16876d}
 .letter-grid input{accent-color:#13886d;margin-left:5px}
+.letter-grid:has(.option-transcribed){grid-template-columns:1fr}
+.letter-grid .option-transcribed{display:flex;gap:12px;align-items:flex-start;text-align:right;padding:13px}
+.letter-grid .option-letter{font-weight:900;min-width:30px}
+.letter-grid .option-content{flex:1;font-weight:500;white-space:pre-wrap}
+#original-options-note{padding:10px 12px;background:#f0f7f8;border:1px solid #d6e6e9;border-radius:9px;margin-top:10px}
 .quiz-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.quiz-controls .main-btn{background:#10736d;color:#fff}
 .grade-feedback{border:1px solid #a9dfc8;background:#ecfaf2;border-radius:11px;padding:14px;margin-top:15px}
 .grade-feedback.wrong{background:#fff4eb;border-color:#ebc6af}.grade-feedback.pending{background:#f1f4f7;border-color:#dae3e8}
@@ -93,7 +98,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 <div class="quiz-form">
 <h3>الجواب ديالك على السؤال <span id="active-q">Q1</span></h3>
 <p class="mini">اقرا السؤال والاختيارات من الصورة الأصلية، ومن بعد اختار الحرف. إلا ما بانش السؤال، تنقل بين الصفحات من الفوق.</p>
-<div id="answer-letters" class="letter-grid"></div>
+<div id="original-options-note" class="mini" role="status"></div><div id="answer-letters" class="letter-grid"></div>
 <div class="quiz-controls"><button type="button" class="main-btn" id="submit-answer">صحّح الجواب</button><button type="button" id="q-prev">→ السابق</button><button type="button" id="q-next">الموالي ←</button></div>
 <div id="grade-feedback" class="grade-feedback" hidden></div>
 </div>
@@ -118,6 +123,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 </section>
 </main>
 <footer><div class="wrap">مسار — موقع مستقل للتحضير لمباراة التعليم. لا يجمع بيانات شخصية. <a href="https://www.men.gov.ma/" target="_blank" rel="noopener noreferrer">وزارة التربية الوطنية المغربية</a></div></footer>
+<script src="transcribed-questions.js"></script>
 <script>
 (function(){
 "use strict";
@@ -249,7 +255,15 @@ function showScan(){const img=$("scan"),src="images/"+activeExam.id+"-"+String(p
 function setPage(p){page=Math.min(activeExam.pages,Math.max(1,p));showScan()}
 function letterUI(){const container=$("answer-letters");container.replaceChildren();
  const saved=qanswers[activeExam.id+"-"+qno]||"";
- for(let i=0;i<activeExam.letters;i++){const v="ABCDE"[i],lab=document.createElement("label"),inp=document.createElement("input");inp.type="radio";inp.name="answer";inp.value=v;inp.checked=saved===v;lab.append(inp,document.createTextNode(v));container.append(lab)}
+ const item=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]?.[String(qno)];
+ const options=item?.options;
+ const verified=Array.isArray(options)&&options.length===activeExam.letters&&options.every(x=>typeof x==="string"&&x.trim());
+ const note=$("original-options-note");
+ note.textContent=verified?"الاختيارات أدناه منقولة من الورقة الأصلية. يمكنك مقارنتها بالصورة أعلاه.":"الاختيارات مكتوبة داخل صورة الورقة الأصلية أعلاه. لم تُنسخ بعد إلى نص قابل للنقر، لذلك تظهر الحروف هنا فقط. لا نريد اختراع اقتراحات غير موجودة في PDF.";
+ for(let i=0;i<activeExam.letters;i++){const v="ABCDE"[i],lab=document.createElement("label"),inp=document.createElement("input");inp.type="radio";inp.name="answer";inp.value=v;inp.checked=saved===v;lab.append(inp);
+ if(verified){lab.className="option-transcribed";const letter=document.createElement("span");letter.className="option-letter";letter.textContent=v;const body=document.createElement("span");body.className="option-content";body.textContent=options[i];lab.append(letter,body)}
+ else lab.append(document.createTextNode(v));
+ container.append(lab)}
 }
 function feedback(){const box=$("grade-feedback");box.replaceChildren();let ans=qanswers[activeExam.id+"-"+qno];
  if(!ans){box.hidden=true;return}box.hidden=false;
