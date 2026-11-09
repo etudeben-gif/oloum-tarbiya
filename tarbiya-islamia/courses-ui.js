@@ -12,11 +12,11 @@ let done={};try{done=JSON.parse(localStorage.getItem("masar-islam-lessons-v2")||
 let current=data[0].id;
 function node(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n}
 const header=node("div","course-hero");
-header.append(node("div","section-eyebrow","افهم الدرس ثم طبق في الامتحان"),node("h2",null,"دروس التربية الإسلامية ومراجعة المنهاج داخل الموقع"),node("p",null,"25 درساً ومحوراً للمراجعة، مع خرائط المنهاج الرسمي للإعدادي، ثم أسئلة أصلية من أوراق المباريات. جميع أسئلة 2021 للتخصص والديداكتيك مكتوبة مع الاختيارات."));
+header.append(node("div","section-eyebrow","افهم الدرس ثم طبق في الامتحان"),node("h2",null,"دروس التربية الإسلامية ومراجعة المنهاج داخل الموقع"),node("p",null,"مكتبة موسعة: "+data.length+" درساً ومحوراً، تشمل دروس السنوات الثلاث للإعدادي وعلوم التخصص والديداكتيك. كل درس فيه شرح مفصل وأدلة وتطبيقات، ثم أسئلة المباريات الأصلية دون اختراع أسئلة جديدة."));
 const filters=node("div","course-filters");
 const search=node("input");search.type="search";search.placeholder="قلب على درس أو مفهوم...";search.setAttribute("aria-label","البحث في الدروس");
 const select=node("select");select.setAttribute("aria-label","اختيار مجال الدروس");
-for(const opt of [["all","جميع الدروس"],["التخصص","مادة التخصص"],["الديداكتيك","ديداكتيك المادة"],["المنهاج الرسمي","المنهاج الرسمي للإعدادي"],["المقالات الرسمية","أسئلة مقالية 2021 مع الأجوبة"],["منهجية","منهجية QCM"]]){const o=node("option",null,opt[1]);o.value=opt[0];select.append(o)}
+for(const opt of [["all","جميع الدروس"],["التخصص","مادة التخصص"],["الديداكتيك","ديداكتيك المادة"],["المنهاج الرسمي","خرائط المنهاج الرسمي"],["الأولى إعدادي","دروس الأولى إعدادي بالتفصيل"],["الثانية إعدادي","دروس الثانية إعدادي بالتفصيل"],["الثالثة إعدادي","دروس الثالثة إعدادي بالتفصيل"],["المقالات الرسمية","أسئلة مقالية 2021 مع الأجوبة"],["منهجية","منهجية QCM"]]){const o=node("option",null,opt[1]);o.value=opt[0];select.append(o)}
 const progress=node("p","mini");
 filters.append(search,select);header.append(filters,progress);
 const details=node("article","card course-detail");details.id="masar-current-course";
@@ -31,8 +31,8 @@ function openCourse(id,scroll){
  details.append(head,node("p","course-lead",c.summary));
  for(const [j,p] of c.parts.entries()){const sec=node("section","course-chapter");sec.append(node("h3",null,(j+1)+". "+p[0]),node("p",null,p[1]));details.append(sec)}
  const memory=node("div","course-memory");memory.append(node("strong",null,"الخلاصة للحفظ"),node("p",null,c.memorize));details.append(memory);
- const cite=node("details","course-source");const summary=node("summary",null,"مصدر الدرس (اختياري)");const a=node("a",null,"مراجعة المصدر");a.href=c.url;a.target="_blank";a.rel="noopener noreferrer";cite.append(summary,node("p",null,c.source),a);details.append(cite);
- const official=node("p","mini",c.group==="المقالات الرسمية"?"هذه أسئلة أصلية من امتحان 2021، وعناصر الإجابة مأخوذة من دليل التصحيح المرفق بملف PDF.":"مرجع المنهاج: وزارة التربية الوطنية، منهاج التربية الإسلامية لسلكي الإعدادي والتأهيلي (يونيو 2016). هذا الشرح مادة مراجعة تعليمية وليس نصاً وزارياً حرفياً.");const officialLink=node("a",null,"الاطلاع على وثيقة المنهاج");officialLink.href="https://ampei.ma/?page_id=18221";officialLink.target="_blank";officialLink.rel="noopener noreferrer";details.append(official,officialLink);
+ const cite=node("details","course-source");const summary=node("summary",null,"المصادر والمراجع التي بُني عليها الدرس");const a=node("a",null,"مراجعة المصدر");a.href=c.url;a.target="_blank";a.rel="noopener noreferrer";cite.append(summary,node("p",null,c.source),a);details.append(cite);
+ const official=node("p","mini",c.group==="المقالات الرسمية"?"هذه أسئلة أصلية من امتحان 2021، وعناصر الإجابة مستندة إلى دليل التصحيح المرفق بملف PDF.":"عناوين الدروس وبرنامج الإعدادي مؤطرة بمنهاج يونيو 2016؛ أما الشرح والأمثلة فهي مادة تعليمية محررة للمراجعة وليست اقتباساً وزارياً حرفياً. راجع النصوص الشرعية والمراجع الأصلية عند الاستدلال.");const officialLink=node("a",null,"الاطلاع على وثيقة المنهاج");officialLink.href="https://ampei.ma/?page_id=18221";officialLink.target="_blank";officialLink.rel="noopener noreferrer";details.append(official,officialLink);
  const actions=node("div","course-actions");
  const mark=node("button","primary",done[id]?"✓ تمت مراجعة الدرس":"✓ أنهيت الدرس");
  mark.type="button";mark.onclick=()=>{done[id]=!done[id];try{localStorage.setItem("masar-islam-lessons-v2",JSON.stringify(done))}catch(e){}openCourse(id,false);showList();};
@@ -51,7 +51,7 @@ function openCourse(id,scroll){
 function showList(){
  grid.replaceChildren();
  const needle=search.value.trim().toLocaleLowerCase("ar"),cat=select.value;
- const subset=data.filter(c=>(cat==="all"||c.group===cat)&&(!needle||(c.title+" "+c.summary+" "+c.parts.map(p=>p[0]).join(" ")).toLocaleLowerCase("ar").includes(needle)));
+ const subset=data.filter(c=>(cat==="all"||c.group===cat)&&(!needle||(c.title+" "+c.summary+" "+c.parts.map(p=>p.join(" ")).join(" ")).toLocaleLowerCase("ar").includes(needle)));
  if(!subset.length)grid.append(node("p","notice","ما لقيناش درس مطابق، جرّب كلمة أخرى."));
  for(const c of subset){
   const tile=node("button","card course-library-tile"+(current===c.id?" selected":""));tile.type="button";tile.dataset.id=c.id;
