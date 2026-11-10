@@ -1,0 +1,78 @@
+/* Masar premium visual refresh — Sciences de l'éducation / الثانوي */
+:root{--masar-ink:#153e49;--masar-teal:#0d786d;--masar-gold:#d7ab64}
+body{background:radial-gradient(circle at top right,#e7f4ed 0%,transparent 34%),radial-gradient(circle at 6% 26%,#edf3f9 0%,transparent 34%),#f7faf9;color:var(--masar-ink)}
+header{background:linear-gradient(120deg,#123d49,#12655f);border-bottom:3px solid var(--masar-gold);box-shadow:0 6px 22px #193c4514;padding:16px 20px}
+header .brand{font-size:clamp(19px,2.5vw,23px)}
+header a{transition:transform .18s,background .18s}header a:hover{background:#0b7268!important;transform:translateY(-2px)}
+.wrap{max-width:1220px}
+#course-hub{border:1px solid #cce3dd;border-top:5px solid #168a78;border-radius:19px;box-shadow:0 15px 48px #214f5216;padding:25px 28px;background:radial-gradient(circle at 3% 0%,#eaf7f1,transparent 33%),white}
+#course-hub .course-head h2{font-size:clamp(27px,3vw,37px);letter-spacing:-.75px;line-height:1.5}
+#course-hub .course-head p{max-width:950px;font-size:14px;line-height:2}
+#course-hub .course-head .question-code{background:#dff3e9;border:1px solid #c1e2d4;color:#116b5a;font-size:13px}
+#course-hub .course-controls{margin:20px 0 14px;padding:14px;background:#f5faf8;border:1px solid #dcece7;border-radius:14px}
+#course-hub .course-controls select,#course-hub .course-controls input{border:1px solid #b8d8d0;background:white;padding:12px;border-radius:10px}
+#course-hub .course-controls input:focus,#course-hub .course-controls select:focus{border-color:#168b78}
+#course-hub .course-tabs{max-height:235px;overflow-y:auto;flex-wrap:wrap;overflow-x:hidden;gap:8px}
+#course-hub .course-tab{white-space:normal;text-align:right;font-size:13px;line-height:1.6;min-height:47px;border-radius:12px;transition:transform .18s,box-shadow .18s,border-color .18s}
+#course-hub .course-tab:hover{transform:translateY(-2px);box-shadow:0 6px 17px #226c6417;border-color:#67afa0}
+#course-hub .course-tab.active{background:#0f786d;color:white;box-shadow:0 4px 12px #11796628}
+#course-hub .course-current{font-size:clamp(22px,3vw,31px)}
+#course-hub .reader-hero{background:linear-gradient(110deg,#e7f6ef,#fffdf8);border-color:#cee5d9;box-shadow:0 6px 20px #1b5c5110;border-radius:15px;padding:21px 25px}
+#course-hub .master-chapter{border-bottom:1px solid #dfedeb;padding-top:26px;padding-bottom:26px}
+#course-hub .master-chapter h3{font-size:20px;letter-spacing:-.3px}
+#course-hub .reader-toc{box-shadow:0 4px 18px #2c575b0b}
+#course-hub .reader-references{border-radius:15px}
+#course-hub .reader-glossary{border-radius:14px}
+#course-hub .course-exercises{background:linear-gradient(115deg,#ebf8f1,#f8fcf9);border:1px solid #cce5da;border-top:4px solid #168979;border-radius:16px;box-shadow:0 7px 22px #1a565117;padding:24px}
+#course-hub .course-exercises h3{font-size:21px;color:#164e57}
+#course-hub .course-q{transition:background .16s,transform .16s;border-radius:11px}
+#course-hub .course-q:hover{background:#def2e9;transform:translateX(-3px)}
+#course-hub>.layout{gap:20px}
+#course-hub .layout .card{border-radius:15px;box-shadow:0 4px 14px #1b424510}
+#course-hub .layout .side .card{background:white}
+#course-hub .layout .question-code{background:#e8f5ef}
+#course-hub .science-mindmap{margin:18px auto 12px;padding:24px 23px 29px;max-width:900px;border:1px solid #cee6dd;border-radius:18px;background:radial-gradient(circle at 50% 18%,#eaf8f1 0%,transparent 66%),#fbfefd;box-shadow:0 7px 23px #18544d10}
+#course-hub .science-mindmap-kicker{text-align:center;color:#147c71;font-size:12px;font-weight:800}
+#course-hub .science-mindmap h3{text-align:center;color:#195764;font-size:23px;line-height:1.5;margin:3px 0}
+#course-hub .science-mindmap p{text-align:center;color:#5a7179;font-size:13px;line-height:1.85;margin:5px 0 19px}
+#course-hub .science-mindmap-root{position:relative;max-width:375px;margin:auto;background:linear-gradient(110deg,#106e6c,#125261);border:3px solid white;border-radius:17px;box-shadow:0 9px 22px #176c612a;padding:16px 24px;color:white;text-align:center}
+#course-hub .science-mindmap-root:after{content:"";position:absolute;height:25px;width:3px;bottom:-26px;right:calc(50% - 1px);background:#a3d6c9}
+#course-hub .science-mindmap-root strong{display:block;font-size:19px;line-height:1.55}
+#course-hub .science-mindmap-root span{display:block;font-size:12px;color:#cfebdf;margin-top:5px}
+#course-hub .science-mindmap-branches{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px 27px;margin:26px auto 0;max-width:770px}
+#course-hub .science-mindmap-branches:before{content:"";position:absolute;right:calc(50% - 1px);top:0;bottom:0;width:2px;background:#bbded4;pointer-events:none}
+#course-hub .science-mindmap-branch{position:relative;display:flex;flex-direction:column;gap:4px;text-align:right;align-items:flex-start;justify-content:center;padding:12px 16px;min-height:74px;background:#fff;border:1px solid #d3e4e0;border-right:5px solid #128778;border-radius:12px;color:#26515a;font-size:14px;line-height:1.65;font-weight:800;box-shadow:0 5px 16px #206c6010;transition:transform .16s,border-color .16s,box-shadow .16s}
+#course-hub .science-mindmap-branch:nth-child(3n+2){border-right-color:#d2a45d}
+#course-hub .science-mindmap-branch:nth-child(3n){border-right-color:#4e97af}
+#course-hub .science-mindmap-branch:before{content:"";position:absolute;top:50%;width:13px;height:2px;background:#a8d3c6}
+#course-hub .science-mindmap-branch:nth-child(odd):before{left:-14px}
+#course-hub .science-mindmap-branch:nth-child(even):before{right:-14px}
+#course-hub .science-mindmap-branch small{font-size:11px;color:#54837b}
+#course-hub .science-mindmap-branch:hover,#course-hub .science-mindmap-branch:focus-visible{transform:translateY(-3px);border-color:#4ba998;box-shadow:0 8px 20px #20756723}
+#course-hub .science-scoreboard{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:18px 0}
+#course-hub .science-scoreboard-item{background:#fff;border:1px solid #daebe5;border-radius:12px;box-shadow:0 3px 12px #1b544e13;padding:13px 12px;display:flex;flex-direction:column;align-items:center;gap:5px}
+#course-hub .science-scoreboard-item span{font-weight:750;color:#617981;font-size:12px}
+#course-hub .science-scoreboard-item strong{font-variant-numeric:tabular-nums;font-size:25px;color:#205b64}
+#course-hub .science-scoreboard-item.points{background:#114f59;border-color:#114f59}
+#course-hub .science-scoreboard-item.points span{color:#d1e9e3}
+#course-hub .science-scoreboard-item.points strong{color:#fff}
+#course-hub .science-scoreboard-item.correct strong{color:#0b8567}
+#course-hub .science-scoreboard-item.wrong strong{color:#bc6746}
+#course-hub .science-score-note{margin:8px 0 10px;color:#486971;font-size:13px;line-height:1.85}
+#course-hub #score{font-variant-numeric:tabular-nums;font-size:30px;color:#0e7568}
+#course-hub .result strong{font-size:16px}
+@media(max-width:740px){
+ #course-hub{padding:17px 12px;border-radius:14px}
+ #course-hub .science-mindmap{padding:17px 11px 20px;margin:13px 0}
+ #course-hub .science-mindmap-branches{gap:9px;grid-template-columns:repeat(2,minmax(0,1fr))}
+ #course-hub .science-mindmap-branches:before,#course-hub .science-mindmap-branch:before{display:none}
+ #course-hub .science-mindmap-branch{font-size:12px;padding:10px;min-height:72px}
+ #course-hub .science-scoreboard{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ #course-hub .science-scoreboard-item strong{font-size:22px}
+ #course-hub .course-exercises{padding:15px 12px}
+ #course-hub .course-controls{padding:11px}
+ #course-hub .course-controls label{font-size:12px}
+ #course-hub .course-tab{padding:8px 10px;font-size:12px}
+ #course-hub .reader-hero{padding:15px}
+}
+@media(prefers-reduced-motion:reduce){#course-hub *,header a{transition:none!important;scroll-behavior:auto!important}}
