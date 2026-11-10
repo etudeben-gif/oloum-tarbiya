@@ -65,28 +65,47 @@ const examList=[
 let exam=examList[0],qNo=1,examAnswers={};try{examAnswers=JSON.parse(localStorage.getItem("manar-exams-v1")||"{}")||{}}catch(_){}
 const saveExam=()=>{try{localStorage.setItem("manar-exams-v1",JSON.stringify(examAnswers))}catch(_){}};
 for(const item of examList){const op=T("option",null,item.label);op.value=item.id;$("exam-year").append(op)}
-$("exam-year").onchange=()=>{exam=examList.find(x=>x.id===$("exam-year").value);qNo=1;renderExam()};
+$("exam-year").onchange=()=>{exam=examList.find(x=>x.id===$("exam-year").value);qNo=1;currentScanPage=1;renderExam()};
 $("exam-question").onchange=()=>{qNo=Number($("exam-question").value)||1;renderExam()};
 $("prev-question").onclick=()=>{qNo=Math.max(1,qNo-1);renderExam()};
-$("next-question").onclick=()=>{qNo=Math.min(exam.count,qNo+1);renderExam()};
-function pageOf(ex,n){
- if(ex.id==="2021-specialty"){if(n<=3)return 3;if(n<=7)return 4;if(n<=12)return 5;if(n<=17)return 6;if(n<=22)return 7;if(n<=25)return 8;if(n<=30)return 9;if(n<=34)return 10;if(n<=38)return 11;if(n<=78)return Math.min(19,12+Math.floor((n-39)/5));return 20}
- if(ex.id==="2021-didactics"){if(n<=4)return 3;if(n<=9)return 4;if(n<=13)return 5;if(n<=18)return 6;if(n<=22)return 7;if(n<=26)return 8;return 9}
- const frac=(n-1)/Math.max(1,ex.count);return Math.max(1,Math.min(ex.pages,ex.first+Math.floor(frac*(ex.pages-ex.first+1))));
-}
+$("next-question").onclick=()=>{qNo=Math.min(originals[exam.id]?exam.count:exam.pages,qNo+1);renderExam()};
+/* الصفحة الدقيقة لكل سؤال غير موثقة؛ لا نستخدم معادلة تخمينية لإسناد السؤال لصفحة. */
+let currentScanPage=1;
 function scanImage(ex,p){
  const fig=T("figure","exam-scan"),image=T("img");image.src="../tarbiya-islamia/images/"+ex.id+"-"+String(p).padStart(2,"0")+".webp";image.alt="صورة الورقة الأصلية للدورة "+ex.label+", الصفحة "+p;image.loading="lazy";image.onerror=()=>{fig.replaceChildren(T("p","warning","صورة الصفحة غير متوفرة هنا"))};fig.append(image,T("figcaption",null,"الورقة الأصلية · الصفحة "+p));return fig
 }
 function renderExam(){
- const original=originals[exam.id]||{},q=original[String(qNo)],box=$("exam-paper");box.replaceChildren();
- const select=$("exam-question");if(select.options.length!==exam.count){select.replaceChildren();for(let n=1;n<=exam.count;n++){const op=T("option",null,"السؤال "+n+(original[String(n)]?" · نص مكتوب":" · صورة فقط"));op.value=n;select.append(op)}}select.value=String(qNo);
- $("prev-question").disabled=qNo===1;$("next-question").disabled=qNo===exam.count;
- box.append(T("h3",null,exam.label+" — السؤال "+qNo));
- if(q?.context)box.append(T("div","exam-stimulus","نص الانطلاق / السند:\n"+q.context));
- else if(!q)box.append(T("p","warning","نص هذا السؤال لم يُفرغ بعد. الورقة الأصلية معروضة قبل الإجابة."));
- const p=pageOf(exam,qNo);box.append(scanImage(exam,p));
- // Preserve access to the entire prior page if a question starts mid-context.
- if(!q){const prev=T("button","outline","عرض الصفحة السابقة");prev.onclick=()=>{const pos=p-1;if(pos>=1){const fig=scanImage(exam,pos);prev.replaceWith(fig)}};box.append(prev)}
+ const original=originals[exam.id]||{},known=Boolean(originals[exam.id]),q=known?original[String(qNo)]:null,box=$("exam-paper");box.replaceChildren();
+ const select=$("exam-question");
+ const total=known?exam.count:exam.pages;
+ if(select.options.length!==total || select.dataset.exam!==exam.id){
+  select.replaceChildren();select.dataset.exam=exam.id;
+  for(let n=1;n<=total;n++){
+   const op=T("option",null,known?"السؤال "+n:"الصفحة "+n);
+   op.value=n;select.append(op);
+  }
+ }
+ select.value=String(qNo);
+ $("prev-question").disabled=qNo===1;$("next-question").disabled=qNo===total;
+ box.append(T("h3",null,exam.label+" — "+(known?"السؤال ":"الصفحة ")+qNo));
+ if(q?.context){
+  box.append(T("div","exam-stimulus","نص الانطلاق المنقول مع السؤال:\n"+q.context));
+ }
+ const helper=T("p","chapter-note",known?"الورقة الأصلية: تصفّح صفحاتها للتحقق من النص والسند. لم يُتحقق من صفحة هذا السؤال تحديداً، لذلك لا نعرض رقم صفحة تخمينياً.":"الأسئلة غير مفرغة نصياً لهذه الدورة. تُعرض صفحات الورقة الأصلية دون اختيارات أو إجابات مفترضة.");
+ box.append(helper);
+ const panel=T("div","exam-scan-controls"),pLabel=T("label",null,"تصفح صفحة الوثيقة الأصلية: "),pSelect=T("select");
+ for(let p=1;p<=exam.pages;p++){const o=T("option",null,"الصفحة "+p);o.value=p;pSelect.append(o)}
+ if(!known)currentScanPage=qNo;
+ currentScanPage=Math.max(1,Math.min(currentScanPage,exam.pages));
+ pSelect.value=String(currentScanPage);
+ pSelect.onchange=()=>{currentScanPage=Number(pSelect.value)||1;figure.replaceWith(scanImage(exam,currentScanPage));figure=panel.nextElementSibling};
+ pLabel.append(pSelect);panel.append(pLabel);
+ const back=T("button","outline","صفحة سابقة"),forward=T("button","outline","صفحة تالية");
+ function changePage(delta){currentScanPage=Math.max(1,Math.min(exam.pages,currentScanPage+delta));pSelect.value=String(currentScanPage);const next=scanImage(exam,currentScanPage);figure.replaceWith(next);figure=next;back.disabled=currentScanPage<=1;forward.disabled=currentScanPage>=exam.pages}
+ back.onclick=()=>changePage(-1);forward.onclick=()=>changePage(1);
+ back.disabled=currentScanPage<=1;forward.disabled=currentScanPage>=exam.pages;
+ panel.append(back,forward);box.append(panel);
+ let figure=scanImage(exam,currentScanPage);box.append(figure);
  if(q){
   box.append(T("div","exam-question",(q.task?"المطلوب: "+q.task+"\n":"")+q.question));
   const options=T("div","answer-options"),key=exam.id+"/"+qNo;
@@ -96,10 +115,9 @@ function renderExam(){
   const feedback=T("div");box.append(feedback);
   btn.onclick=()=>{const selected=options.querySelector('input[name="official-exam-answer"]:checked');if(!selected){feedback.replaceChildren(T("p","warning","اختر جواباً قبل التصحيح."));return}examAnswers[key]=selected.value;saveExam();showFeedback()};
   function showFeedback(){feedback.replaceChildren();const ans=examAnswers[key];if(!ans)return;const right=ans===q.answer,fb=T("div","result-box"+(right?"":" wrong"));fb.append(T("strong",null,right?"✓ إجابة صحيحة":"✗ إجابة غير صحيحة"),T("p",null,"الجواب الصحيح: "+q.answer+" — "+(q.options["ABCD".indexOf(q.answer)]||"")),T("p",null,q.reason||"التعليل غير متاح"));feedback.append(fb)}
-  showFeedback()
- }else{
-  const note=T("p","warning","ما كنعرضوش اختيارات أو تصحيح غير موجودين في التفريغ الموثق. يمكن قراءة نص السؤال مباشرة من الصورة الأصلية.");
-  box.append(note)
+  showFeedback();
+ }else if(known){
+  box.append(T("p","warning","تعذر العثور على تفريغ موثق لهذا السؤال، يمكنك الرجوع إلى صور الوثيقة أعلاه."));
  }
  if(exam.id.startsWith("2021"))renderEssays();else $("essay-area").replaceChildren();
 }
@@ -107,8 +125,8 @@ function renderEssays(){
  const container=$("essay-area");container.replaceChildren();
  const essay=(window.MASAR_ISLAM_COURSES||[]).find(x=>x.id===(exam.id==="2021-specialty"?"essay-2021-specialty":"essay-2021-didactics"));
  if(!essay)return;
- container.append(T("h3",null,"الأسئلة المقالية الأصلية · "+exam.label),T("p",null,"السند الأصلي المصور قبل الأسئلة المقالية:"));
- container.append(scanImage(exam,2));
+ container.append(T("h3",null,"الأسئلة المقالية · "+exam.label),T("p",null,"نصوص السؤال وعناصر الإجابة في بنك الورقة، وتُراجع صور صفحاتها الأصلية أعلاه."));
+ container.append(T("p","chapter-note","استعرض صفحات الورقة أعلاه لتحديد السند المقالي الأصلي؛ صورة الصفحة الثانية وحدها ليست سنداً مؤكداً لكل سؤال."));
  for(const p of essay.parts||[]){const details=T("details"),sum=T("summary",null,p[0]);details.append(sum);const answer=T("p",null,p[1]);details.append(answer);container.append(details)}
 }
 paintList();paintCourse();paintPractice();renderExam();
