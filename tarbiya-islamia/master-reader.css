@@ -181,3 +181,25 @@ nav[aria-label="أقسام الصفحة"] button.active{background:#10786c;color
 #masar-course-app .master-citations-compact summary{font-size:14px;font-weight:800;color:#1c6165;cursor:pointer}
 #masar-course-app .master-action-row{max-width:920px;margin:0 auto}
 @media(max-width:700px){#masar-course-app .master-practice{padding:14px 11px;margin:13px 10px}#masar-course-app .master-practice-options{grid-template-columns:1fr}#masar-course-app .master-focused{margin:12px 10px}#masar-course-app .master-understand{padding:12px}#masar-course-app .master-understand p{font-size:13px}}
+
+
+/* 2026-11-10 — ملخص مقروء ثم شرح قابل للفتح ثم أسئلة تدريبية موثقة بدرسها */
+#courses>.knowledge-block{display:none}
+#masar-course-app .master-full-course{max-width:920px;margin:15px auto 23px;background:#fbfdfc;border:1px solid #cfdedb;border-radius:14px;overflow:hidden}
+#masar-course-app .master-full-course>summary{display:list-item;cursor:pointer;padding:16px 22px;background:#eaf5f0;color:#135f58;font-size:17px;font-weight:800}
+#masar-course-app .master-full-course>summary:hover{background:#dceee5}
+#masar-course-app .master-full-course .master-outline{margin:16px}
+#masar-course-app .master-full-course .master-chapter{padding:17px 22px}
+#masar-course-app .master-full-course .master-reading{max-width:100%}
+#masar-course-app .master-practice{margin-top:19px}
+#masar-course-app .master-practice-question{scroll-margin-top:16px}
+#masar-course-app .master-practice-option:disabled{cursor:default;opacity:1}
+#masar-course-app .master-practice-feedback{background:#eaf6ef;border-right:4px solid #1d9b73;border-radius:9px;padding:12px 14px;margin-top:12px}
+#masar-course-app .master-practice-feedback.wrong{background:#fff2ec;border-color:#cf7859}
+#masar-course-app .master-practice-feedback strong{display:block;font-size:14px;margin-bottom:6px}
+#masar-course-app .master-practice-feedback p{color:#2c4b52;font-size:13px;font-weight:500;line-height:1.9;margin:4px 0}
+#masar-course-app .master-practice-question .master-practice-retry{margin:8px 0 0}
+#masar-course-app .master-choice-rationales{background:#f2f7f8;border-right:3px solid #168b79;padding:11px 13px;border-radius:10px;margin:12px 0}
+#masar-course-app .master-choice-rationales p{margin:6px 0}
+#masar-course-app .master-explanation-limit{font-size:12px;color:#6c737a}
+@media(max-width:700px){#masar-course-app .master-full-course{margin:12px 10px}#masar-course-app .master-full-course>summary{padding:12px 14px;font-size:15px}#masar-course-app .master-full-course .master-chapter{padding:14px}#masar-course-app .master-practice-question{padding:12px 11px}}
