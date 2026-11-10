@@ -115,6 +115,20 @@ function renderCourse(c){
  title.append(N("span","master-tag",c.group+(c.id.startsWith("g1-")?" · الأولى إعدادي":c.id.startsWith("g2-")?" · الثانية إعدادي":c.id.startsWith("g3-")?" · الثالثة إعدادي":"")),N("h2",null,c.title),N("p",null,c.summary));
  title.append(N("p",null,"تتضمن القراءة "+c.readerChapters.length+" فصول أساسية، "+c.readerGlossary.length+" فقرة ضبط إضافية، ثم أسئلة من الامتحان الأصلي إن وُجدت صلة موضوعية موثقة."));
  detail.append(title);
+ const compact=N("section","master-quick-review");
+ compact.append(N("span","master-quick-kicker","للحفظ السريع"),N("h3",null,"الدرس في دقيقة"));
+ const table=N("table","master-quick-table");
+ const thead=N("thead"),tr=N("tr");
+ tr.append(N("th",null,"المفهوم"),N("th",null,"الخلاصة المفيدة"));thead.append(tr);table.append(thead);
+ const tbody=N("tbody");
+ c.readerChapters.slice(0,4).forEach(p=>{
+  const row=N("tr"),text=String(p.text||"").trim();
+  let lead=text.split(/[.؟!؛]\s*|\n+/)[0].trim();
+  if(lead.length>150){const cut=lead.slice(0,148).lastIndexOf(" ");lead=lead.slice(0,Math.max(cut,75))+"…"}
+  row.append(N("td",null,p.title),N("td",null,lead));
+  tbody.append(row);
+ });
+ table.append(tbody);compact.append(table);detail.append(compact);
  detail.append(makeMindMap(c));
  const toc=N("nav","master-outline");toc.setAttribute("aria-label","فهرس الدرس");
  toc.append(N("h3",null,"فهرس الدرس — اقرأ بالتسلسل"));
