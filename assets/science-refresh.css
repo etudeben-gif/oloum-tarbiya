@@ -76,3 +76,15 @@ header a{transition:transform .18s,background .18s}header a:hover{background:#0b
  #course-hub .reader-hero{padding:15px}
 }
 @media(prefers-reduced-motion:reduce){#course-hub *,header a{transition:none!important;scroll-behavior:auto!important}}
+
+/* Concise lesson recap panels */
+#course-hub .science-quick-review{background:#fff;border:1px solid #d0e5dc;border-radius:15px;padding:19px 22px;margin:14px 0 19px;box-shadow:0 5px 20px #17584e0d}
+#course-hub .science-quick-review .quick-tag{display:inline-block;color:#116e5e;background:#e3f4ed;padding:4px 10px;border-radius:100px;font-size:12px;font-weight:800}
+#course-hub .science-quick-review h3{font-size:20px;color:#15535e;margin:10px 0 14px}
+#course-hub .science-quick-table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border:1px solid #dce9e5;border-radius:10px;table-layout:auto}
+#course-hub .science-quick-table th{background:#e7f5ef;color:#125a51;text-align:right;font-weight:800;padding:11px 13px;font-size:14px}
+#course-hub .science-quick-table td{font-size:14px;line-height:1.8;color:#2b4851;padding:11px 13px;border-top:1px solid #dfe9e7;vertical-align:top}
+#course-hub .science-quick-table td:first-child{font-weight:800;color:#165d60;white-space:normal}
+#course-hub .science-quick-table tr:nth-child(even){background:#fafdfb}
+#course-hub .science-quick-hint{font-size:13px;line-height:1.9;color:#3d6967;margin:12px 0 0}
+@media(max-width:740px){#course-hub .science-quick-review{padding:13px 10px}#course-hub .science-quick-table th,#course-hub .science-quick-table td{font-size:12px;padding:8px 7px;line-height:1.7}#course-hub .science-quick-review h3{font-size:17px}#course-hub .science-quick-hint{font-size:12px}}
