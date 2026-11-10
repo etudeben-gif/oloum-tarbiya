@@ -1,0 +1,19 @@
+name: Islamic education QCM quality check
+on:
+  push:
+    paths:
+      - 'tarbiya-islamia/**'
+      - 'scripts/check-islamic-review.cjs'
+      - '.github/workflows/islamic-review-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/check-islamic-review.cjs
