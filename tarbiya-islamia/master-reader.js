@@ -36,8 +36,8 @@ const library=N("div","master-library");
 const detail=N("article","master-detail");
 const quiz=N("section","master-quiz");quiz.id="masar-master-quiz";
 container.append(hero,library,detail,quiz);
-let finished={};try{finished=JSON.parse(localStorage.getItem("masar-islam-lessons-v2")||"{}")||{}}catch(_){}
-let answers={};try{answers=JSON.parse(localStorage.getItem("masar-islam-qcm-v2")||"{}")||{}}catch(_){}
+let finished={};try{finished=JSON.parse(localStorage.getItem(window.MASAR_PROFILES?.key("masar-islam-lessons-v2")||"masar-islam-lessons-v2")||"{}")||{}}catch(_){}
+let answers={};try{answers=JSON.parse(localStorage.getItem(window.MASAR_PROFILES?.key("masar-islam-qcm-v2")||"masar-islam-qcm-v2")||"{}")||{}}catch(_){}
 let current="quran",activeQuestion=0,picked="";
 const questionIds=Object.entries(bank).flatMap(([exam,questions])=>Object.keys(questions).map(q=>({exam,q})));
 function scoreSummary(){
@@ -67,8 +67,8 @@ function makeMindMap(c){
  return box;
 }
 function persist(){
- try{localStorage.setItem("masar-islam-lessons-v2",JSON.stringify(finished))}catch(_){}
- try{localStorage.setItem("masar-islam-qcm-v2",JSON.stringify(answers))}catch(_){}
+ try{localStorage.setItem(window.MASAR_PROFILES?.key("masar-islam-lessons-v2")||"masar-islam-lessons-v2",JSON.stringify(finished))}catch(_){}
+ try{localStorage.setItem(window.MASAR_PROFILES?.key("masar-islam-qcm-v2")||"masar-islam-qcm-v2",JSON.stringify(answers))}catch(_){}
  try{window.dispatchEvent(new Event("masar-lesson-qcm"))}catch(_){}
 }
 function normalize(v){return String(v||"").normalize("NFKC").toLocaleLowerCase("ar").replace(/[\u064b-\u065f\u0670]/g,"").replace(/[إأآ]/g,"ا").replace(/ى/g,"ي")}
@@ -231,7 +231,7 @@ search.addEventListener("input",()=>{
  if(first&&first.id!==current)goTo(first.id,false);else showList();
 });
 window.MASAR_MASTER_SYNC=function(){
- try{answers=JSON.parse(localStorage.getItem("masar-islam-qcm-v2")||"{}")||{}}catch(_){}
+ try{answers=JSON.parse(localStorage.getItem(window.MASAR_PROFILES?.key("masar-islam-qcm-v2")||"masar-islam-qcm-v2")||"{}")||{}}catch(_){}
  const c=courses.find(x=>x.id===current);if(c)renderQuiz(c);
  updateProgress();
 };
