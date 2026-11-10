@@ -144,3 +144,14 @@ nav[aria-label="أقسام الصفحة"] button.active{background:#10786c;color
  #masar-course-app .master-scoreboard-item strong{font-size:22px}
 }
 @media(prefers-reduced-motion:reduce){#masar-course-app *,nav[aria-label="أقسام الصفحة"] *{transition:none!important;scroll-behavior:auto!important}}
+
+/* Concise one-minute revision table before each Islamic lesson */
+#masar-course-app .master-quick-review{margin:18px 26px 12px;padding:19px 21px;background:#fff;border:1px solid #d2e5df;border-radius:15px;box-shadow:0 5px 19px #174e4910}
+#masar-course-app .master-quick-kicker{display:inline-block;background:#e4f4ed;color:#117363;font-size:12px;font-weight:800;padding:4px 11px;border-radius:100px}
+#masar-course-app .master-quick-review h3{font-size:20px;color:#1b5c62;margin:10px 0 13px}
+#masar-course-app .master-quick-table{width:100%;border:1px solid #dcebe7;border-radius:10px;overflow:hidden;border-spacing:0;table-layout:auto}
+#masar-course-app .master-quick-table th{background:#e6f6ef;padding:11px 14px;text-align:right;color:#14584f;font-size:14px;font-weight:800}
+#masar-course-app .master-quick-table td{padding:10px 13px;color:#294951;font-size:14px;line-height:1.85;border-top:1px solid #dfece8;vertical-align:top}
+#masar-course-app .master-quick-table td:first-child{font-weight:800;color:#155d61;min-width:27%}
+#masar-course-app .master-quick-table tr:nth-child(even){background:#fbfdfb}
+@media(max-width:650px){#masar-course-app .master-quick-review{margin:12px 11px;padding:13px 10px}#masar-course-app .master-quick-table th,#masar-course-app .master-quick-table td{font-size:12px;padding:8px 7px;line-height:1.7}#masar-course-app .master-quick-review h3{font-size:17px}}
