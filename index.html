@@ -313,6 +313,7 @@ render();
 <script src="science-master-extras-enriched.js?v=20261110final2"></script>
 <script src="science-master-exam-links.js?v=20261110final1"></script>
 <script src="science-master-assemble.js?v=20261110final1"></script>
+<script src="science-quick-review.js?v=20261110quick1"></script>
 <script>
 (function(){
 const lessons=window.MASAR_SECONDARY_LESSONS||[];
@@ -359,6 +360,23 @@ function renderCourse(){
  hero.append(node('span','reader-kicker',(g?g[1]:c.group)+' · '+(c.extraExam?'درس إضافي من مواضيع الامتحانات':'درس ضمن محاور التوصيف')));
  hero.append(node('p','','الدرس مقسم إلى '+c.displayParts.length+' فصول متتابعة. الفهم أولاً، ثم QCM من الامتحانات الأصلية. ويمكنك فتح وثائق الوزارة والمركز الجهوي بعد الشرح.'));
  article.append(hero);
+ if(c.quickReview?.rows?.length){
+  const review=node('section','science-quick-review');
+  review.append(node('div','quick-tag','للحفظ السريع'),node('h3','','ملخص الدرس في دقيقة'));
+  const tbl=document.createElement('table');tbl.className='science-quick-table';
+  const head=document.createElement('thead'),hr=document.createElement('tr');
+  c.quickReview.headers.forEach(v=>{const th=document.createElement('th');th.textContent=v;hr.append(th)});
+  head.append(hr);tbl.append(head);
+  const body=document.createElement('tbody');
+  c.quickReview.rows.forEach(row=>{
+   const tr=document.createElement('tr');
+   row.forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td)});
+   body.append(tr);
+  });
+  tbl.append(body);review.append(tbl);
+  if(currentIndex===1)review.append(node('p','science-quick-hint','مفاتيح QCM: دوام الشيء ← حس حركية · التمركز حول الذات ← ما قبل العمليات · ثبات الكمية ← المحسوسة · الفرضيات ← الصورية. الأعمار تقريبية.'));
+  article.append(review);
+ }
  const map=node('section','science-mindmap');map.setAttribute('aria-label','الخريطة الذهنية التفاعلية لعلوم التربية');
  map.append(node('div','science-mindmap-kicker','تعرّف على العلاقات بين عناصر الدرس'),node('h3','','الخريطة الذهنية'),node('p','','اضغط على كل فرع للانتقال إلى شرحه المفصل.'));
  const root=node('div','science-mindmap-root');root.append(node('strong','',c.title),node('span','',c.displayParts.length+' محاور رئيسية'));map.append(root);
