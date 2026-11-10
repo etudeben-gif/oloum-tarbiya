@@ -6,7 +6,7 @@
 (function(){
 "use strict";
 const INDEX="masar-learner-profiles-v1",ACTIVE="masar-learner-active-v1";
-const DATA_KEYS=["masar-original-exams-v1","masar-islam-qcm-v2","masar-islam-lessons-v2","masar-islam-lessons-v1"];
+const DATA_KEYS=["masar-original-exams-v1","masar-islam-qcm-v2","masar-islam-lessons-v2","masar-islam-lessons-v1","masar-science-practice-2026","masar-islam-practice-2026"];
 const PREFIX="masar-learner-data-v1:";
 function read(k){try{return localStorage.getItem(k)}catch(_){return null}}
 function write(k,v){try{localStorage.setItem(k,v);return true}catch(_){return false}}
