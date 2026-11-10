@@ -143,7 +143,7 @@ function practiceQuestions(c){
  const seed=Array.from(c.id).reduce((v,ch)=>v+ch.charCodeAt(0),0)%4;
  return candidates.map((item,i)=>{
    if(!Array.isArray(item.options)||item.options.length!==4||!Number.isInteger(item.correct)||item.correct<0||item.correct>3)return null;
-   const rotate=(seed+i*3+Math.floor(i/4))%4;
+   const rotate=(seed+(i<6?3*i:2*(i-6)))%4;
    const indices=[0,1,2,3].map(n=>(n+rotate)%4);
    return {...item,options:indices.map(j=>item.options[j]),correct:indices.indexOf(item.correct)};
  }).filter(Boolean);
