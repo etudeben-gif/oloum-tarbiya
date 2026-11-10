@@ -60,9 +60,53 @@ select{background:#fff;border:1px solid #cbdce1;border-radius:10px;padding:10px;
 #course-hub .course-sources h3{font-size:15px;margin:0 0 5px}
 #course-hub .course-sources p{font-size:12px;color:#506b72;margin:4px 0}
 @media(max-width:700px){#course-hub .course-outline ol{columns:1}#course-hub .course-block{padding:16px 14px}#course-hub .course-block p{font-size:15px;line-height:2}}
+
+/* Design 2026-11-10: organized textbook reading, no two-column fragments. */
+#course-hub{background:#fbfdfd;overflow:hidden}
+#course-hub .course-head h2{font-size:clamp(23px,3vw,32px);line-height:1.4;margin:0 0 10px}
+#course-hub .course-head p{font-size:14px;line-height:1.9}
+#course-hub .course-article{max-width:920px;display:flex;flex-direction:column;gap:0;margin:15px auto 20px}
+#course-hub .course-tabs{max-height:180px;overflow:auto;gap:7px;border-top:1px solid #e3eded;padding-top:16px}
+#course-hub .course-tab{font-size:13px;padding:9px 12px}
+#course-hub .course-current{font-size:clamp(21px,3vw,28px);padding:15px 0 5px;border-bottom:2px solid #dcebe8;margin-top:16px}
+#course-hub .reader-hero{background:linear-gradient(115deg,#ecf8f5,#fff);border:1px solid #cce6df;border-radius:13px;padding:18px 21px;margin:10px 0 15px}
+#course-hub .reader-hero p{margin:8px 0 0;color:#385a60;line-height:1.9;font-size:14px}
+#course-hub .reader-kicker{color:#0e6e65;font-size:13px;font-weight:800}
+#course-hub .reader-toc{padding:17px 22px;margin:0 0 11px;background:white;border:1px solid #d8e4e5;border-radius:12px}
+#course-hub .reader-toc h3{font-size:16px;margin:0 0 8px;color:#225963}
+#course-hub .reader-toc ol{padding-right:24px;margin:0;columns:2;column-gap:30px}
+#course-hub .reader-toc li{break-inside:avoid;margin:2px 0;padding:3px}
+#course-hub .reader-toc a{font-size:14px;color:#146c72;text-decoration:none}
+#course-hub .master-chapter{background:#fff;border-bottom:1px solid #dfebeb;padding:26px 29px;scroll-margin-top:16px}
+#course-hub .master-chapter:nth-of-type(even){background:#fcfefd}
+#course-hub .chapter-label{display:inline-block;color:#39756e;font-size:12px;font-weight:800;margin-bottom:6px}
+#course-hub .master-chapter h3{font-size:19px;color:#174754;margin:0 0 12px;line-height:1.55}
+#course-hub .master-chapter p{font-size:16px;color:#263f49;line-height:2.13;margin:0 0 12px;overflow-wrap:anywhere}
+#course-hub .master-chapter p:last-child{margin-bottom:0}
+#course-hub .reader-references{background:#f2f7f9;border:1px solid #d7e4e7;padding:19px 22px;border-radius:13px;margin:20px 0 0}
+#course-hub .reader-references h3{font-size:17px;margin:0 0 10px}
+#course-hub .reader-note{color:#4d6971;font-size:13px;line-height:1.95;margin:0 0 10px}
+#course-hub .reader-source{display:flex;flex-wrap:wrap;gap:7px 10px;align-items:baseline;padding:7px 0;border-bottom:1px solid #dce8e9}
+#course-hub .reader-source-kind{color:#57747b;font-size:12px;font-weight:800;min-width:84px}
+#course-hub .reader-source a{color:#116a75;overflow-wrap:anywhere;font-size:13px}
+#course-hub .reader-biblio{font-size:12px;line-height:1.85;color:#547078;margin:12px 0 0}
+#course-hub .reader-ministry-note{padding:7px 0}
+#course-hub .reader-ministry-note summary{color:#225b62;font-weight:800;cursor:pointer}
+#course-hub .reader-ministry-note p{font-size:14px;line-height:2}
+#course-hub .reader-actions{display:flex;gap:9px;flex-wrap:wrap;justify-content:space-between;padding:18px 0}
+#course-hub .reader-nav{background:#e6f0f1;color:#1b5d66;border-radius:9px;padding:11px 14px;font-weight:800}
+#course-hub .reader-nav:disabled{opacity:.35;cursor:not-allowed}
+#course-hub .reader-nav-primary{background:#147a71;color:white}
+#course-hub .course-exercises{max-width:100%;background:#ecf7f3;border:1px solid #d2e6e0;padding:22px;margin-top:15px}
+#course-hub .master-q{font-size:13px;line-height:1.7;white-space:normal;text-align:right;max-width:100%}
+#course-hub>.layout{margin-top:22px;border-top:2px solid #dce9e7;padding-top:22px}
+#course-hub .layout .card{background:#fff}
+#course-hub .layout .content{min-width:0}
+#course-hub .layout .frame{max-height:65vh}
+@media(max-width:740px){#course-hub .reader-toc ol{columns:1}#course-hub .master-chapter{padding:19px 13px}#course-hub .master-chapter p{font-size:15px;line-height:2.08}#course-hub .reader-hero,#course-hub .reader-references{padding:15px 12px}#course-hub .course-tabs{max-height:200px}#course-hub>.layout{margin-top:15px}}
 </style></head><body>
 <header><div class="inner"><div class="brand">مسار | علوم التربية للثانوي</div><a href="./tarbiya-islamia/" style="color:#fff;background:#147b76;border-radius:9px;padding:7px 14px;font-weight:bold;text-decoration:none">التربية الإسلامية</a></div></header>
-<main class="wrap"><section class="card" id="course-hub" aria-label="الدروس قبل الامتحانات"><div class="course-head"><div><div class="step"><b>1</b> الدرس أولاً، ثم الأسئلة الرسمية</div><h2>دروس علوم التربية — الثانوي الإعدادي والتأهيلي</h2><p class="small">هذا اختبار علوم التربية الخاص بالثانوي الإعدادي والتأهيلي، المشترك بين التخصصات ومنها التربية الإسلامية، وليس اختبار الابتدائي ولا اختبار مادة التخصص. الدروس مرتبة من التعريف وأفكار العلماء إلى التطبيق والمراجعة، ثم تأتي الأسئلة الأصلية التي تحققنا من صلتها بالدرس.</p><p class="small"><a href="https://drive.google.com/file/d/1H8Ql6B3s3rWep-O51YJJ0MOnF2j7V0WA/view" target="_blank" rel="noopener noreferrer">التوصيف الوزاري لعلوم التربية – مسلك الثانوي – نونبر 2025</a></p></div><span class="question-code">35 درساً · 6 محاور · ترتيب جديد</span></div><div class="course-controls"><label for="course-group">المحور حسب التوصيف الوزاري</label><select id="course-group"><option value="all">جميع المحاور (100%)</option></select><label for="course-search">البحث عن درس أو مفهوم</label><input id="course-search" type="search" placeholder="مثلاً: بياجيه، الكفايات، بورديو، السوسيومترية" autocomplete="off"></div><p class="small" id="course-count" role="status"></p><div class="course-tabs" id="course-tabs" role="group" aria-label="اختيار الدرس"></div><h3 id="course-current" class="course-current"></h3><p class="small">المحاور والنسب من التوصيف الرسمي لوزارة التربية الوطنية المغربية (نونبر 2025). الشرح النظري والأمثلة مكتوبة للمراجعة وليست منقولة حرفياً من وثائق الوزارة؛ التوصيف يحدد المحاور ولا يتضمن دروساً مفصلة.</p><div id="course-article" class="course-article"></div><div class="course-exercises"><h3>المرحلة الثانية: الأسئلة الرسمية المتحقق من ربطها بالدرس</h3><p class="course-note">لا تظهر أزرار سؤال خاص إلا عندما يكون الربط بالدرس موثقاً في بيانات المراجعة. باقي الدروس لا نختلق لها أسئلة. الأسئلة المصورة أصلية، لكن أجوبة نونبر 2025 المقترحة غير وزارية.</p><div id="course-qs"></div></div></section><div class="layout">
+<main class="wrap"><section class="card" id="course-hub" aria-label="الدروس قبل الامتحانات"><div class="course-head"><div><div class="step"><b>1</b> الدرس أولاً، ثم الأسئلة الرسمية</div><h2>دروس علوم التربية — الثانوي الإعدادي والتأهيلي</h2><p class="small">هذا اختبار علوم التربية الخاص بالثانوي الإعدادي والتأهيلي، المشترك بين التخصصات ومنها التربية الإسلامية، وليس اختبار الابتدائي ولا اختبار مادة التخصص. برنامج مراجعة موسّع: 35 درساً ضمن المحاور الرسمية و9 دروس إضافية مستخلصة من موضوعات امتحانات سابقة. اقرأ الشرح المتسلسل ثم جاوب عن أسئلة الأوراق الأصلية مباشرة أسفل الدرس.</p><p class="small"><a href="https://drive.google.com/file/d/1H8Ql6B3s3rWep-O51YJJ0MOnF2j7V0WA/view" target="_blank" rel="noopener noreferrer">التوصيف الوزاري لاختبار علوم التربية – الثانوي – نونبر 2025</a> · <a href="https://crmefcasablancasettat.ma/%D8%A8%D8%B7%D8%A7%D9%82%D8%A7%D8%AA-%D8%AA%D9%88%D8%B5%D9%8A%D9%81-%D8%A7%D9%84%D8%AB%D8%A7%D9%86%D9%88%D9%8A-2/" target="_blank" rel="noopener noreferrer">بطاقة مجزوءة علوم التربية – المركز الجهوي لتكوين الثانوي</a></p></div><span class="question-code">44 درساً · 35 أساسي + 9 تكميلي من الامتحانات</span></div><div class="course-controls"><label for="course-group">المحور حسب التوصيف الوزاري</label><select id="course-group"><option value="all">جميع المحاور (100%)</option></select><label for="course-search">البحث عن درس أو مفهوم</label><input id="course-search" type="search" placeholder="مثلاً: بياجيه، الكفايات، بورديو، السوسيومترية" autocomplete="off"></div><p class="small" id="course-count" role="status"></p><div class="course-tabs" id="course-tabs" role="group" aria-label="اختيار الدرس"></div><h3 id="course-current" class="course-current"></h3><p class="small">المحاور والنسب من التوصيف الرسمي لوزارة التربية الوطنية المغربية (نونبر 2025). الشرح النظري والأمثلة مكتوبة للمراجعة وليست منقولة حرفياً من وثائق الوزارة؛ التوصيف يحدد المحاور ولا يتضمن دروساً مفصلة.</p><div id="course-article" class="course-article"></div><div class="course-exercises"><h3>المرحلة الثانية: QCM من أوراق المباريات الأصلية — بعد الدرس</h3><p class="course-note">كل زر يفتح سؤالاً مصوراً من ورقة امتحان حقيقية؛ نميّز السؤال المباشر عن المرتبط بالمقارنة. اختر الإجابة ثم اقرأ التصحيح والتعليل. مفاتيح 2025 و2022 غير وزارية، خلافاً لشبكة أبريل 2024 الموثقة.</p><div id="course-qs"></div></div><div class="layout">
 <aside class="side">
 <section class="card mainselector"><h3>امتحانات علوم التربية — الثانوي</h3><label class="field" for="exam-select">الدورة</label><select id="exam-select"></select><label class="field" for="number-select">رقم السؤال</label><select id="number-select"></select><div class="info" id="exam-meta"></div></section>
 <section class="card"><h3>النتيجة التدريبية</h3><div class="counter" id="score">0 / 0</div><div class="small" id="completed">0 من 354 سؤالاً</div><div class="progress"><div id="progress-bar"></div></div><button id="reset" class="clear" type="button">مسح الإجابات</button></section>
@@ -91,10 +135,11 @@ select{background:#fff;border:1px solid #cbdce1;border-radius:10px;padding:10px;
 <div class="source-view"><div class="toolbar"><span class="small" id="sheet-label">الصفحة</span><div class="toolbox"><button id="zoom-out" type="button" aria-label="تصغير">−</button><span id="zoom-label" class="small">100%</span><button id="zoom-in" type="button" aria-label="تكبير">+</button><button id="page-toggle" type="button">الصفحة كاملة</button></div></div><div class="frame" id="canvas-frame"><div class="loader" id="loading">تحميل صورة السؤال الأصلي...</div><canvas id="question-canvas" aria-label="السؤال والاختيارات كما وردا في ورقة الامتحان الأصلية"></canvas></div></div>
 <div class="info">تُعرض صورة السؤال والاختيارات كما وردت في الوثيقة المصورة، دون تغيير النص أو الصياغة. يمكن تكبير الصورة أو فتح الصفحة كاملة. عند عدم توفر شبكة تصحيح وزارية، يظهر الجواب باعتباره ترجيحاً تعليمياً لا حقيقة رسمية.</div>
 <div class="choice-title">اختر إجابتك بحسب الاختيارات المطبوعة في الصورة</div><div class="options" id="answers"></div>
-<div class="buttons"><button type="button" class="primary" id="check">تصحيح الجواب</button><button type="button" class="secondary" id="skip">تخطي السؤال</button></div><div class="result" id="feedback" hidden></div>
+<div class="buttons"><button type="button" class="primary" id="check">تصحيح الجواب</button><button type="button" class="secondary" id="retry">إعادة المحاولة</button><button type="button" class="secondary" id="skip">تخطي السؤال</button></div><div class="result" id="feedback" hidden></div>
 <div class="nav"><button type="button" id="prev">→ السابق</button><button type="button" id="next">التالي ←</button></div></section>
-</div></div></main>
+</div></div></section></main>
 <script id="masar-reasoning-data">window.MASAR_REASONING_2025={"61":"مرحلة الكمون عند فرويد تُميز عادة بهدوء نسبي للدوافع الجنسية وتوجيه الطاقة نحو التعلم والعلاقات الاجتماعية. يختلف ذلك عن المرحلة الفمية أو الشرجية أو التناسلية.","63":"نظرية النمو النفسي الاجتماعي ترتبط بإريك إريكسون، الذي صاغ مراحل نمو تتميز كل واحدة بأزمة أو مهمة نفسية اجتماعية.","64":"في منهج مونتيسوري يهيئ الراشد بيئة منظمة ويلاحظ الطفل ويوجهه عند الضرورة؛ لا يقوم على التلقين المستمر ولا على ترك الطفل بلا إطار.","66":"العنف الرمزي في تحليل بورديو مرتبط بفرض معايير ثقافية واجتماعية بوصفها مشروعة وطبيعية، وليس بالضرورة اعتداءً مادياً مباشراً.","67":"مرحلة العمليات الصورية عند بياجيه تمثل القدرة على التعامل مع الفرضيات والأفكار المجردة، بخلاف العمليات المادية المرتبطة بالمحسوس.","68":"يرتبط طور المراهقة في نظرية إريكسون بصراع الهوية مقابل تشتت الدور، حيث يستكشف المراهق أدواره وقيمه واتجاهاته.","69":"في العمليات الصورية يصبح التفكير الافتراضي والاستدلال المجرد ممكناً؛ أما منطق العمليات المادية فيرتبط أكثر بموضوعات ملموسة.","72":"الإشراط الإجرائي عند سكينر يفسر تغير احتمال تكرار السلوك بحسب نتائجه، مثل التعزيز والعقاب، وليس مجرد اقتران منبهين.","73":"في نموذج أتكنسون وشيفرين قد تُحفظ المعلومات مؤقتاً في الذاكرة قصيرة المدى، ويسهم التكرار والترميز في نقلها إلى الذاكرة طويلة المدى.","74":"يؤكد برونر دور التعلم بالاكتشاف والتنظيم النشط للمعلومات، مع تمثيل المعرفة بالفعل ثم الصورة ثم الرمز.","75":"منطقة النمو القريب عند فيغوتسكي هي المسافة بين ما يستطيع المتعلم إنجازه مستقلاً وما يمكن أن ينجزه بمساعدة راشد أو قرين أكثر خبرة.","77":"يتقدم البناء المعرفي في نظرية بياجيه بعمليتي الاستيعاب والملاءمة والموازنة؛ المتعلم ينظم معارفه بنشاط عبر التفاعل مع البيئة.","81":"في تصنيف بلوم التقليدي، استعمال المعرفة أو القاعدة في وضعية جديدة ينتمي إلى مستوى التطبيق، بخلاف مجرد التذكر أو الفهم.","82":"التربية الدامجة تسعى لإزالة عوائق الولوج والمشاركة والتعلم لدى جميع المتعلمين، مع تكييف الشروط والوسائل حسب الحاجات.","83":"العصف الذهني يركز أولاً على إنتاج أفكار متعددة دون نقد فوري، ثم تُناقش الاقتراحات وتُنتقى في مرحلة لاحقة.","84":"يشير مبدأ المطابقة عند بولز وجينتس إلى تشابه العلاقات الاجتماعية والتنظيمية في المدرسة مع علاقات العمل في النظام الاقتصادي.","86":"تُعد إعادة الحفظ والتكرار البسيط من الاستراتيجيات السطحية، على خلاف الربط والتنظيم والتحليل التي تقترب من المعالجة العميقة.","87":"الوضعية المشكلة تستثير البحث وتعبئة المعارف السابقة لتجاوز عائق ذي معنى، وليست مجرد طلب إعادة إنتاج جواب محفوظ.","90":"ارتبط كورت ليفين بنظرية المجال ودراسة دينامية الجماعات، بما فيها تفاعل الأفراد والقوى المؤثرة في السلوك داخل الجماعة.","92":"يتضمن التقويم جمع المعلومات وقياس جوانب الأداء ثم إصدار حكم واتخاذ قرار تربوي مناسب، وليس الاكتفاء بإجراء اختبار.","93":"توجد الحاجات الفيزيولوجية الأساسية في قاعدة التسلسل الهرمي الشائع المنسوب إلى ماسلو، قبل حاجات الأمن والانتماء والتقدير.","96":"يتعلق التواصل شبه اللفظي بنبرة الصوت وشدته وسرعته وإيقاعه، لا بمحتوى الكلمات ذاته ولا بحركات الجسم وحدها.","100":"الذاكرة العاملة منظومة للاحتفاظ المؤقت بالمعلومات ومعالجتها أثناء إنجاز مهمة، وتختلف عن التخزين طويل المدى.","101":"يُربط التعزيز في الإشراط الإجرائي بسكينر؛ التعزيز يزيد احتمال تكرار الاستجابة، بينما الإشراط الكلاسيكي يرتبط أساساً ببافلوف.","103":"يصف باندورا التعلم بالملاحظة والنمذجة: ينتبه الفرد إلى نموذج ويحتفظ بما لاحظه ويعيد الأداء وفق دافعيته وقدرته.","104":"يطلق تأثير بجماليون أو روزنتال على أثر توقعات الأستاذ في أداء المتعلم، حين تنعكس التوقعات على معاملة المتعلمين وفرص تعلمهم.","105":"المقاربة بالكفايات لا تقتصر على حفظ الموارد، بل تستهدف تعبئة المعارف والمهارات والمواقف في وضعية ذات معنى.","106":"يُصاغ الهدف الإجرائي بحيث يمكن ملاحظة الأداء وتقويمه باستخدام شروط ومعايير محددة، وهو ما يميز بيداغوجيا الأهداف.","107":"يرتبط التقويم التكويني بالتغذية الراجعة والدعم أثناء التعلم، بينما يأتي التقويم الإجمالي عند نهاية مرحلة.","108":"تتميز الكفاية بتعبئة موارد مختلفة لمواجهة مهمة مركبة وسياقية، لا بتجميع معارف معزولة دون توظيف.","109":"بيداغوجيا الأهداف تُجزئ التعلمات إلى أهداف واضحة قابلة للملاحظة والقياس وتساعد على تتبع تحققها.","110":"اللعب البيداغوجي نشاط تتضمن قواعده وتفاعلاته غاية تعلمية مقصودة، بخلاف اللعب المخصص للترفيه وحده.","113":"يربط بورديو التفاوت في التحصيل بالرأسمال الثقافي والظروف الاجتماعية وآليات إعادة الإنتاج المدرسي، وليس بالقدرات الفردية فقط.","114":"يعد دوركايم التربية تنشئة اجتماعية تنقل القيم والقواعد المشتركة للأجيال الناشئة وتساعد على اندماجها في المجتمع.","115":"يرتبط بورديو وباسرون بآليات إعادة الإنتاج الاجتماعي والثقافي والعنف الرمزي في المؤسسة المدرسية.","116":"السوسيوغرام تمثيل للعلاقات والاختيارات داخل الجماعة، وليس مقياساً لعلامات الاختبارات الدراسية.","119":"تركز صنافة كراثوول على المجال الوجداني للأهداف، مثل التلقي والاستجابة والتثمين والتنظيم والتمثل القيمي."};</script>
+<script src="science-master-reasoning.js?v=20261110final1"></script>
 <script src="question-guides.js"></script>
 <script>
 (function(){
@@ -169,7 +214,7 @@ function showFeedback(){
  :'التوثيق: مفتاح إجابة متداول للمراجعة، لم يتم التحقق من كونه رسمياً.';
  box.appendChild(note);
  if(correctionPages[e.id]){const source=document.createElement('a');source.href=correctionPages[e.id];source.target='_blank';source.rel='noopener noreferrer';source.textContent='مراجعة مصدر الامتحان والتصحيح';box.appendChild(source)}
- const explanation=e.id==='2025'?window.MASAR_REASONING_2025?.[String(qi+61)]:null;
+ const explanation=e.id==='2025'?window.MASAR_REASONING_2025?.[String(qi+61)]:e.id==='2022'?window.MASAR_REASONING_2022?.[String(qi+61)]:null;
  const detail=document.createElement('div');detail.className='knowledge-block';detail.style.marginTop='12px';
  const heading=document.createElement('strong');heading.textContent='تعليل تعليمي للمراجعة';detail.appendChild(heading);
  const p=document.createElement('p');
@@ -203,13 +248,14 @@ if(guide){
 }
 $('q-code').textContent='Q'+n;
 $('answers').innerHTML='';const selected=answers[id(e,n)]||'';for(let i=0;i<e.choices;i++){const letter='ABCDE'[i],label=document.createElement('label');label.className='option';const input=document.createElement('input');input.type='radio';input.name='answer';input.value=letter;input.checked=selected===letter;label.append(input,document.createTextNode(letter));$('answers').appendChild(label)}
-$('check').disabled=!!selected;$('check').textContent=selected?'تم حفظ الجواب':'تصحيح الجواب';$('feedback').hidden=true;if(selected)showFeedback();
+$('check').disabled=!!selected;$('retry').disabled=!selected;$('retry').hidden=!selected;$('check').textContent=selected?'تم حفظ الجواب':'تصحيح الجواب';$('feedback').hidden=true;if(selected)showFeedback();
 $('prev').disabled=qi===0;$('next').disabled=qi===e.count-1;$('skip').disabled=qi===e.count-1;full=false;$('page-toggle').textContent='الصفحة كاملة';zoom=100;
 $('q-grid').innerHTML='';for(let i=0;i<e.count;i++){const b=document.createElement('button');b.type='button';b.textContent=i+61;b.className=(i===qi?'now ':'')+(answers[id(e,i+61)]?'done':'');b.onclick=()=>{qi=i;render()};$('q-grid').appendChild(b)}showImage();updateScore()}
 function turn(step){const e=exams[examIndex];if(qi+step>=0&&qi+step<e.count){qi+=step;render();$('question-card').scrollIntoView({behavior:'smooth',block:'start'})}}
 exams.forEach((e,i)=>{const o=document.createElement('option');o.value=e.id;o.textContent=e.name;$('exam-select').appendChild(o)});
 $('exam-select').onchange=function(){examIndex=exams.findIndex(e=>e.id===this.value);qi=0;render()};$('number-select').onchange=function(){qi=Number(this.value);render()};
 $('check').onclick=function(){const c=document.querySelector('input[name="answer"]:checked');if(!c){$('feedback').hidden=false;$('feedback').className='result neutral';$('feedback').textContent='اختر أحد الحروف أولاً.';return}const e=exams[examIndex];answers[id(e,qi+61)]=c.value;save();render()};
+$('retry').onclick=function(){const e=exams[examIndex];delete answers[id(e,qi+61)];save();render()};
 $('prev').onclick=()=>turn(-1);$('next').onclick=()=>turn(1);$('skip').onclick=()=>turn(1);
 $('page-toggle').onclick=function(){full=!full;this.textContent=full?'قصّ السؤال':'الصفحة كاملة';showImage()};
 $('zoom-in').onclick=()=>setZoom(zoom+40);$('zoom-out').onclick=()=>setZoom(zoom-40);
@@ -227,6 +273,14 @@ fetch('science-proposed-keys.json',{cache:'no-store'})
 <script src="science-secondary-thinkers.js?v=20261110a"></script>
 <script src="science-secondary-curated.js?v=20261110b"></script>
 <script src="science-secondary-official-notes.js?v=20261110b"></script>
+<script src="science-master-psych1.js?v=20261110final1"></script>
+<script src="science-master-learning.js?v=20261110final1"></script>
+<script src="science-master-competencies.js?v=20261110final1"></script>
+<script src="science-master-methods.js?v=20261110final1"></script>
+<script src="science-master-sociology.js?v=20261110final1"></script>
+<script src="science-master-extras.js?v=20261110final1"></script>
+<script src="science-master-exam-links.js?v=20261110final1"></script>
+<script src="science-master-assemble.js?v=20261110final1"></script>
 <script>
 (function(){
 const lessons=window.MASAR_SECONDARY_LESSONS||[];
@@ -237,40 +291,86 @@ const courseCount=document.getElementById('course-count'),currentTitle=document.
 let currentIndex=0;
 function node(tag,cls,value){const e=document.createElement(tag);if(cls)e.className=cls;if(value!==undefined)e.textContent=value;return e}
 for(const [key,name,weight] of groups){const option=document.createElement('option');option.value=key;option.textContent=name+' ('+weight+'%)';groupSelect.appendChild(option)}
-function filteredIndexes(){const q=searchInput.value.trim().toLocaleLowerCase('ar');return lessons.map((c,i)=>({c,i})).filter(({c})=>(groupSelect.value==='all'||c.group===groupSelect.value)&&(!q||[c.title,...c.parts.flat()].join(' ').toLocaleLowerCase('ar').includes(q))).map(x=>x.i)}
-function openOriginalQuestion(n){const exam=document.getElementById('exam-select'),num=document.getElementById('number-select');if(!exam||!num)return;exam.value='2025';exam.dispatchEvent(new Event('change'));num.value=String(n-61);num.dispatchEvent(new Event('change'));document.getElementById('question-card')?.scrollIntoView({behavior:'smooth',block:'start'})}
+function normalize(s){return String(s||'').normalize('NFKC').toLocaleLowerCase('ar').replace(/[\u064b-\u065f\u0670]/g,'').replace(/[إأآ]/g,'ا').replace(/ى/g,'ي')}
+function filteredIndexes(){const q=normalize(searchInput.value.trim());return lessons.map((c,i)=>({c,i})).filter(({c})=>{
+ const okGroup=groupSelect.value==='all'||c.group===groupSelect.value;
+ const textToSearch=[c.title,...(c.displayParts||[]).flatMap(p=>[p.heading,p.text])].join(' ');
+ return okGroup&&(!q||normalize(textToSearch).includes(q));
+}).map(x=>x.i)}
+function examLabel(id){return id==='2025'?'نونبر 2025':id==='2022'?'نونبر 2022':id}
+function openOriginalQuestion(examId,n){
+ const exam=document.getElementById('exam-select'),num=document.getElementById('number-select');
+ if(!exam||!num)return;
+ exam.value=examId;exam.dispatchEvent(new Event('change'));
+ num.value=String(n-61);num.dispatchEvent(new Event('change'));
+ document.getElementById('question-card')?.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function linkTo(url,label){
+ const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label;return a;
+}
 function renderCourse(){
- const indexes=filteredIndexes();if(!indexes.includes(currentIndex))currentIndex=indexes[0]??-1;
+ const indexes=filteredIndexes();
+ if(!indexes.includes(currentIndex))currentIndex=indexes[0]??-1;
  tabs.replaceChildren();article.replaceChildren();qs.replaceChildren();
- courseCount.textContent=indexes.length+' درساً ظاهراً من أصل '+lessons.length+' درساً — '+lessons.reduce((n,c)=>n+c.parts.length,0)+' فقرة شرح وتطبيق — اختَر الدرس ثم انتقل إلى الامتحان الأصلي';
- if(currentIndex<0){currentTitle.textContent='ما لقيناش درساً بهذا البحث';article.append(node('p','small','جرب كلمة أخرى أو اختَر جميع المحاور.'));return}
- for(const i of indexes){const c=lessons[i],b=node('button','course-tab'+(i===currentIndex?' active':''),c.title);b.type='button';b.setAttribute('aria-pressed',String(i===currentIndex));b.onclick=()=>{currentIndex=i;renderCourse();currentTitle.scrollIntoView({behavior:'smooth',block:'start'})};tabs.appendChild(b)}
- const c=lessons[currentIndex],g=groups.find(x=>x[0]===c.group);currentTitle.textContent=c.title+' — '+(g?g[1]:'');
- const outline=node('nav','course-outline');outline.setAttribute('aria-label','فهرس فقرات الدرس');outline.append(node('h3','','فهرس الدرس — اقرأ بالترتيب'));
+ const totalParts=lessons.reduce((n,c)=>n+(c.displayParts?.length||0),0);
+ courseCount.textContent=indexes.length+' من أصل '+lessons.length+' درساً · '+totalParts+' فصل شرح وتطبيق · نسـخة منقحة 10 نونبر 2026';
+ if(currentIndex<0){currentTitle.textContent='لم نجد درساً مطابقاً';article.append(node('p','small','جرب عبارة أخرى أو اختر جميع المحاور.'));return}
+ for(const i of indexes){
+  const c=lessons[i],b=node('button','course-tab'+(i===currentIndex?' active':''),(i+1)+'. '+c.title);
+  b.type='button';b.setAttribute('aria-pressed',String(i===currentIndex));
+  b.onclick=()=>{currentIndex=i;renderCourse();currentTitle.scrollIntoView({behavior:'smooth',block:'start'})};
+  tabs.append(b);
+ }
+ const c=lessons[currentIndex],g=groups.find(x=>x[0]===c.group);
+ currentTitle.textContent=(currentIndex+1)+'. '+c.title;
+ const hero=node('div','reader-hero');
+ hero.append(node('span','reader-kicker',(g?g[1]:c.group)+' · '+(c.extraExam?'درس إضافي من مواضيع الامتحانات':'درس ضمن محاور التوصيف')));
+ hero.append(node('p','','الدرس مقسم إلى '+c.displayParts.length+' فصول متتابعة. الفهم أولاً، ثم QCM من الامتحانات الأصلية. ويمكنك فتح وثائق الوزارة والمركز الجهوي بعد الشرح.'));
+ article.append(hero);
+ const toc=node('nav','reader-toc');toc.setAttribute('aria-label','فهرس الدرس');
+ toc.append(node('h3','','محتويات الدرس'));
  const ol=document.createElement('ol');
- c.parts.forEach(([heading],k)=>{const li=document.createElement('li'),a=document.createElement('a');a.href='#course-section-'+k;a.textContent=heading;li.append(a);ol.append(li)});
- outline.append(ol);article.append(outline);
- c.parts.forEach(([heading,body],k)=>{
-   const kind=c.sectionKinds?.[k]||'شرح الدرس',exam=kind==='ما يجب ضبطه في المباراة';
-   const section=node('section','course-block'+(exam?' course-exam':''));section.id='course-section-'+k;
-   section.append(node('span','course-kind',(k+1)+' / '+c.parts.length+' · '+kind),node('h3','',heading),node('p','',body));
+ c.displayParts.forEach((p,k)=>{const li=document.createElement('li'),a=document.createElement('a');a.href='#master-section-'+k;a.textContent=p.heading;li.append(a);ol.append(li)});
+ toc.append(ol);article.append(toc);
+ c.displayParts.forEach((part,k)=>{
+   const section=node('section','master-chapter');section.id='master-section-'+k;
+   section.append(node('span','chapter-label','الفصل '+(k+1)+' من '+c.displayParts.length));
+   section.append(node('h3','',part.heading));
+   const paragraphs=part.text.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+   for(const value of paragraphs)section.append(node('p','',value));
    article.append(section);
  });
- const sources=node('div','course-sources');sources.append(node('h3','','المراجع الرسمية المرتبطة بالمحور'));
- sources.append(node('p','','توصيف الوزارة يحدد موضوع الاختبار ووزنه، ولا يقدم نصوص هذه الدروس. الشروح النظرية والأمثلة أعلاه صياغة تعليمية للمراجعة، وليست مقتطفات رسمية.'));
- const link=document.createElement('a');link.href='https://drive.google.com/file/d/1H8Ql6B3s3rWep-O51YJJ0MOnF2j7V0WA/view';link.target='_blank';link.rel='noopener noreferrer';link.textContent='التوصيف الوزاري لعلوم التربية – الثانوي (2025)';sources.append(link);
- for(const [label,url] of c.ministrySources||[]){const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label;sources.append(a)}
- if(c.officialNotes?.length){
-  const official=node('div','course-sources');official.append(node('h3','','مضامين مستخلصة من صفحات الوزارة'));
-  official.append(node('p','','الفقرات التالية تلخيص تعليمي لمضامين صفحات الوزارة المشار إليها، وليست اقتباساً حرفياً.'));
-  for(const [heading,body,url] of c.officialNotes){
-   const sec=node('section','course-block');sec.append(node('h3','',heading),node('p','',body));
-   const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='اقرأ المصدر الرسمي';sec.append(a);official.append(sec);
-  }article.append(official);
+ const sources=node('section','reader-references');
+ sources.append(node('h3','','مصادر الدرس ومرجعية التكوين'));
+ sources.append(node('p','reader-note','التوصيف الوزاري يحدد محاور الاختبار، وبطاقة مجزوءة المركز الجهوي تحدد محتويات التكوين ومراجعه. متن الدرس شرح تعليمي أصلي في ضوء هذه المرجعيات، وليس نقلاً حرفياً عن الوزارة.'));
+ for(const item of c.sourceLinks||[]){
+  const row=document.createElement('div');row.className='reader-source';
+  row.append(node('span','reader-source-kind',item.kind));
+  row.append(linkTo(item.url,item.label));sources.append(row);
+ }
+ sources.append(node('p','reader-biblio','من مراجع التكوين المذكورة في بطاقة المركز الجهوي: '+(c.bibliography||'')));
+ for(const [heading,body,url] of c.officialNotes||[]){
+   const sub=node('details','reader-ministry-note'),summary=document.createElement('summary');summary.textContent=heading;
+   sub.append(summary,node('p','',body),linkTo(url,'المرجع المنشور على موقع الوزارة'));
+   sources.append(sub);
  }
  article.append(sources);
- if(c.qs?.length){for(const n of c.qs){const b=node('button','course-q','سؤال أصلي Q'+n);b.type='button';b.onclick=()=>openOriginalQuestion(n);qs.appendChild(b)}}
- else{qs.append(node('p','small','لم نتحقق بعد من سؤال رسمي محدد مرتبط بهذا الدرس. الأسئلة الموجودة أسفل الصفحة من ورقة الامتحان العامة، وقد لا تتعلق بالدرس الحالي. لن نعرضها باعتبارها QCM خاصاً بهذا الدرس.'));const b=node('button','course-q','استعراض الامتحان الكامل (ليس مرتبطاً بالدرس)');b.type='button';b.onclick=()=>{const exam=document.getElementById('exam-select');if(exam){exam.value='2025';exam.dispatchEvent(new Event('change'))}document.getElementById('question-card')?.scrollIntoView({behavior:'smooth',block:'start'})};qs.appendChild(b)}
+ const nav=node('div','reader-actions');
+ const back=node('button','reader-nav','الدرس السابق');back.type='button';back.disabled=currentIndex===0;back.onclick=()=>{if(currentIndex>0){currentIndex--;renderCourse();currentTitle.scrollIntoView({behavior:'smooth',block:'start'})}};
+ const next=node('button','reader-nav','الدرس التالي');next.type='button';next.disabled=currentIndex===lessons.length-1;next.onclick=()=>{if(currentIndex<lessons.length-1){currentIndex++;renderCourse();currentTitle.scrollIntoView({behavior:'smooth',block:'start'})}};
+ const qGo=node('button','reader-nav reader-nav-primary','انتقل إلى الأسئلة الرسمية');qGo.type='button';qGo.onclick=()=>document.querySelector('#course-hub .course-exercises')?.scrollIntoView({behavior:'smooth',block:'start'});
+ nav.append(back,next,qGo);article.append(nav);
+ const arr=c.examLinks||[];
+ if(arr.length){
+  const nDirect=arr.filter(x=>x.relation==='مباشر').length;
+  qs.append(node('p','reader-note','وجدنا '+arr.length+' سؤالاً مصوراً مناسباً لهذا المحور، منها '+nDirect+' أسئلة مباشرة، والباقي للتوسيع أو المقارنة. الصياغة والاختيارات في صورة الورقة الأصلية.'));
+  for(const item of arr){
+   const b=node('button','course-q master-q',(item.relation==='مباشر'?'سؤال مباشر':'سؤال '+item.relation)+' · '+examLabel(item.exam)+' · Q'+item.q+' — '+item.topic);
+   b.type='button';b.onclick=()=>openOriginalQuestion(item.exam,item.q);qs.append(b);
+  }
+ }else{
+  qs.append(node('p','reader-note','لا توجد أسئلة مطابقة في الأوراق المقروءة بعد. جميع دورات الامتحانات الأصلية متاحة أسفل الدرس.'));
+ }
 }
 groupSelect.addEventListener('change',renderCourse);searchInput.addEventListener('input',renderCourse);
 renderCourse();
