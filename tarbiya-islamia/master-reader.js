@@ -123,30 +123,35 @@ function lessonRows(c){
  return c.readerChapters.slice(0,6).map(p=>[p.title,shortText(p.text,160)]);
 }
 function renderPractice(c){
- const rows=lessonRows(c).filter(r=>r[0]&&r[1]).slice(0,4),box=N("section","master-practice");
- box.append(N("span","master-quick-kicker","تدريب خاص بالدرس — غير وزاري"),N("h3",null,"QCM للفهم قبل الامتحان"),N("p","master-practice-intro","أسئلة متنوعة: مرة تحدد المفهوم من المثال ومرة تختار الشرح الصحيح. +1 للصحيح، −1 للخطأ، و0 للمتروك."));
- if(rows.length<4)return box;
- let points=0;for(let i=0;i<4;i++){const x=practice[c.id+"-"+i];if(x!==undefined)points+=x===i?1:-1}
- box.append(N("div","master-practice-score","نقطة هذا الدرس: "+(points>0?"+":"")+points));
- for(let i=0;i<4;i++){
-  const key=c.id+"-"+i,chosen=practice[key],q=N("div","master-practice-question");
-  const reverse=i%2===1;
-  q.append(N("strong",null,"Q"+(i+1)+" — "+(reverse?"ما هو الشرح الصحيح للمفهوم؟":"أي مفهوم ينطبق عليه الشرح؟")),N("p",null,reverse?rows[i][0]:rows[i].slice(1).join(" — ")));
+ const rows=lessonRows(c);
+ const bank=window.MASAR_GENERATE_TEN_QCM(rows);
+ const box=N("section","master-practice");
+ box.append(N("span","master-quick-kicker","10 QCM تدريبية بصياغة مشابهة للمباراة — غير وزارية"));
+ box.append(N("h3",null,"10 أسئلة مناسبة لدرس: "+c.title));
+ box.append(N("p","master-practice-intro","تطبيق للمفاهيم، تعاريف، تمييز بين البدائل، واختيار العبارة غير الصحيحة. تُعرض أسئلة الامتحانات الأصلية منفصلة أسفل الملخص."));
+ let points=0,done=0;
+ for(let i=0;i<bank.length;i++){
+  const x=practice[c.id+"-ten-"+i];if(x!==undefined){done++;points+=x===bank[i].correct?1:-1}
+ }
+ box.append(N("div","master-practice-score","نقطة هذا الدرس: "+(points>0?"+":"")+points+" · "+done+" / 10"));
+ for(let i=0;i<bank.length;i++){
+  const item=bank[i],key=c.id+"-ten-"+i,chosen=practice[key],q=N("div","master-practice-question");
+  q.append(N("strong",null,"Q"+(i+1)+" — "+item.kind),N("p",null,item.prompt));
   const choices=N("div","master-practice-options");
-  for(let j=0;j<4;j++){
-   const k=(j+i+1)%4,button=N("button","master-practice-option"+(chosen!==undefined&&k===i?" correct":chosen===k?" wrong":""),reverse?rows[k].slice(1).join(" — "):rows[k][0]);
+  item.options.forEach((opt,j)=>{
+   const button=N("button","master-practice-option"+(chosen!==undefined&&j===item.correct?" correct":chosen===j?" wrong":""),String.fromCharCode(65+j)+" — "+opt);
    button.type="button";button.disabled=chosen!==undefined;
-   button.onclick=()=>{practice[key]=k;savePractice();renderCourse(c)};
+   button.onclick=()=>{practice[key]=j;savePractice();renderCourse(c)};
    choices.append(button);
-  }
+  });
   q.append(choices);
   if(chosen!==undefined){
-   const correctText=rows[i].slice(1).join(" — ");
-   const actual=rows[chosen];
-   const explain=chosen===i
-    ? "✓ صحيح +1 · "+rows[i][0]+": "+correctText
-    : "✗ خطأ −1 · اخترتي «"+(actual?.[0]||"جواباً آخر")+"» ومعناه: "+(actual?.slice(1).join(" — ")||"غير محدد")+". أما السؤال فكيخص «"+rows[i][0]+"»، لأنه: "+correctText;
-   q.append(N("p","master-practice-feedback",explain));
+   const good=chosen===item.correct;
+   const message=(good?"✓ صحيح +1":"✗ خطأ −1")+
+     " · الجواب الصحيح: "+String.fromCharCode(65+item.correct)+" — "+item.options[item.correct]+
+     ". التعليل: "+item.reason+
+     (good?"":" · اختيارك كان: "+String.fromCharCode(65+chosen)+" — "+item.options[chosen]+".");
+   q.append(N("p","master-practice-feedback",message));
    const retry=N("button","master-practice-retry","إعادة المحاولة");retry.type="button";
    retry.onclick=()=>{delete practice[key];savePractice();renderCourse(c)};q.append(retry);
   }
