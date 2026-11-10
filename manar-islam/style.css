@@ -9,3 +9,5 @@
 @media(max-width:480px){.head-inner{padding:17px 14px}.brand h1{font-size:20px}.brand h1 span{display:block;font-size:14px}.brand .eyebrow{font-size:10px}.top-tabs{padding:0 10px}.lesson-list{grid-template-columns:1fr}.study-sidebar{max-height:270px}.summary-row{grid-template-columns:1fr;gap:2px}.practice-controls label,.exam-controls label{min-width:100%}}
 
 .spec-strip{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 22px}.spec-strip>div{background:#eaf5ee;border:1px solid #cbded3;border-right:4px solid #238d71;border-radius:10px;padding:13px 17px}.spec-strip strong{display:block;color:#14564c;font-size:13px;margin-bottom:4px}.spec-strip span{font-size:12px;color:#3b625f;line-height:1.9}@media(max-width:800px){.spec-strip{grid-template-columns:1fr}}
+
+.exam-scan-controls{display:flex;flex-wrap:wrap;align-items:end;gap:10px;padding:12px 0}.exam-scan-controls label{font-weight:800;color:#265c55;min-width:220px;flex:1}.exam-scan-controls select{display:block;background:#fff;border:1px solid #bfdbd0;border-radius:9px;padding:8px 12px;min-width:170px;margin-top:5px}.exam-scan-controls .outline:disabled{opacity:.45;cursor:default}
