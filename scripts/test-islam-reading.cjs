@@ -28,9 +28,6 @@ const {JSDOM,VirtualConsole}=require("jsdom");
  assert.equal(intro.hidden,false,"Reading card missing in original exam tab");
  assert.equal(exam.value,"2021-specialty","Start with the fully corrected original 2021 specialty test");
  const expected={
-  "2025-specialty":"2025-specialty-02.webp",
-  "2023-specialty":"2023-specialty-01.webp",
-  "2022-specialty":"2022-specialty-02.webp",
   "2021-specialty":"2021-specialty-02.webp",
   "2021-didactics":"2021-didactics-02.webp"
  };
@@ -39,12 +36,11 @@ const {JSDOM,VirtualConsole}=require("jsdom");
   assert.equal(intro.hidden,false,id+" reading block hidden");
   const srcs=[...document.querySelectorAll("#intro-live-images img")].map(img=>img.getAttribute("src"));
   assert(srcs.some(x=>x.endsWith(image)),id+" missing original passage image");
-  assert.equal(document.getElementById("intro-live-images").hidden,false,id+" passage collapsed");
+  assert.equal(document.getElementById("intro-live-images").hidden,true,id+" source document intentionally collapsed until reader opens it");
  }
- for(const id of ["2022-didactics","2023-didactics","2025-didactics"]){
+ for(const id of ["2022-specialty","2023-specialty","2025-specialty","2022-didactics","2023-didactics","2025-didactics"]){
   exam.value=id;exam.dispatchEvent(new Event("change",{bubbles:true}));
-  assert.equal(intro.hidden,false,id+" intro info hidden");
-  assert.equal(document.getElementById("intro-live-empty").hidden,false,id+" should explain no separate preamble");
+  assert.equal(intro.hidden,true,id+" should not fabricate a separate introduction");
  }
  const tab=document.querySelector('nav button[data-tab="courses"]');
  tab.click();
