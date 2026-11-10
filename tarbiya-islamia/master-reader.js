@@ -141,7 +141,12 @@ function renderPractice(c){
   }
   q.append(choices);
   if(chosen!==undefined){
-   q.append(N("p","master-practice-feedback",(chosen===i?"✓ صحيح +1":"✗ خطأ −1")+" · "+rows[i][0]+": "+rows[i].slice(1).join(" — ")));
+   const correctText=rows[i].slice(1).join(" — ");
+   const actual=rows[chosen];
+   const explain=chosen===i
+    ? "✓ صحيح +1 · "+rows[i][0]+": "+correctText
+    : "✗ خطأ −1 · اخترتي «"+(actual?.[0]||"جواباً آخر")+"» ومعناه: "+(actual?.slice(1).join(" — ")||"غير محدد")+". أما السؤال فكيخص «"+rows[i][0]+"»، لأنه: "+correctText;
+   q.append(N("p","master-practice-feedback",explain));
    const retry=N("button","master-practice-retry","إعادة المحاولة");retry.type="button";
    retry.onclick=()=>{delete practice[key];savePractice();renderCourse(c)};q.append(retry);
   }
