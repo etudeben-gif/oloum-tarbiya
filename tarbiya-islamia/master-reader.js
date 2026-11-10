@@ -112,6 +112,7 @@ function renderCourse(c){
  detail.replaceChildren();
  const title=N("div","master-title");
  title.append(N("span","master-tag",c.group),N("h2",null,c.title));
+ if(c.sourceStatus){title.append(N("p","master-source-status",c.sourceStatus));}
  detail.append(title);
  const chapters=Array.isArray(c.readerChapters)?c.readerChapters:[];
  if(chapters.length){
@@ -120,6 +121,7 @@ function renderCourse(c){
    const chapter=N("section","master-chapter");
    chapter.id="masar-chapter-"+c.id+"-"+i;
    chapter.append(N("h3",null,part.title));
+    if(part.sourceUrl)chapter.append(link(part.sourceLabel||"افتح النص الأصلي للدرس",part.sourceUrl));
    for(const paragraph of String(part.text||"").split(/\\n\\s*\\n/).filter(Boolean))
      chapter.append(N("p",null,paragraph.trim()));
    reading.append(chapter);
