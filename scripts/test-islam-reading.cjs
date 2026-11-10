@@ -26,7 +26,7 @@ const {JSDOM,VirtualConsole}=require("jsdom");
  document.querySelector('nav button[data-tab="exams"]').click();
  assert.equal(document.getElementById("exams").hidden,false,"Exam tab must remain accessible");
  assert.equal(intro.hidden,false,"Reading card missing in original exam tab");
- assert.equal(exam.value,"2025-specialty");
+ assert.equal(exam.value,"2021-specialty","Start with the fully corrected original 2021 specialty test");
  const expected={
   "2025-specialty":"2025-specialty-02.webp",
   "2023-specialty":"2023-specialty-01.webp",
