@@ -1,0 +1,24 @@
+name: Smoke-test Science Education lessons, mind maps and Canadian grading
+on:
+  push:
+    paths:
+      - 'index.html'
+      - 'science-*.js'
+      - 'science-*.json'
+      - 'assets/science-refresh.css'
+      - 'scripts/test-science-reading.cjs'
+      - '.github/workflows/test-science-reading.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  course-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --ignore-scripts jsdom@24
+      - run: node scripts/test-science-reading.cjs
