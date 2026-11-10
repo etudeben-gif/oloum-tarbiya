@@ -78,22 +78,20 @@ function mount(){
  const cover=el("div","masar-profile-cover");cover.id="masar-profile-cover";cover.hidden=true;
  cover.setAttribute("role","dialog");cover.setAttribute("aria-modal","true");cover.setAttribute("aria-labelledby","masar-profile-title");
  const panel=el("div","masar-profile-modal"),badge=el("div","masar-profile-brand","مِسار • مساحة المتعلم");
- const heading=el("h2","", "دخل بسميتك وخلي نقطك محفوظة");heading.id="masar-profile-title";
- const hint=el("p","masar-profile-hint","سجل اسمك مرة وحدة، ونفس النقاط والأجوبة والدروس غادي يبقاو محفوظين ليك فهاد المتصفح حتى من بعد ما تسد الموقع وترجع.");
+ const heading=el("h2","", "دخل باسمك");heading.id="masar-profile-title";
  const nameBox=el("form","masar-profile-form"),label=el("label","", "الاسم ديالك");
  label.setAttribute("for","masar-name-input");
  const input=el("input");input.id="masar-name-input";input.type="text";input.autocomplete="nickname";input.maxLength=45;input.required=true;input.minLength=2;input.placeholder="مثلاً: محمد أمين";
  const go=el("button","masar-profile-main","دخول ومتابعة المراجعة");go.type="submit";
  const message=el("p","masar-profile-message");message.setAttribute("aria-live","polite");
  nameBox.append(label,input,go,message);
- const roster=el("section","masar-profile-roster"),rosterTitle=el("h3","", "المتعلمون المسجلون فهاد المتصفح");
+ const roster=el("section","masar-profile-roster"),rosterTitle=el("h3","", "اختار المتعلم");
  const rosterList=el("div","masar-profile-roster-list");
  roster.append(rosterTitle,rosterList);
  const migrateWrap=el("label","masar-profile-migrate");
  const migrate=el("input");migrate.type="checkbox";migrate.checked=true;
- migrateWrap.append(migrate,document.createTextNode(" عندي نقاط قديمة فهاد الجهاز، ربطها بأول اسم نسجلو."));
+ migrateWrap.append(migrate,document.createTextNode(" استرجاع النقط القديمة"));
  const backup=el("div","masar-profile-backup"),backupTitle=el("h3","", "حفظ ونقل التقدم");
- const backupHelp=el("p","", "إلا بغيتي تنقل النقط لتلفون أو حاسوب آخر، صدّر النسخة واسترجعها تما. الاسم بوحده ما كيحفظش النقط عبر الأجهزة.");
  const exportBtn=btn("تنزيل نسخة من نقطي",()=>{const p=current();if(p)download(p)},"masar-profile-export");
  const uploadBtn=btn("استرجاع نسخة",()=>fileInput.click(),"masar-profile-import");
  const fileInput=el("input");fileInput.type="file";fileInput.accept=".json,application/json";fileInput.hidden=true;
@@ -102,10 +100,9 @@ function mount(){
    catch(e){message.textContent=e.message||"تعذر استرجاع الملف."}
    fileInput.value="";
  });
- backup.append(backupTitle,backupHelp,exportBtn,uploadBtn,fileInput);
- const disclaimer=el("p","masar-profile-warning","مهم: هاد الحساب محلي وبالاسم فقط، ماشي حساب بكلمة سر. أي واحد كيستعمل نفس المتصفح يقدر يختار الاسم. ماتكتبش معلومات شخصية حساسة.");
+ backup.append(backupTitle,exportBtn,uploadBtn,fileInput);
  const exit=btn("إغلاق",()=>close(),"masar-profile-close");
- panel.append(badge,heading,hint,nameBox,migrateWrap,roster,backup,disclaimer,exit);
+ panel.append(badge,heading,nameBox,migrateWrap,roster,backup,exit);
  cover.append(panel);document.body.append(cover);
  let forceLogin=false;
  function close(){if(forceLogin)return;cover.hidden=true;document.body.classList.remove("masar-profile-locked")}
