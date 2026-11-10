@@ -43,6 +43,8 @@ api.activate(first.id,{reload:false});
 assert.equal(JSON.parse(w.localStorage.getItem(api.key("masar-original-exams-v1")))["2025-61"],"B");
 assert.equal(JSON.parse(w.localStorage.getItem(api.key("masar-islam-qcm-v2")))["2021-specialty-1"],"C");
 assert.equal(api.list().length,2,"Profiles should stay distinct");
+assert(api.DATA_KEYS.includes("masar-science-practice-2026"),"Science practice QCM must be included in backup");
+assert(api.DATA_KEYS.includes("masar-islam-practice-2026"),"Islamic practice QCM must be included in backup");
 assert.equal(api.current().name,"أمين");
 
 const other=session();
