@@ -88,3 +88,28 @@ header a{transition:transform .18s,background .18s}header a:hover{background:#0b
 #course-hub .science-quick-table tr:nth-child(even){background:#fafdfb}
 #course-hub .science-quick-hint{font-size:13px;line-height:1.9;color:#3d6967;margin:12px 0 0}
 @media(max-width:740px){#course-hub .science-quick-review{padding:13px 10px}#course-hub .science-quick-table th,#course-hub .science-quick-table td{font-size:12px;padding:8px 7px;line-height:1.7}#course-hub .science-quick-review h3{font-size:17px}#course-hub .science-quick-hint{font-size:12px}}
+
+/* 28 November exam preparation: concise, understood lesson + on-topic QCM */
+#course-hub .science-focused-lesson{max-width:900px;margin:15px auto 16px}
+#course-hub .science-exam-notes{display:grid;grid-template-columns:1fr;gap:9px;margin-top:15px}
+#course-hub .science-exam-note{background:#f7fbf9;padding:13px 16px;border:1px solid #dcebe5;border-right:4px solid #238575;border-radius:10px}
+#course-hub .science-exam-note:nth-child(2){border-right-color:#5f9ba7}
+#course-hub .science-exam-note:nth-child(3){border-right-color:#d2a35c}
+#course-hub .science-exam-note strong{font-size:14px;color:#165c60}
+#course-hub .science-exam-note p{font-size:14px;line-height:1.95;color:#294954;margin:5px 0 0}
+#course-hub .science-training{background:#f4faf6;border:1px solid #d2e5dd;border-top:3px solid #138a70;border-radius:14px;padding:18px 20px;margin:15px auto 19px;max-width:900px}
+#course-hub .science-training h3{font-size:19px;color:#1d575b;margin:10px 0}
+#course-hub .science-training>p{font-size:13px;color:#506b70;line-height:1.9}
+#course-hub .science-training-total{display:inline-block;background:#135c59;color:#fff;font-weight:800;padding:7px 13px;border-radius:9px;margin:8px 0;font-variant-numeric:tabular-nums}
+#course-hub .science-training-question{border:1px solid #d9e7e2;background:white;border-radius:11px;padding:15px 17px;margin:12px 0}
+#course-hub .science-training-question>strong{font-size:15px;color:#1c555b}
+#course-hub .science-training-question>p{font-size:14px;line-height:1.9;color:#354f58;margin:7px 0 12px}
+#course-hub .science-training-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+#course-hub .science-training-choice{padding:10px 12px;text-align:right;border-radius:9px;border:1px solid #d2e4dd;color:#26535b;background:#f8fbfa;font-size:13px;font-weight:750;line-height:1.65}
+#course-hub .science-training-choice:not(:disabled):hover{border-color:#0f8d79;background:#eff8f4}
+#course-hub .science-training-choice.correct{background:#e3f5e8;border-color:#51b083;color:#176849}
+#course-hub .science-training-choice.wrong{background:#fff0e9;border-color:#e2a38e;color:#994932}
+#course-hub .science-training-feedback{font-weight:700}
+#course-hub .science-training-retry{border-radius:9px;padding:8px 12px;background:#e6f1ed;color:#17675a;font-size:13px;font-weight:800}
+#course-hub .reader-references{margin-top:12px}
+@media(max-width:700px){#course-hub .science-training{padding:14px 11px}#course-hub .science-training-options{grid-template-columns:1fr}#course-hub .science-exam-note p{font-size:13px}}
