@@ -155,3 +155,29 @@ nav[aria-label="أقسام الصفحة"] button.active{background:#10786c;color
 #masar-course-app .master-quick-table td:first-child{font-weight:800;color:#155d61;min-width:27%}
 #masar-course-app .master-quick-table tr:nth-child(even){background:#fbfdfb}
 @media(max-width:650px){#masar-course-app .master-quick-review{margin:12px 11px;padding:13px 10px}#masar-course-app .master-quick-table th,#masar-course-app .master-quick-table td{font-size:12px;padding:8px 7px;line-height:1.7}#masar-course-app .master-quick-review h3{font-size:17px}}
+
+/* 28 November preparation: simple understandable summary, no long chapters or maps */
+#masar-course-app .master-focused{max-width:920px;margin:15px auto 16px}
+#masar-course-app .master-focused .master-quick-table{table-layout:auto}
+#masar-course-app .master-understand{margin-top:14px;border:1px solid #d9e8e2;background:#f7fbf9;border-radius:12px;padding:15px 18px}
+#masar-course-app .master-understand h4{font-size:15px;color:#156c61;margin:0 0 6px}
+#masar-course-app .master-understand h4:nth-of-type(2){margin-top:13px;color:#91632f}
+#masar-course-app .master-understand p{font-size:14px;color:#304e56;line-height:1.95;margin:0}
+#masar-course-app .master-practice{max-width:920px;margin:15px auto;border:1px solid #cfe5d9;border-top:3px solid #1b9278;border-radius:14px;padding:18px 23px;background:#f4faf7}
+#masar-course-app .master-practice h3{font-size:20px;color:#1a575d;margin:10px 0}
+#masar-course-app .master-practice-intro{font-size:13px;line-height:1.9;color:#557078}
+#masar-course-app .master-practice-score{display:inline-block;background:#12565e;color:white;padding:7px 12px;border-radius:9px;font-size:14px;font-weight:800;margin:9px 0}
+#masar-course-app .master-practice-question{background:white;border:1px solid #d8e7e0;border-radius:12px;padding:15px 18px;margin:12px 0}
+#masar-course-app .master-practice-question strong{color:#185b62;font-size:15px}
+#masar-course-app .master-practice-question>p{color:#354f57;font-size:14px;line-height:1.95;margin:8px 0}
+#masar-course-app .master-practice-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#masar-course-app .master-practice-option{font-size:13px;text-align:right;line-height:1.7;padding:10px 12px;border:1px solid #d2e4de;border-radius:9px;background:#f8fcfa;color:#28515b;font-weight:750}
+#masar-course-app .master-practice-option:not(:disabled):hover{background:#e7f7f0;border-color:#2eae90}
+#masar-course-app .master-practice-option.correct{border-color:#74bd96;background:#e6f6eb;color:#176748}
+#masar-course-app .master-practice-option.wrong{border-color:#ddad99;background:#fff2ea;color:#9d4b36}
+#masar-course-app .master-practice-feedback{font-weight:750}
+#masar-course-app .master-practice-retry{background:#e3f1eb;color:#165c55;border-radius:8px;padding:9px 13px;font-size:12px;font-weight:800}
+#masar-course-app .master-citations-compact{max-width:920px;margin:12px auto}
+#masar-course-app .master-citations-compact summary{font-size:14px;font-weight:800;color:#1c6165;cursor:pointer}
+#masar-course-app .master-action-row{max-width:920px;margin:0 auto}
+@media(max-width:700px){#masar-course-app .master-practice{padding:14px 11px;margin:13px 10px}#masar-course-app .master-practice-options{grid-template-columns:1fr}#masar-course-app .master-focused{margin:12px 10px}#masar-course-app .master-understand{padding:12px}#masar-course-app .master-understand p{font-size:13px}}
