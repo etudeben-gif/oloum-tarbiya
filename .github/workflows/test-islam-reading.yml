@@ -5,6 +5,10 @@ on:
       - 'tarbiya-islamia/index.html'
       - 'tarbiya-islamia/courses-ui.js'
       - 'tarbiya-islamia/courses-full.js'
+      - 'tarbiya-islamia/master-*.js'
+      - 'tarbiya-islamia/master-*.css'
+      - 'tarbiya-islamia/grade*.js'
+      - 'tarbiya-islamia/courses-enriched.js'
       - 'scripts/test-islam-reading.cjs'
       - '.github/workflows/test-islam-reading.yml'
   workflow_dispatch:
