@@ -10,6 +10,14 @@ function session(){
  const api=dom.window.MASAR_PROFILES;
  assert(api&&typeof api.key==="function","Missing profile API");
  assert(dom.window.document.querySelector("#masar-profile-cover"),"First-visit login modal missing");
+ const modal=dom.window.document.querySelector(".masar-profile-modal");
+ assert(modal,"Login panel should render");
+ assert.equal(modal.querySelector("h2")?.textContent,"دخل باسمك","Login title must remain short");
+ assert(modal.querySelector("#masar-name-input"),"Name input must remain visible");
+ assert(!modal.textContent.includes("سجل اسمك مرة وحدة"),"Old explanatory paragraph is still visible");
+ assert(!modal.textContent.includes("مهم: هاد الحساب محلي"),"Old verbose warning is still visible");
+ assert(!modal.textContent.includes("إلا بغيتي تنقل النقط لتلفون"),"Backup explanation should be removed");
+ assert(!modal.querySelector(".masar-profile-warning"),"Warning block must not render");
  return {dom,w:dom.window,api};
 }
 const {dom,w,api}=session();
