@@ -316,6 +316,7 @@ render();
 <script src="science-quick-review.js?v=20261110quick1"></script>
 <script src="science-exam-insights.js?v=20261111c"></script>
 <script src="science-course-case-qcm.js?v=20261111case1"></script>
+<script src="assets/course-qcm-generator.js?v=20261111ten1"></script>
 <script>
 (function(){
 const lessons=window.MASAR_SECONDARY_LESSONS||[];
@@ -348,75 +349,45 @@ const sciencePracticeKey=window.MASAR_PROFILES?.key('masar-science-practice-2026
 let sciencePracticeAnswers={};try{sciencePracticeAnswers=JSON.parse(localStorage.getItem(sciencePracticeKey)||'{}')||{}}catch(e){}
 function saveSciencePractice(){try{localStorage.setItem(sciencePracticeKey,JSON.stringify(sciencePracticeAnswers))}catch(e){}}
 function renderScienceTraining(c,index){
- const pool=(c.quickReview?.rows||[]).filter(r=>r?.length>=2);
- const rows=index===2&&pool.length>=8?[pool[0],pool[3],pool[4],pool[7]]:pool.slice(0,4);
+ const bank=window.MASAR_GENERATE_TEN_QCM(c.quickReview?.rows||[],c.caseQ);
  const box=node('section','science-training');
- box.append(node('span','quick-tag','أسئلة تدريبية من إعداد الموقع — ليست ورقة رسمية'),node('h3','','QCM خاصة بهذا الدرس'));
- box.append(node('p','science-score-note','جاوب بعد فهم الشرح: +1 للصحيح، −1 للخطأ، و0 للمتروك. كل سؤال مبني على مفاهيم هذا الدرس فقط.'));
- if(rows.length<4)return box;
- const total=rows.reduce((acc,_,i)=>{
-  const value=sciencePracticeAnswers[index+'-'+i];
-  return acc+(value===undefined?0:(value===i?1:-1));
- },0)+(c.caseQ&&sciencePracticeAnswers[index+'-case']!==undefined?(sciencePracticeAnswers[index+'-case']===c.caseQ.correct?1:-1):0);
- box.append(node('div','science-training-total','نقطة تدريبات هذا الدرس: '+(total>0?'+':'')+total));
- rows.forEach((r,i)=>{
-  const answerKey=index+'-'+i,existing=sciencePracticeAnswers[answerKey];
-  const question=node('div','science-training-question');
-  const reverse=i%2===1;
-  const options=rows.map(x=>reverse?x.slice(1).join(' — '):x[0]);
-  const right=i;
-  const description=r.slice(1).join(' — ');
-  const qTitle=node('strong','','Q'+(i+1)+' — '+(reverse?'ما هو الشرح الصحيح للمفهوم التالي؟':'أي مفهوم يطابق الوصف التالي؟'));
-  question.append(qTitle,node('p','',reverse?r[0]:description));
-  const answers=node('div','science-training-options');
-  const order=[0,1,2,3].map(x=>(x+i+1)%4);
-  for(const j of order){
-   const b=node('button','science-training-choice'+(existing!==undefined&&j===right?' correct':existing===j?' wrong':''),options[j]);
-   b.type='button';b.disabled=existing!==undefined;
-   b.onclick=()=>{sciencePracticeAnswers[answerKey]=j;saveSciencePractice();renderCourse()};
-   answers.append(b);
-  }
-  question.append(answers);
-  if(existing!==undefined){
-   const msg=node('p','science-training-feedback',existing===right?'✓ جواب صحيح +1':'✗ خطأ −1');
-   const chosenRow=rows[existing];
-   if(existing!==right&&chosenRow)msg.append(document.createTextNode(' · اختيارك «'+chosenRow[0]+'» كيعني: '+chosenRow.slice(1).join(' — ')+'. ولكن المطلوب هنا هو «'+r[0]+'» لأنه: '+description));
-   else msg.append(document.createTextNode(' · '+r[0]+' يعني: '+description));
-   const related=c.examLinks?.filter(x=>x.relation==='مباشر')||[];
-   if(related.length)msg.append(document.createTextNode(' · تقدر تتدرب أيضاً على السؤال الأصلي المباشر من نفس المحور أسفل الملخص.'));
-   question.append(msg);
-   const retry=node('button','science-training-retry','إعادة المحاولة');retry.type='button';
-   retry.onclick=()=>{delete sciencePracticeAnswers[answerKey];saveSciencePractice();renderCourse()};
-   question.append(retry);
-  }
-  box.append(question);
- });
- if(c.caseQ){
-  const q=c.caseQ,key=index+'-case',existing=sciencePracticeAnswers[key];
-  const block=node('div','science-training-question science-case-question');
-  block.append(node('strong','','Q5 — سؤال تطبيقي من وضعية امتحانية (تدريب من إعداد الموقع)'),node('p','',q.prompt));
-  const buttons=node('div','science-training-options');
-  q.options.forEach((option,i)=>{
-   const b=node('button','science-training-choice'+(existing!==undefined&&i===q.correct?' correct':existing===i?' wrong':''),String.fromCharCode(65+i)+' — '+option);
-   b.type='button';b.disabled=existing!==undefined;b.onclick=()=>{sciencePracticeAnswers[key]=i;saveSciencePractice();renderCourse()};
-   buttons.append(b);
-  });
-  block.append(buttons);
-  if(existing!==undefined){
-   const feedback=node('p','science-training-feedback',(existing===q.correct?'✓ صحيح +1':'✗ خطأ −1')+' · الجواب: '+String.fromCharCode(65+q.correct)+' — '+q.options[q.correct]+'. التعليل: '+q.reason);
-   if(existing!==q.correct)feedback.append(document.createTextNode(' · اختيارك: '+q.options[existing]+'.'));
-   block.append(feedback);
-   const retry=node('button','science-training-retry','إعادة المحاولة');retry.type='button';retry.onclick=()=>{delete sciencePracticeAnswers[key];saveSciencePractice();renderCourse()};block.append(retry);
-  }
-  box.append(block);
+ box.append(node('span','quick-tag','10 QCM تدريبية على شكل المباراة — من إعداد الموقع وليست رسمية'),
+   node('h3','','10 أسئلة على درس: '+c.title),
+   node('p','science-score-note','مستوحاة من نوع الأسئلة السابقة: مفهوم، تمييز، عبارة غير صحيحة، ووضعية تطبيقية. تصحيح وتعليل بعد كل جواب. النظام الكندي +1 / −1 / 0.'));
+ let score=0,done=0;
+ for(let i=0;i<bank.length;i++){
+  const saved=sciencePracticeAnswers[index+'-ten-'+i];
+  if(saved!==undefined){done++;score+=saved===bank[i].correct?1:-1}
  }
+ box.append(node('div','science-training-total','نتيجة هذا الدرس: '+(score>0?'+':'')+score+' نقطة · '+done+' / 10 إجابات'));
+ bank.forEach((q,i)=>{
+  const key=index+'-ten-'+i,chosen=sciencePracticeAnswers[key],item=node('div','science-training-question');
+  item.append(node('strong','','Q'+(i+1)+' — '+q.kind),node('p','',q.prompt));
+  const choices=node('div','science-training-options');
+  q.options.forEach((opt,j)=>{
+   const btn=node('button','science-training-choice'+(chosen!==undefined&&j===q.correct?' correct':chosen===j?' wrong':''),String.fromCharCode(65+j)+' — '+opt);
+   btn.type='button';btn.disabled=chosen!==undefined;
+   btn.onclick=()=>{sciencePracticeAnswers[key]=j;saveSciencePractice();renderCourse()};
+   choices.append(btn);
+  });item.append(choices);
+  if(chosen!==undefined){
+   const correct=chosen===q.correct;
+   item.append(node('p','science-training-feedback',(correct?'✓ صحيح +1':'✗ خطأ −1')+
+    ' · الجواب الصحيح: '+String.fromCharCode(65+q.correct)+' — '+q.options[q.correct]+
+    '. التعليل: '+q.reason+
+    (correct?'':' · اختيارك كان: '+String.fromCharCode(65+chosen)+' — '+q.options[chosen]+'.')));
+   const retry=node('button','science-training-retry','إعادة المحاولة');retry.type='button';
+   retry.onclick=()=>{delete sciencePracticeAnswers[key];saveSciencePractice();renderCourse()};item.append(retry);
+  }
+  box.append(item);
+ });
  return box;
 }
 function renderCourse(){
  const indexes=filteredIndexes();
  if(!indexes.includes(currentIndex))currentIndex=indexes[0]??-1;
  tabs.replaceChildren();article.replaceChildren();qs.replaceChildren();
- courseCount.textContent=indexes.length+' من أصل '+lessons.length+' ملخصاً واضحاً · 5 أسئلة تدريبية لكل درس · الأسئلة الأصلية عند توفر مطابقة مباشرة';
+ courseCount.textContent=indexes.length+' من أصل '+lessons.length+' ملخصاً واضحاً · 10 أسئلة تدريبية لكل درس · الأسئلة الأصلية عند توفر مطابقة مباشرة';
  if(currentIndex<0){currentTitle.textContent='لم نجد درساً مطابقاً';article.append(node('p','small','جرب عبارة أخرى أو اختر جميع المحاور.'));return}
  for(const i of indexes){
   const c=lessons[i],b=node('button','course-tab'+(i===currentIndex?' active':''),(i+1)+'. '+c.title);
