@@ -24,7 +24,7 @@ hero.append(
   N("div","master-pill","المقرر المفصل · اختبار التخصص والديداكتيك للسلك الثانوي"),
   N("h2",null,"التربية الإسلامية: الدرس كاملاً ثم الأسئلة الرسمية"),
   N("p",null,courses.length+" درساً ومحوراً: القرآن والتجويد والحديث والفقه والعقيدة والأصول والسيرة، وديداكتيك المادة، ودروس الإعدادي الثلاث. الشرح منظم بالأفكار والأدلة والأمثلة، والأسئلة التفاعلية من ورقتي 2021 الأصليتين فقط."),
-  N("p",null,"كل درس معه خريطة ذهنية تفاعلية. والتصحيح بالنظام الكندي في المراجعة: +1 صحيح، −1 خطأ، و0 سؤال متروك؛ هذه طريقة تدريب وليست إعلاناً عن سلم التنقيط الرسمي.")
+  N("p",null,"الدروس كاملة في شكل ملخص مفهوم، مع أمثلة وفروق QCM. بلا خريطة ذهنية ولا شرح مطوّل.")
 );
 const filters=N("div","master-filters");
 const search=N("input");search.type="search";search.placeholder="ابحث عن موضوع أو آية أو مفهوم أو حكم فقهي...";search.setAttribute("aria-label","البحث في كل محتوى الدروس");
@@ -109,66 +109,74 @@ function goTo(id,scroll=true){
  renderCourse(c);renderQuiz(c);showList();updateProgress();
  if(scroll)detail.scrollIntoView({behavior:"smooth",block:"start"});
 }
+
+const practiceKey=window.MASAR_PROFILES?.key("masar-islam-practice-2026")||"masar-islam-practice-2026";
+let practice={};try{practice=JSON.parse(localStorage.getItem(practiceKey)||"{}")||{}}catch(_){}
+function savePractice(){try{localStorage.setItem(practiceKey,JSON.stringify(practice))}catch(_){}}
+function shortText(text,max=280){
+ const parts=String(text||"").split(/\n+/)[0].match(/[^.!؟؛]+[.!؟؛]?/g)||[];
+ let out="";for(const p of parts){if(out.length&&out.length+p.length>max)break;out+=p}
+ return (out||String(text||"")).trim().slice(0,Math.max(max,out.length));
+}
+function lessonRows(c){
+ if(c.resumeRows?.length>=4)return c.resumeRows;
+ return c.readerChapters.slice(0,6).map(p=>[p.title,shortText(p.text,160)]);
+}
+function renderPractice(c){
+ const rows=lessonRows(c).filter(r=>r[0]&&r[1]).slice(0,4),box=N("section","master-practice");
+ box.append(N("span","master-quick-kicker","تدريب خاص بالدرس — غير وزاري"),N("h3",null,"QCM للفهم قبل الامتحان"),N("p","master-practice-intro","اختار المفهوم المناسب من 4 اختيارات؛ التصحيح يشرح العلاقة. الصحيح +1، الخطأ −1، المتروك 0."));
+ if(rows.length<4)return box;
+ let points=0;for(let i=0;i<4;i++){const x=practice[c.id+"-"+i];if(x!==undefined)points+=x===i?1:-1}
+ box.append(N("div","master-practice-score","نقطة هذا الدرس: "+(points>0?"+":"")+points));
+ for(let i=0;i<4;i++){
+  const key=c.id+"-"+i,chosen=practice[key],q=N("div","master-practice-question");
+  q.append(N("strong",null,"Q"+(i+1)+" — أي مفهوم ينطبق عليه الشرح؟"),N("p",null,rows[i].slice(1).join(" — ")));
+  const choices=N("div","master-practice-options");
+  for(let j=0;j<4;j++){
+   const k=(j+i+1)%4,button=N("button","master-practice-option"+(chosen!==undefined&&k===i?" correct":chosen===k?" wrong":""),rows[k][0]);
+   button.type="button";button.disabled=chosen!==undefined;
+   button.onclick=()=>{practice[key]=k;savePractice();renderCourse(c)};
+   choices.append(button);
+  }
+  q.append(choices);
+  if(chosen!==undefined){
+   q.append(N("p","master-practice-feedback",(chosen===i?"✓ صحيح +1":"✗ خطأ −1")+" · "+rows[i][0]+": "+rows[i].slice(1).join(" — ")));
+   const retry=N("button","master-practice-retry","إعادة المحاولة");retry.type="button";
+   retry.onclick=()=>{delete practice[key];savePractice();renderCourse(c)};q.append(retry);
+  }
+  box.append(q);
+ }
+ return box;
+}
 function renderCourse(c){
  detail.replaceChildren();
  const title=N("div","master-title");
- title.append(N("span","master-tag",c.group+(c.id.startsWith("g1-")?" · الأولى إعدادي":c.id.startsWith("g2-")?" · الثانية إعدادي":c.id.startsWith("g3-")?" · الثالثة إعدادي":"")),N("h2",null,c.title),N("p",null,c.summary));
- title.append(N("p",null,"تتضمن القراءة "+c.readerChapters.length+" فصول أساسية، "+c.readerGlossary.length+" فقرة ضبط إضافية، ثم أسئلة من الامتحان الأصلي إن وُجدت صلة موضوعية موثقة."));
+ title.append(N("span","master-tag",c.group),N("h2",null,c.title),N("p",null,"شرح مختصر مفهوم حسب المنهاج، مثال، الفرق بين المصطلحات، وQCM مرتبطة بالدرس."));
  detail.append(title);
- const compact=N("section","master-quick-review");
- compact.append(N("span","master-quick-kicker","للحفظ السريع"),N("h3",null,"الدرس في دقيقة"));
- const table=N("table","master-quick-table");
- const thead=N("thead"),tr=N("tr");
- tr.append(N("th",null,"المفهوم"),N("th",null,"الخلاصة المفيدة"));thead.append(tr);table.append(thead);
- const tbody=N("tbody");
- c.readerChapters.slice(0,4).forEach(p=>{
-  const row=N("tr"),text=String(p.text||"").trim();
-  let lead=text.split(/[.؟!؛]\s*|\n+/)[0].trim();
-  if(lead.length>150){const cut=lead.slice(0,148).lastIndexOf(" ");lead=lead.slice(0,Math.max(cut,75))+"…"}
-  row.append(N("td",null,p.title),N("td",null,lead));
-  tbody.append(row);
- });
- table.append(tbody);compact.append(table);detail.append(compact);
- detail.append(makeMindMap(c));
- const toc=N("nav","master-outline");toc.setAttribute("aria-label","فهرس الدرس");
- toc.append(N("h3",null,"فهرس الدرس — اقرأ بالتسلسل"));
- const ol=N("ol");
- c.readerChapters.forEach((p,i)=>{const li=N("li"),a=N("a",null,p.title);a.href="#islam-chapter-"+i;li.append(a);ol.append(li)});
- toc.append(ol);detail.append(toc);
- const reading=N("div","master-reading");
- c.readerChapters.forEach((part,i)=>{
-   const sec=N("section","master-chapter");sec.id="islam-chapter-"+i;
-   sec.append(N("span","master-chapter-number","الفصل "+(i+1)+" / "+c.readerChapters.length),N("h3",null,part.title));
-   for(const para of splitParagraphs(part.text))sec.append(N("p",null,para));
-   reading.append(sec);
- });
- detail.append(reading);
- if(c.readerGlossary.length){
-  const expand=N("details","master-glossary"),sum=N("summary",null,"مصطلحات وتفصيلات إضافية من الدرس (افتح للمراجعة)");
-  expand.append(sum);
-  for(const item of c.readerGlossary){
-   const elem=N("div","master-glossary-item");elem.append(N("h4",null,item.title));
-   for(const p of splitParagraphs(item.text))elem.append(N("p",null,p));
-   expand.append(elem);
-  }
-  detail.append(expand);
- }
- const sources=N("section","master-citations");
- sources.append(N("h3",null,"المراجع الوزارية والملفات الأصلية"));
- sources.append(N("p",null,c.sourceNote+" الشرح مكتوب للمراجعة وليس نقلاً حرفياً من وثيقة الوزارة أو من مرجع فقهي."));
- for(const item of c.officialSources){
-  const row=N("div","master-citation-line");row.append(N("small",null,item.type+" · "),link(item.title,item.url));sources.append(row);
- }
+ const rows=lessonRows(c),compact=N("section","master-quick-review master-focused");
+ compact.append(N("span","master-quick-kicker","خلاصة للمراجعة قبل 28 نونبر"),N("h3",null,"افهم الفكرة، ثم احفظ المصطلح"));
+ const table=N("table","master-quick-table"),head=N("thead"),tr=N("tr"),body=N("tbody");
+ tr.append(N("th",null,"المفهوم"),N("th",null,"الشرح الواضح"));head.append(tr);table.append(head);
+ for(const r of rows){const line=N("tr");line.append(N("td",null,r[0]),N("td",null,r.slice(1).join(" — ")));body.append(line)}
+ table.append(body);compact.append(table);
+ const explain=N("div","master-understand");
+ explain.append(N("h4",null,"كيفاش نفهم الدرس؟"),N("p",null,shortText(c.readerChapters[0]?.text,330)));
+ explain.append(N("h4",null,"انتبه فـQCM"),N("p",null,c.examTip||"ميز المصطلحات المتشابهة، ثم طبقها على مثال واضح."));
+ compact.append(explain);detail.append(compact);
+ detail.append(renderPractice(c));
+ const sources=N("details","master-citations master-citations-compact");
+ sources.append(N("summary",null,"مراجع الدرس والوثائق الرسمية"));
+ sources.append(N("p",null,c.sourceNote));
+ for(const ref of c.officialSources){const row=N("div","master-citation-line");row.append(N("small",null,ref.type+" · "),link(ref.title,ref.url));sources.append(row)}
  detail.append(sources);
- const actions=N("div","master-action-row");
- const mark=N("button","primary",finished[c.id]?"✓ درس مراجع":"✓ أنهيت قراءة الدرس");
- mark.type="button";mark.onclick=()=>{finished[c.id]=!finished[c.id];persist();updateProgress();mark.textContent=finished[c.id]?"✓ درس مراجع":"✓ أنهيت قراءة الدرس";showList()};
- const currentIdx=courses.findIndex(x=>x.id===c.id),prev=N("button",null,"الدرس السابق"),next=N("button",null,"الدرس التالي");
- prev.type=next.type="button";prev.disabled=currentIdx===0;next.disabled=currentIdx===courses.length-1;
- prev.onclick=()=>goTo(courses[currentIdx-1].id);
- next.onclick=()=>goTo(courses[currentIdx+1].id);
- const exercise=N("button",null,"انزل إلى الأسئلة الرسمية");exercise.type="button";exercise.onclick=()=>quiz.scrollIntoView({behavior:"smooth",block:"start"});
- actions.append(mark,prev,next,exercise);detail.append(actions);
+ const actions=N("div","master-action-row"),mark=N("button","primary",finished[c.id]?"✓ درس مراجع":"✓ أنهيت مراجعة الدرس");
+ mark.type="button";mark.onclick=()=>{finished[c.id]=!finished[c.id];persist();updateProgress();mark.textContent=finished[c.id]?"✓ درس مراجع":"✓ أنهيت مراجعة الدرس";showList()};
+ const i=courses.findIndex(x=>x.id===c.id),prev=N("button",null,"الدرس السابق"),next=N("button",null,"الدرس التالي"),original=N("button",null,"الأسئلة الأصلية المرتبطة بالدرس");
+ for(const b of [prev,next,original])b.type="button";
+ prev.disabled=i===0;next.disabled=i===courses.length-1;
+ prev.onclick=()=>goTo(courses[i-1].id);next.onclick=()=>goTo(courses[i+1].id);
+ original.onclick=()=>quiz.scrollIntoView({behavior:"smooth",block:"start"});
+ actions.append(mark,prev,next,original);detail.append(actions);
 }
 function renderQuiz(c){
  quiz.replaceChildren();
@@ -184,13 +192,13 @@ function renderQuiz(c){
  }
  quiz.append(board);
  if(!list.length){
-  const empty=N("p","master-noq","هذا المحور ما لقيناش ليه سؤالاً مطابقاً ضمن 110 أسئلة QCM المنقولة من 2021؛ ما غاديش نعوضوه بسؤال مفبرك. تقدر تفتح ورقتي الامتحان الأصليتين.");
+  const empty=N("p","master-noq","ما لقيناش سؤالاً أصلياً مطابقاً لهاد الدرس ضمن أسئلة 2021. التدريب اللي فوق مخصص لنفس الموضوع وموسوم بأنه غير وزاري.");
   empty.append(" ",link("أسئلة التخصص الأصلية",examPdf["2021-specialty"])," · ",link("أسئلة الديداكتيك الأصلية",examPdf["2021-didactics"]));quiz.append(empty);return;
  }
- quiz.append(N("p",null,"المتاح: "+list.length+" سؤالاً، منها "+list.filter(x=>x.linkStrength==="مباشر في مجال الدرس").length+" مباشرة في مجال الدرس؛ والأسئلة الموسومة «المجال الأوسع» تفيد في المراجعة لكنها لا تتناول عنوان الدرس حرفياً."));
+ quiz.append(N("p",null,"المتاح: "+list.length+" سؤالاً أصلياً مربوطاً بهاذ المبحث بعد مراجعة العناوين؛ والتدريب الخاص بالدرس كاين فوق."));
  const picker=N("div","master-quiz-picker");
  list.forEach((entry,i)=>{
-  const b=N("button",(i===activeQuestion?"current":""),"Q"+entry.number+" · "+(entry.linkStrength==="مباشر في مجال الدرس"?"مباشر":"موسع"));
+  const b=N("button",(i===activeQuestion?"current":""),"Q"+entry.number+" · "+"مرتبط");
   b.type="button";b.title=entry.question;
   b.onclick=()=>{activeQuestion=i;picked="";renderQuiz(c)};
   picker.append(b);
