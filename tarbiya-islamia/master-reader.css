@@ -65,3 +65,82 @@
 #masar-course-app .master-noq{background:#fff;padding:15px;border-radius:9px;border:1px solid #dfe9e7;color:#4c6570;line-height:1.9}
 @media(max-width:800px){#masar-course-app .master-library{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){#masar-course-app .master-filters{grid-template-columns:1fr}#masar-course-app .master-library{grid-template-columns:1fr 1fr;max-height:250px}#masar-course-app .master-outline ol{columns:1}#masar-course-app .master-chapter{padding:18px 14px}#masar-course-app .master-chapter p{font-size:15px;line-height:2.08}#masar-course-app .master-title,#masar-course-app .master-quiz{padding:19px 14px}#masar-course-app .master-outline,#masar-course-app .master-glossary,#masar-course-app .master-citations{margin-left:13px;margin-right:13px}#masar-course-app .master-action-row{padding:15px 13px}}
+
+/* الهوية البصرية المحسّنة: كتابة عربية واضحة، فراغات مريحة، وتسلسل بصري متماسك */
+:root{--atlas-ink:#153d48;--atlas-teal:#10796d;--atlas-sea:#14687b;--atlas-cream:#fffdfa;--atlas-gold:#d4a55b}
+body{background:radial-gradient(circle at 100% 0%,#e6f3ec 0%,transparent 32%),radial-gradient(circle at 0 25%,#edf3fb 0%,transparent 28%),#f7faf9;color:var(--atlas-ink)}
+header{background:linear-gradient(110deg,#113f49,#12635d);border-bottom:3px solid var(--atlas-gold);padding:16px 20px;box-shadow:0 6px 24px #0b374514}
+header strong{font-size:clamp(19px,2.5vw,24px);letter-spacing:-.3px}
+main{max-width:1220px;padding-top:35px}
+main>h1{font-size:clamp(30px,4vw,45px);color:#153a45;letter-spacing:-.8px}
+main>.sub{font-size:15px;line-height:2}
+nav[aria-label="أقسام الصفحة"]{border:0;gap:8px;margin:24px 0 20px;padding:8px;border-radius:14px;background:white;box-shadow:0 5px 19px #153f4a0c}
+nav[aria-label="أقسام الصفحة"] button{border-radius:10px;padding:11px 17px;transition:background .18s,transform .18s}
+nav[aria-label="أقسام الصفحة"] button:hover{background:#eaf3f2;transform:translateY(-1px)}
+nav[aria-label="أقسام الصفحة"] button.active{background:#10786c;color:white;box-shadow:0 4px 12px #10786c38}
+.meter .metric{background:#fff;border:1px solid #deebe7;border-radius:100px;padding:8px 14px;box-shadow:0 2px 9px #163d4810}
+#masar-course-app .master-hero{background:radial-gradient(circle at 3% 3%,#d3eee4 0%,transparent 45%),linear-gradient(120deg,#edfaf4,#fffdf7);border:1px solid #c5e3d8;box-shadow:0 14px 45px #134d5020;border-radius:20px;padding:29px 32px}
+#masar-course-app .master-hero h2{font-size:clamp(27px,3.1vw,36px);letter-spacing:-.8px}
+#masar-course-app .master-hero .master-pill{font-size:13px;background:#dff3e8;padding:6px 13px;border-radius:100px;display:inline-block}
+#masar-course-app .master-library{max-height:340px;padding:16px;border-radius:17px;box-shadow:0 6px 24px #21444a0b;gap:10px}
+#masar-course-app .master-tile{border-radius:13px;padding:13px 14px;transition:transform .15s,box-shadow .15s,border-color .15s;min-height:82px}
+#masar-course-app .master-tile:hover{transform:translateY(-2px);border-color:#7dbeaf;box-shadow:0 7px 18px #196f6418}
+#masar-course-app .master-tile.selected{box-shadow:inset 0 0 0 1px #299c88,0 3px 12px #17695c12}
+#masar-course-app .master-detail{border-radius:21px;box-shadow:0 14px 37px #163d4812}
+#masar-course-app .master-title{background:linear-gradient(100deg,#f1faf6,#fff);padding:29px 34px}
+#masar-course-app .master-chapter{padding-top:26px;padding-bottom:26px}
+#masar-course-app .master-chapter h3{letter-spacing:-.4px}
+#masar-course-app .master-quiz{background:linear-gradient(120deg,#edf9f1,#f7fbf9);border-radius:16px;margin-top:24px;box-shadow:0 7px 25px #18494c10}
+#masar-course-app .master-quiz-question{box-shadow:0 6px 20px #193d4811}
+#masar-course-app .master-choice{border:1px solid #cddfdd;transition:border-color .15s,background .15s,transform .15s}
+#masar-course-app .master-choice:hover{background:#f0f9f6;transform:translateX(-2px)}
+#masar-course-app .master-quiz-button{box-shadow:0 3px 9px #115b581e}
+#masar-course-app .master-quiz-button:hover{filter:brightness(.95)}
+#masar-course-app .master-mindmap{margin:24px 26px 9px;background:radial-gradient(circle at 50% 30%,#f2faf6,transparent 60%),#fcfefd;border:1px solid #d6e9e4;border-radius:18px;padding:25px 22px 27px;overflow:hidden;box-shadow:0 6px 25px #174b4910}
+#masar-course-app .master-mindmap-kicker{color:#0e8075;font-size:12px;font-weight:800;text-align:center}
+#masar-course-app .master-mindmap h3{color:#1a5360;font-size:23px;text-align:center;margin:3px 0 3px}
+#masar-course-app .master-mindmap-note{font-size:13px;color:#59737a;text-align:center;margin:0 0 21px;line-height:1.8}
+#masar-course-app .master-mindmap-root{max-width:370px;margin:0 auto;position:relative;background:linear-gradient(130deg,#116d6d,#12505c);color:white;box-shadow:0 9px 25px #12645b36;border:3px solid #f9fbf8;border-radius:18px;padding:15px 22px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+#masar-course-app .master-mindmap-root:after{content:"";position:absolute;width:3px;height:26px;background:#80c7b7;bottom:-27px;right:calc(50% - 1px)}
+#masar-course-app .master-mindmap-root-icon{color:#f2ce86;font-size:19px}
+#masar-course-app .master-mindmap-root strong{font-size:18px;line-height:1.6}
+#masar-course-app .master-mindmap-root-sub{font-size:12px;color:#c5eadc}
+#masar-course-app .master-mindmap-branches{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px 25px;margin:26px auto 0;max-width:790px}
+#masar-course-app .master-mindmap-branches:before{content:"";position:absolute;height:calc(100% - 16px);width:2px;background:#b9dfd3;right:calc(50% - 1px);top:0;pointer-events:none}
+#masar-course-app .master-mindmap-branch{position:relative;display:flex;flex-direction:column;align-items:flex-start;text-align:right;justify-content:center;gap:4px;background:#fff;border:1px solid #cce2d8;border-right:5px solid #168879;border-radius:12px;padding:12px 16px;box-shadow:0 4px 13px #1c625c12;color:#244d54;font-weight:750;font-size:14px;line-height:1.6;min-height:74px;transition:transform .18s,box-shadow .18s,border-color .18s}
+#masar-course-app .master-mindmap-branch:nth-child(3n+2){border-right-color:#c99c59}
+#masar-course-app .master-mindmap-branch:nth-child(3n){border-right-color:#4e92a9}
+#masar-course-app .master-mindmap-branch:before{content:"";position:absolute;width:13px;height:2px;top:50%;background:#9ccbbf;pointer-events:none}
+#masar-course-app .master-mindmap-branch:nth-child(odd):before{left:-14px}
+#masar-course-app .master-mindmap-branch:nth-child(even):before{right:-14px}
+#masar-course-app .master-mindmap-branch small{font-size:11px;color:#508078}
+#masar-course-app .master-mindmap-branch:hover,#masar-course-app .master-mindmap-branch:focus-visible{transform:translateY(-3px);border-color:#39ac96;box-shadow:0 9px 19px #126e6224}
+#masar-course-app .master-scoreboard{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:17px 0 20px}
+#masar-course-app .master-scoreboard-item{background:#fff;border:1px solid #dae7e4;border-radius:12px;padding:13px 12px;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 3px 10px #174a4910}
+#masar-course-app .master-scoreboard-item span{font-size:12px;color:#617780;font-weight:750}
+#masar-course-app .master-scoreboard-item strong{font-size:25px;font-variant-numeric:tabular-nums;color:#185b67}
+#masar-course-app .master-scoreboard-item.correct strong{color:#087d61}
+#masar-course-app .master-scoreboard-item.incorrect strong{color:#bb583b}
+#masar-course-app .master-scoreboard-item.points{background:#114f54;border-color:#114f54}
+#masar-course-app .master-scoreboard-item.points span{color:#d4eae0}
+#masar-course-app .master-scoreboard-item.points strong{color:#fff}
+#masar-course-app .master-quiz-question .master-feedback{border-right:5px solid #1d9a74}
+#masar-course-app .master-quiz-question .master-feedback.wrong{border-right-color:#d88b63}
+#masar-course-app .master-quiz-button.secondary{box-shadow:none}
+#masar-course-app .master-quiz-button:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+@media(max-width:650px){
+ main{padding-top:21px}
+ nav[aria-label="أقسام الصفحة"]{gap:5px;padding:6px}
+ nav[aria-label="أقسام الصفحة"] button{flex:1 1 40%;padding:9px 8px;font-size:13px}
+ #masar-course-app .master-hero{padding:19px 16px;border-radius:16px}
+ #masar-course-app .master-mindmap{margin:14px 11px 10px;padding:18px 10px}
+ #masar-course-app .master-mindmap-root{max-width:94%}
+ #masar-course-app .master-mindmap-branches{gap:10px 8px}
+ #masar-course-app .master-mindmap-branches:before{display:none}
+ #masar-course-app .master-mindmap-branch{font-size:12px;padding:10px;min-height:70px}
+ #masar-course-app .master-mindmap-branch:before{display:none}
+ #masar-course-app .master-scoreboard{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ #masar-course-app .master-scoreboard-item{padding:9px}
+ #masar-course-app .master-scoreboard-item strong{font-size:22px}
+}
+@media(prefers-reduced-motion:reduce){#masar-course-app *,nav[aria-label="أقسام الصفحة"] *{transition:none!important;scroll-behavior:auto!important}}
