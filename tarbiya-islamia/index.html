@@ -299,6 +299,16 @@ function feedback(){const box=$("grade-feedback");box.replaceChildren();let ans=
  const msg=document.createElement("p");
  const checked=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]?.[String(qno)];msg.textContent=checked?.reason?(checked?.task?"الاختيار الخاطئ: ":"الجواب: ")+key+" — "+checked.reason+" ("+(checked.keySource?"مفتاح الجواب مطابق لدليل التصحيح الوزاري المرفق بالورقة؛ التعليل شرح تعليمي":checked.confidence==="اجتهادي"?"ترجيح اجتهادي يحتاج مراجعة متخصصة":"تعليل تعليمي تمت مراجعته مع نص الورقة") +").":"الجواب "+key+" حسب مفتاح مقترح غير رسمي. لم يتم بعد توثيق التعليل التفصيلي لهذا السؤال من نصه واختياراته، لذلك لا نعطي تفسيراً مؤلفاً على أنه يقين. راجع الصورة الأصلية والدرس المرتبط بالمفهوم.";
  expl.appendChild(msg);
+ const optionNotes=window.MASAR_ISLAM_OPTION_NOTES?.[activeExam.id+"-"+qno];
+ if(optionNotes){
+  const heading=document.createElement("strong");heading.textContent="لماذا كل اختيار صحيح أو خطأ؟";expl.appendChild(heading);
+  for(const letter of "ABCDE".slice(0,activeExam.letters)){
+   if(!optionNotes[letter])continue;
+   const line=document.createElement("p");
+   line.textContent=letter+" — "+(letter===key?"✓ ":"✗ ")+optionNotes[letter];
+   expl.appendChild(line);
+  }
+ }
  const back=document.createElement("button");back.type="button";back.className="quiet-button";back.textContent="رجع للدرس وراجع المفاهيم";back.onclick=()=>{const tab=document.querySelector('nav button[data-tab="courses"]');if(tab)tab.click();document.getElementById("masar-current-course")?.scrollIntoView({behavior:"smooth",block:"start"})};expl.appendChild(back);box.appendChild(expl);
  const small=document.createElement("div");small.className="mini";small.textContent=checked?.keySource?"الجواب مأخوذ من دليل التصحيح المرفق بملف الامتحان الأصلي؛ التنقيط المعروض هنا تدريبي.":"التنقيط هنا للتدريب، والتصحيح اجتهادي غير وزاري.";box.appendChild(small);if(checked?.keySourceUrl){const a=document.createElement("a");a.href=checked.keySourceUrl;a.target="_blank";a.rel="noopener noreferrer";a.textContent="شاهد PDF الأصلي ودليل التصحيح";box.appendChild(a)}
 }
@@ -378,5 +388,5 @@ renderQuiz();renderMistakes();
 <script src="resumes-specialty.js?v=20261111a"></script>
 <script src="resumes-grades.js?v=20261111a"></script>
 <script src="exam-topic-matches.js?v=20261111study2"></script>
-<script src="../assets/course-qcm-generator.js?v=20261111ten1"></script>
-<script src="master-reader.js?v=20261111ten1"></script></body></html>
+<script src="official-choice-notes.js?v=20261110review1"></script>
+<script src="master-reader.js?v=20261110full1"></script></body></html>
