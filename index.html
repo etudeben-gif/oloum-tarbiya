@@ -347,7 +347,7 @@ const sciencePracticeKey=window.MASAR_PROFILES?.key('masar-science-practice-2026
 let sciencePracticeAnswers={};try{sciencePracticeAnswers=JSON.parse(localStorage.getItem(sciencePracticeKey)||'{}')||{}}catch(e){}
 function saveSciencePractice(){try{localStorage.setItem(sciencePracticeKey,JSON.stringify(sciencePracticeAnswers))}catch(e){}}
 function renderScienceTraining(c,index){
- const rows=(c.quickReview?.rows||[]).filter(r=>r?.length>=2).slice(0,5);
+ const rows=(c.quickReview?.rows||[]).filter(r=>r?.length>=2).slice(0,4);
  const box=node('section','science-training');
  box.append(node('span','quick-tag','أسئلة تدريبية من إعداد الموقع — ليست ورقة رسمية'),node('h3','','QCM خاصة بهذا الدرس'));
  box.append(node('p','science-score-note','جاوب بعد فهم الشرح: +1 للصحيح، −1 للخطأ، و0 للمتروك. كل سؤال مبني على مفاهيم هذا الدرس فقط.'));
@@ -360,11 +360,12 @@ function renderScienceTraining(c,index){
  rows.forEach((r,i)=>{
   const answerKey=index+'-'+i,existing=sciencePracticeAnswers[answerKey];
   const question=node('div','science-training-question');
-  const options=rows.slice(0,4).map(x=>x[0]);
-  const right=i<4?i:0;
-  const description=r.length>2?r[2]:r[1];
-  if(i>=4)return;
-  const qTitle=node('strong','','Q'+(i+1)+' — أي مفهوم يطابق الوصف التالي؟');question.append(qTitle,node('p','',description));
+  const reverse=i%2===1;
+  const options=rows.map(x=>reverse?x.slice(1).join(' — '):x[0]);
+  const right=i;
+  const description=r.slice(1).join(' — ');
+  const qTitle=node('strong','','Q'+(i+1)+' — '+(reverse?'ما هو الشرح الصحيح للمفهوم التالي؟':'أي مفهوم يطابق الوصف التالي؟'));
+  question.append(qTitle,node('p','',reverse?r[0]:description));
   const answers=node('div','science-training-options');
   const order=[0,1,2,3].map(x=>(x+i+1)%4);
   for(const j of order){
