@@ -35,7 +35,21 @@ for(const c of courses){
  {title:"وزارة التربية الوطنية — منهاج التربية الإسلامية للثانوي، يونيو 2016",url:curriculum,type:"منهاج رسمي"},
  {title:"CRMEF الدار البيضاء سطات — بطاقات مجزوءات التربية الإسلامية للتخطيط والتقويم والديداكتيك",url:crmef,type:"تكوين رسمي"}
  ];
- const e=c.group==="الديداكتيك"?"2021-didactics":"2021-specialty";
+ if(c.group==="الديداكتيك"){
+   const base="https://crmefcasablancasettat.ma/wp-content/uploads/2022/06/";
+   const names=[
+     ["بطاقة مجزوءة الديداكتيك – ثانوي تربية إسلامية","بطاقة توصيف مجزوءة الديداكتيك – ثانوي تربية إسلامية.pdf"],
+     ["بطاقة مجزوءة التخطيط – ثانوي تربية إسلامية","بطاقة توصيف مجزوءة التخطيط – ثانوي تربية إسلامية.pdf"],
+     ["بطاقة مجزوءة التقويم – ثانوي تربية إسلامية","بطاقة توصيف مجزوءة التقويم – ثانوي تربية إسلامية.pdf"],
+     ["بطاقة مجزوءة تدبير التعلمات 1 – ثانوي تربية إسلامية","بطاقة توصيف مجزوءة تدبير التعلمات 1 – ثانوي تربية إسلامية.pdf"]
+   ];
+   let selected=names[0];
+   if(c.id==="planning")selected=names[1];
+   if(c.id==="assessment")selected=names[2];
+   if(c.id==="methods"||c.id==="inclusion")selected=names[3];
+   c.officialSources.push({title:selected[0],url:base+encodeURIComponent(selected[1]),type:"بطاقة مجزوءة رسمية PDF"});
+ }
+  const e=c.group==="الديداكتيك"?"2021-didactics":"2021-specialty";
  if(c.group!=="المنهاج الرسمي"){
  c.officialSources.push({title:"الامتحان الأصلي لدجنبر 2021 ودليل عناصر الإجابة — "+(e==="2021-didactics"?"الديداكتيك":"التخصص"),url:e==="2021-didactics"?examDid:examSpec,type:"أسئلة أصلية وتصحيح مرفق"});
  }
