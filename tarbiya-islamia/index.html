@@ -65,7 +65,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 .intro-live-actions button{background:#126e6b;color:white;border-radius:9px;padding:9px 14px;font-weight:750}
 .intro-live-actions button[hidden]{display:none!important}
 @media(max-width:700px){#intro-live{padding:11px}.intro-live-heading h3{font-size:17px}.intro-live-images.enlarged .intro-figure img{width:190%}}
-</style><link rel="stylesheet" href="master-reader.css?v=20261110map2">
+</style><link rel="stylesheet" href="master-reader.css?v=20261110map2"><link rel="stylesheet" href="../assets/masar-profiles.css?v=20261110profile1"><script src="../assets/masar-profiles.js?v=20261110profile1"></script>
 </head><body>
 <header><div class="wrap"><strong>مسار | التربية الإسلامية</strong><a href="../">علوم التربية للثانوي</a></div></header>
 <main>
@@ -221,8 +221,8 @@ const $=id=>document.getElementById(id);
 const escape=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const card=(t,m,p,l,href)=>'<article class="card"><h3>'+escape(t)+'</h3><div class="meta">'+escape(m)+'</div><p>'+escape(p)+'</p><a class="link" target="_blank" rel="noopener noreferrer" href="'+escape(href)+'">'+escape(l)+'</a></article>';
 let activeExam=exams.find(e=>e.id==="2021-specialty")||exams[0],qno=4,page=4,zoom=100,onlyMistakes=false,proposed={};
-let qanswers={};try{qanswers=JSON.parse(localStorage.getItem("masar-islam-qcm-v2")||"{}")||{}}catch(e){qanswers={}}
-function save(){try{localStorage.setItem("masar-islam-qcm-v2",JSON.stringify(qanswers))}catch(e){}if(typeof window.MASAR_MASTER_SYNC==="function")window.MASAR_MASTER_SYNC()}
+let qanswers={};try{qanswers=JSON.parse(localStorage.getItem(window.MASAR_PROFILES?.key("masar-islam-qcm-v2")||"masar-islam-qcm-v2")||"{}")||{}}catch(e){qanswers={}}
+function save(){try{localStorage.setItem(window.MASAR_PROFILES?.key("masar-islam-qcm-v2")||"masar-islam-qcm-v2",JSON.stringify(qanswers))}catch(e){}if(typeof window.MASAR_MASTER_SYNC==="function")window.MASAR_MASTER_SYNC()}
 function getKey(e,q){const item=window.MASAR_ISLAM_TRANSCRIPT?.[e.id]?.[String(q)];return item?.answer||null}
 function countScores(){
  let scored=0,correct=0,wrong=0;
@@ -351,13 +351,13 @@ function renderMistakes(){let mistakes=[];
 function showTab(tab){document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));
  document.querySelectorAll(".screen").forEach(x=>x.hidden=x.id!==tab);
  if(tab==="review")renderMistakes();if(tab==="exams")showScan();}
-window.addEventListener("masar-lesson-qcm",()=>{try{qanswers=JSON.parse(localStorage.getItem("masar-islam-qcm-v2")||"{}")||{}}catch(e){}renderQuiz(false);renderMistakes()});
+window.addEventListener("masar-lesson-qcm",()=>{try{qanswers=JSON.parse(localStorage.getItem(window.MASAR_PROFILES?.key("masar-islam-qcm-v2")||"masar-islam-qcm-v2")||"{}")||{}}catch(e){}renderQuiz(false);renderMistakes()});
 $("to-review").onclick=()=>showTab("review");
 fetch("proposed-keys.json",{cache:"no-store"}).then(r=>r.ok?r.json():{}).then(data=>{
  proposed=data||{};renderQuiz(false);renderMistakes();
 }).catch(()=>{proposed={};renderQuiz(false)});
-let completed={};try{completed=JSON.parse(localStorage.getItem("masar-islam-lessons-v1")||"{}")}catch(e){completed={}}
-function renderCourses(){$("course-items").innerHTML=courses.map((c,i)=>'<article class="card course"><div class="head"><h3>'+escape(c.title)+'</h3><button type="button" data-complete="'+i+'" class="'+(completed[i]?"done":"")+'">'+(completed[i]?"تمت المراجعة ✓":"تحديد كمراجع")+'</button></div><p>'+escape(c.desc)+'</p><div class="mini">مرجع الموضوع: '+escape(c.ref)+'</div></article>').join("");$("progress").textContent="تقدّمك: "+Object.values(completed).filter(Boolean).length+" / "+courses.length+" محاور";document.querySelectorAll('[data-complete]').forEach(b=>b.onclick=function(){const i=this.dataset.complete;completed[i]=!completed[i];try{localStorage.setItem("masar-islam-lessons-v1",JSON.stringify(completed))}catch(e){}renderCourses()})}
+let completed={};try{completed=JSON.parse(localStorage.getItem(window.MASAR_PROFILES?.key("masar-islam-lessons-v1")||"masar-islam-lessons-v1")||"{}")}catch(e){completed={}}
+function renderCourses(){$("course-items").innerHTML=courses.map((c,i)=>'<article class="card course"><div class="head"><h3>'+escape(c.title)+'</h3><button type="button" data-complete="'+i+'" class="'+(completed[i]?"done":"")+'">'+(completed[i]?"تمت المراجعة ✓":"تحديد كمراجع")+'</button></div><p>'+escape(c.desc)+'</p><div class="mini">مرجع الموضوع: '+escape(c.ref)+'</div></article>').join("");$("progress").textContent="تقدّمك: "+Object.values(completed).filter(Boolean).length+" / "+courses.length+" محاور";document.querySelectorAll('[data-complete]').forEach(b=>b.onclick=function(){const i=this.dataset.complete;completed[i]=!completed[i];try{localStorage.setItem(window.MASAR_PROFILES?.key("masar-islam-lessons-v1")||"masar-islam-lessons-v1",JSON.stringify(completed))}catch(e){}renderCourses()})}
 $("library-items").innerHTML=docs.map(d=>card(d.title,d.group,d.type,"فتح الوثيقة",d.url)).join("");
 document.querySelectorAll("nav button").forEach(b=>b.onclick=function(){showTab(b.dataset.tab)});
 renderQuiz();renderMistakes();
