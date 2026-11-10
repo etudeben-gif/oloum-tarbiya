@@ -124,16 +124,17 @@ function lessonRows(c){
 }
 function renderPractice(c){
  const rows=lessonRows(c).filter(r=>r[0]&&r[1]).slice(0,4),box=N("section","master-practice");
- box.append(N("span","master-quick-kicker","تدريب خاص بالدرس — غير وزاري"),N("h3",null,"QCM للفهم قبل الامتحان"),N("p","master-practice-intro","اختار المفهوم المناسب من 4 اختيارات؛ التصحيح يشرح العلاقة. الصحيح +1، الخطأ −1، المتروك 0."));
+ box.append(N("span","master-quick-kicker","تدريب خاص بالدرس — غير وزاري"),N("h3",null,"QCM للفهم قبل الامتحان"),N("p","master-practice-intro","أسئلة متنوعة: مرة تحدد المفهوم من المثال ومرة تختار الشرح الصحيح. +1 للصحيح، −1 للخطأ، و0 للمتروك."));
  if(rows.length<4)return box;
  let points=0;for(let i=0;i<4;i++){const x=practice[c.id+"-"+i];if(x!==undefined)points+=x===i?1:-1}
  box.append(N("div","master-practice-score","نقطة هذا الدرس: "+(points>0?"+":"")+points));
  for(let i=0;i<4;i++){
   const key=c.id+"-"+i,chosen=practice[key],q=N("div","master-practice-question");
-  q.append(N("strong",null,"Q"+(i+1)+" — أي مفهوم ينطبق عليه الشرح؟"),N("p",null,rows[i].slice(1).join(" — ")));
+  const reverse=i%2===1;
+  q.append(N("strong",null,"Q"+(i+1)+" — "+(reverse?"ما هو الشرح الصحيح للمفهوم؟":"أي مفهوم ينطبق عليه الشرح؟")),N("p",null,reverse?rows[i][0]:rows[i].slice(1).join(" — ")));
   const choices=N("div","master-practice-options");
   for(let j=0;j<4;j++){
-   const k=(j+i+1)%4,button=N("button","master-practice-option"+(chosen!==undefined&&k===i?" correct":chosen===k?" wrong":""),rows[k][0]);
+   const k=(j+i+1)%4,button=N("button","master-practice-option"+(chosen!==undefined&&k===i?" correct":chosen===k?" wrong":""),reverse?rows[k].slice(1).join(" — "):rows[k][0]);
    button.type="button";button.disabled=chosen!==undefined;
    button.onclick=()=>{practice[key]=k;savePractice();renderCourse(c)};
    choices.append(button);
