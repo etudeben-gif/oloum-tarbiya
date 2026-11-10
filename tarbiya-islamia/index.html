@@ -65,7 +65,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 .intro-live-actions button{background:#126e6b;color:white;border-radius:9px;padding:9px 14px;font-weight:750}
 .intro-live-actions button[hidden]{display:none!important}
 @media(max-width:700px){#intro-live{padding:11px}.intro-live-heading h3{font-size:17px}.intro-live-images.enlarged .intro-figure img{width:190%}}
-</style><link rel="stylesheet" href="master-reader.css?v=20261110lessons2"><link rel="stylesheet" href="../assets/masar-profiles.css?v=20261110profile1"><script src="../assets/masar-profiles.js?v=20261111study"></script>
+</style><link rel="stylesheet" href="master-reader.css?v=20261110essays1"><link rel="stylesheet" href="../assets/masar-profiles.css?v=20261110profile1"><script src="../assets/masar-profiles.js?v=20261111study"></script>
 </head><body>
 <header><div class="wrap"><strong>مسار | التربية الإسلامية</strong><a href="../">علوم التربية للثانوي</a></div></header>
 <main>
@@ -144,10 +144,7 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 "use strict";
 const archive="https://mesconcours.ma/ar/concours/enseignement/college-lycee/education-islamique/";
 
-const readingContext={
- "2021-specialty":{pages:[2],title:"الوثيقة السابقة لقسم الأسئلة الموضوعية – 2021",note:"في الورقة الأصلية نص وأسئلة إنشائية قبل قسم QCM. ما تأكدناش أنه مرتبط بسؤال QCM معيّن؛ يمكنك الاطلاع عليه إذا احتجتي."},
- "2021-didactics":{pages:[2],title:"الوثيقة التمهيدية من امتحان ديداكتيك 2021",note:"الصفحة الثانية فيها وضعيات وأسئلة تسبق QCM. ما كنقدموهاش على أنها سند مباشر لكل أسئلة الاختيار."}
-};
+const readingContext={}; // لا نعرض سنداً عاماً إلا إذا كان مرتبطاً بالأسئلة؛ السند المقالي في قسم المقالات.
 let introductionZoomed=false,introductionHidden=false;
 function renderReadingContext(ex){
  const row=readingContext[ex.id],el=document.getElementById("intro-live");
