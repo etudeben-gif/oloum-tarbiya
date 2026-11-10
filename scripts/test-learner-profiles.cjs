@@ -1,0 +1,48 @@
+const assert=require("node:assert/strict");
+const fs=require("node:fs");
+const path=require("node:path");
+const {JSDOM}=require("jsdom");
+const code=fs.readFileSync(path.resolve("assets/masar-profiles.js"),"utf8");
+function session(){
+ const dom=new JSDOM("<!doctype html><html lang='ar'><body></body></html>",{url:"https://etudeben-gif.github.io/oloum-tarbiya/",runScripts:"dangerously",pretendToBeVisual:true});
+ dom.window.eval(code);
+ dom.window.document.dispatchEvent(new dom.window.Event("DOMContentLoaded"));
+ const api=dom.window.MASAR_PROFILES;
+ assert(api&&typeof api.key==="function","Missing profile API");
+ assert(dom.window.document.querySelector("#masar-profile-cover"),"First-visit login modal missing");
+ return {dom,w:dom.window,api};
+}
+const {dom,w,api}=session();
+const first=api.createOrFind(" أمين ");
+assert.equal(first.name,"أمين");
+api.activate(first.id,{reload:false});
+assert.equal(api.current().name,"أمين");
+assert.equal(api.createOrFind("أمين").id,first.id,"Same name must reuse old account");
+w.localStorage.setItem(api.key("masar-original-exams-v1"),JSON.stringify({"2025-61":"B"}));
+w.localStorage.setItem(api.key("masar-islam-qcm-v2"),JSON.stringify({"2021-specialty-1":"C"}));
+w.localStorage.setItem(api.key("masar-islam-lessons-v2"),JSON.stringify({"quran":true}));
+assert.deepEqual(JSON.parse(w.localStorage.getItem(api.key("masar-islam-qcm-v2"))),{"2021-specialty-1":"C"});
+assert.equal(api.statsFor(first).science,1);
+assert.equal(api.statsFor(first).islam,1);
+assert.equal(api.statsFor(first).lessons,1);
+const second=api.createOrFind("سلمى");
+api.activate(second.id,{reload:false});
+assert.notEqual(api.key("masar-islam-qcm-v2"),"masar-islam-qcm-v2");
+assert.equal(w.localStorage.getItem(api.key("masar-islam-qcm-v2")),null,"Student scores leaked to another name");
+w.localStorage.setItem(api.key("masar-islam-qcm-v2"),JSON.stringify({"2021-specialty-2":"A"}));
+assert.equal(api.statsFor(second).islam,1);
+api.activate(first.id,{reload:false});
+assert.equal(JSON.parse(w.localStorage.getItem(api.key("masar-original-exams-v1")))["2025-61"],"B");
+assert.equal(JSON.parse(w.localStorage.getItem(api.key("masar-islam-qcm-v2")))["2021-specialty-1"],"C");
+assert.equal(api.list().length,2,"Profiles should stay distinct");
+assert.equal(api.current().name,"أمين");
+
+const other=session();
+other.w.localStorage.setItem("masar-original-exams-v1",JSON.stringify({"2022-61":"D"}));
+other.w.localStorage.setItem("masar-islam-qcm-v2",JSON.stringify({"2021-didactics-3":"B"}));
+const migrated=other.api.createOrFind("يوسف",{migrate:true});
+other.api.activate(migrated.id,{reload:false});
+assert.equal(JSON.parse(other.w.localStorage.getItem(other.api.key("masar-original-exams-v1")))["2022-61"],"D","Original Sciences answers must be migrated");
+assert.equal(JSON.parse(other.w.localStorage.getItem(other.api.key("masar-islam-qcm-v2")))["2021-didactics-3"],"B","Original Islamic answers must be migrated");
+console.log("SUCCESS: first-visit name entry, two isolated named profiles, same-name return, both course score histories, existing-progress migration.");
+dom.window.close();other.dom.window.close();
