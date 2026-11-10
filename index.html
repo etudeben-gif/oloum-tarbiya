@@ -390,8 +390,7 @@ function renderCourse(){
  const indexes=filteredIndexes();
  if(!indexes.includes(currentIndex))currentIndex=indexes[0]??-1;
  tabs.replaceChildren();article.replaceChildren();qs.replaceChildren();
- const totalParts=lessons.reduce((n,c)=>n+(c.displayParts?.length||0)+(c.glossary?.length||0),0);
- courseCount.textContent=indexes.length+' من أصل '+lessons.length+' درساً · '+totalParts+' فقرة شرح ومراجعة · النسخة النهائية 10 نونبر 2026';
+ courseCount.textContent=indexes.length+' من أصل '+lessons.length+' ملخصاً واضحاً · 4 أسئلة تدريبية لكل درس · الأسئلة الأصلية عند توفر مطابقة مباشرة';
  if(currentIndex<0){currentTitle.textContent='لم نجد درساً مطابقاً';article.append(node('p','small','جرب عبارة أخرى أو اختر جميع المحاور.'));return}
  for(const i of indexes){
   const c=lessons[i],b=node('button','course-tab'+(i===currentIndex?' active':''),(i+1)+'. '+c.title);
@@ -428,8 +427,8 @@ function renderCourse(){
  if(currentIndex===1)review.append(node('p','science-quick-hint','الأعمار تقريبية: الحس حركية 0–2، ما قبل العمليات 2–7، المحسوسة 7–11، الصورية منذ 11–12 تقريباً.'));
  article.append(review);
  article.append(renderScienceTraining(c,currentIndex));
- const sources=node('section','reader-references');
- sources.append(node('h3','','مصادر الدرس ومرجعية التكوين'));
+ const sources=document.createElement('details');sources.className='reader-references';
+ const sourceSummary=document.createElement('summary');sourceSummary.textContent='المراجع الرسمية وشرح مصدر الدرس';sources.append(sourceSummary);
  sources.append(node('p','reader-note','التوصيف الوزاري يحدد محاور الاختبار، وبطاقة مجزوءة المركز الجهوي تحدد محتويات التكوين ومراجعه. متن الدرس شرح تعليمي أصلي في ضوء هذه المرجعيات، وليس نقلاً حرفياً عن الوزارة.'));
  for(const item of c.sourceLinks||[]){
   const row=document.createElement('div');row.className='reader-source';
