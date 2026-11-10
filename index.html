@@ -315,6 +315,7 @@ render();
 <script src="science-master-assemble.js?v=20261110final1"></script>
 <script src="science-quick-review.js?v=20261110quick1"></script>
 <script src="science-exam-insights.js?v=20261111c"></script>
+<script src="science-course-case-qcm.js?v=20261111case1"></script>
 <script>
 (function(){
 const lessons=window.MASAR_SECONDARY_LESSONS||[];
@@ -356,7 +357,7 @@ function renderScienceTraining(c,index){
  const total=rows.reduce((acc,_,i)=>{
   const value=sciencePracticeAnswers[index+'-'+i];
   return acc+(value===undefined?0:(value===i?1:-1));
- },0);
+ },0)+(c.caseQ&&sciencePracticeAnswers[index+'-case']!==undefined?(sciencePracticeAnswers[index+'-case']===c.caseQ.correct?1:-1):0);
  box.append(node('div','science-training-total','نقطة تدريبات هذا الدرس: '+(total>0?'+':'')+total));
  rows.forEach((r,i)=>{
   const answerKey=index+'-'+i,existing=sciencePracticeAnswers[answerKey];
@@ -390,13 +391,32 @@ function renderScienceTraining(c,index){
   }
   box.append(question);
  });
+ if(c.caseQ){
+  const q=c.caseQ,key=index+'-case',existing=sciencePracticeAnswers[key];
+  const block=node('div','science-training-question science-case-question');
+  block.append(node('strong','','Q5 — سؤال تطبيقي من وضعية امتحانية (تدريب من إعداد الموقع)'),node('p','',q.prompt));
+  const buttons=node('div','science-training-options');
+  q.options.forEach((option,i)=>{
+   const b=node('button','science-training-choice'+(existing!==undefined&&i===q.correct?' correct':existing===i?' wrong':''),String.fromCharCode(65+i)+' — '+option);
+   b.type='button';b.disabled=existing!==undefined;b.onclick=()=>{sciencePracticeAnswers[key]=i;saveSciencePractice();renderCourse()};
+   buttons.append(b);
+  });
+  block.append(buttons);
+  if(existing!==undefined){
+   const feedback=node('p','science-training-feedback',(existing===q.correct?'✓ صحيح +1':'✗ خطأ −1')+' · الجواب: '+String.fromCharCode(65+q.correct)+' — '+q.options[q.correct]+'. التعليل: '+q.reason);
+   if(existing!==q.correct)feedback.append(document.createTextNode(' · اختيارك: '+q.options[existing]+'.'));
+   block.append(feedback);
+   const retry=node('button','science-training-retry','إعادة المحاولة');retry.type='button';retry.onclick=()=>{delete sciencePracticeAnswers[key];saveSciencePractice();renderCourse()};block.append(retry);
+  }
+  box.append(block);
+ }
  return box;
 }
 function renderCourse(){
  const indexes=filteredIndexes();
  if(!indexes.includes(currentIndex))currentIndex=indexes[0]??-1;
  tabs.replaceChildren();article.replaceChildren();qs.replaceChildren();
- courseCount.textContent=indexes.length+' من أصل '+lessons.length+' ملخصاً واضحاً · 4 أسئلة تدريبية لكل درس · الأسئلة الأصلية عند توفر مطابقة مباشرة';
+ courseCount.textContent=indexes.length+' من أصل '+lessons.length+' ملخصاً واضحاً · 5 أسئلة تدريبية لكل درس · الأسئلة الأصلية عند توفر مطابقة مباشرة';
  if(currentIndex<0){currentTitle.textContent='لم نجد درساً مطابقاً';article.append(node('p','small','جرب عبارة أخرى أو اختر جميع المحاور.'));return}
  for(const i of indexes){
   const c=lessons[i],b=node('button','course-tab'+(i===currentIndex?' active':''),(i+1)+'. '+c.title);
