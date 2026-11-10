@@ -226,6 +226,7 @@ fetch('science-proposed-keys.json',{cache:'no-store'})
 <script src="science-secondary-deep-sociology.js?v=20261110a"></script>
 <script src="science-secondary-thinkers.js?v=20261110a"></script>
 <script src="science-secondary-curated.js?v=20261110b"></script>
+<script src="science-secondary-official-notes.js?v=20261110b"></script>
 <script>
 (function(){
 const lessons=window.MASAR_SECONDARY_LESSONS||[];
@@ -259,6 +260,14 @@ function renderCourse(){
  sources.append(node('p','','توصيف الوزارة يحدد موضوع الاختبار ووزنه، ولا يقدم نصوص هذه الدروس. الشروح النظرية والأمثلة أعلاه صياغة تعليمية للمراجعة، وليست مقتطفات رسمية.'));
  const link=document.createElement('a');link.href='https://drive.google.com/file/d/1H8Ql6B3s3rWep-O51YJJ0MOnF2j7V0WA/view';link.target='_blank';link.rel='noopener noreferrer';link.textContent='التوصيف الوزاري لعلوم التربية – الثانوي (2025)';sources.append(link);
  for(const [label,url] of c.ministrySources||[]){const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label;sources.append(a)}
+ if(c.officialNotes?.length){
+  const official=node('div','course-sources');official.append(node('h3','','مضامين مستخلصة من صفحات الوزارة'));
+  official.append(node('p','','الفقرات التالية تلخيص تعليمي لمضامين صفحات الوزارة المشار إليها، وليست اقتباساً حرفياً.'));
+  for(const [heading,body,url] of c.officialNotes){
+   const sec=node('section','course-block');sec.append(node('h3','',heading),node('p','',body));
+   const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent='اقرأ المصدر الرسمي';sec.append(a);official.append(sec);
+  }article.append(official);
+ }
  article.append(sources);
  if(c.qs?.length){for(const n of c.qs){const b=node('button','course-q','سؤال أصلي Q'+n);b.type='button';b.onclick=()=>openOriginalQuestion(n);qs.appendChild(b)}}
  else{qs.append(node('p','small','لم نتحقق بعد من سؤال رسمي محدد مرتبط بهذا الدرس. الأسئلة الموجودة أسفل الصفحة من ورقة الامتحان العامة، وقد لا تتعلق بالدرس الحالي. لن نعرضها باعتبارها QCM خاصاً بهذا الدرس.'));const b=node('button','course-q','استعراض الامتحان الكامل (ليس مرتبطاً بالدرس)');b.type='button';b.onclick=()=>{const exam=document.getElementById('exam-select');if(exam){exam.value='2025';exam.dispatchEvent(new Event('change'))}document.getElementById('question-card')?.scrollIntoView({behavior:'smooth',block:'start'})};qs.appendChild(b)}
