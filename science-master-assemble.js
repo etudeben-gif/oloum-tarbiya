@@ -36,6 +36,8 @@ for(let i=0;i<lessons.length;i++){
  if(i<35&&deep.length<5)throw Error('Not detailed enough: '+i);
  const extras=i<35?reduceDup(deep,c.parts):[];
  c.displayParts=[...(i<35?deep:c.parts),...extras].map(([heading,text])=>({heading,text:text.trim()}));
+ const chosen=new Set(extras.map(x=>x[0]));
+ c.glossary=i<35?c.parts.filter(x=>!chosen.has(x[0])&&x[0]!=='في الامتحان'&&x[1].length>80).map(([heading,text])=>({heading,text:text.trim()})):[];
  if(c.displayParts.length<5)throw Error('Too few sections: '+i);
  c.sourceLinks=[
  {label:"توصيف اختبار علوم التربية للثانوي — وزارة التربية الوطنية، نونبر 2025",url:examPdf,kind:"إطار المباراة"},
