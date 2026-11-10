@@ -25,7 +25,7 @@ select{background:#fff;border:1px solid #cbdce1;border-radius:10px;padding:10px;
 #course-hub .course-tabs{display:flex;gap:8px;overflow-x:auto;padding:9px 0 16px}
 #course-hub .course-tab{white-space:nowrap;border:1px solid #cddfe3;background:#f1f7f9;color:#254d60;padding:9px 14px;border-radius:999px;font-weight:700}
 #course-hub .course-tab.active{background:#0d786d;color:white;border-color:#0d786d}
-#course-hub .course-article{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#course-hub .course-article{display:flex;flex-direction:column;gap:13px;max-width:850px;margin:0 auto}
 #course-hub .course-block{padding:15px;border:1px solid #dce9e9;border-radius:13px;background:#fff}
 #course-hub .course-block h3{margin:0 0 7px;color:#087a70}
 #course-hub .course-block p{margin:0;color:#354e5a}
@@ -44,9 +44,25 @@ select{background:#fff;border:1px solid #cbdce1;border-radius:10px;padding:10px;
 #course-hub .course-article .course-block{border-top:3px solid #d1e8e1}
 #course-hub .course-article .course-block p{line-height:1.95}
 @media(max-width:600px){#course-hub .course-controls{grid-template-columns:1fr}#course-hub .course-controls input,#course-hub .course-controls select{grid-column:1;grid-row:auto}#course-hub .course-tabs{max-height:240px}}
+
+#course-hub .course-block{position:relative;padding:21px 22px;background:#fff;border:1px solid #dbe6e8;border-right:4px solid #149080;border-radius:12px}
+#course-hub .course-block h3{font-size:18px;line-height:1.6;color:#174b57;margin:3px 0 9px}
+#course-hub .course-block p{font-size:15px;line-height:2.15;color:#2d4650;margin:0}
+#course-hub .course-kind{font-size:12px;font-weight:700;color:#32796f;display:inline-block;margin-bottom:3px}
+#course-hub .course-block.course-exam{background:#f2faf6;border-right-color:#ca984b}
+#course-hub .course-outline{background:#f4f9fa;border:1px solid #d6e7e7;border-radius:13px;padding:14px 17px;margin:5px 0}
+#course-hub .course-outline h3{font-size:15px;margin:0 0 6px;color:#225b64}
+#course-hub .course-outline ol{margin:0;padding-right:22px;columns:2;column-gap:30px}
+#course-hub .course-outline li{break-inside:avoid;padding:3px 0}
+#course-hub .course-outline a{font-size:13px;text-decoration:none;color:#136f70}
+#course-hub .course-sources{padding:13px 17px;background:#fafcfb;border:1px solid #d9e7e4;border-radius:12px;margin:6px 0}
+#course-hub .course-sources a{display:inline-block;margin:4px 0 4px 12px}
+#course-hub .course-sources h3{font-size:15px;margin:0 0 5px}
+#course-hub .course-sources p{font-size:12px;color:#506b72;margin:4px 0}
+@media(max-width:700px){#course-hub .course-outline ol{columns:1}#course-hub .course-block{padding:16px 14px}#course-hub .course-block p{font-size:15px;line-height:2}}
 </style></head><body>
 <header><div class="inner"><div class="brand">مسار | علوم التربية للثانوي</div><a href="./tarbiya-islamia/" style="color:#fff;background:#147b76;border-radius:9px;padding:7px 14px;font-weight:bold;text-decoration:none">التربية الإسلامية</a></div></header>
-<main class="wrap"><section class="card" id="course-hub" aria-label="الدروس قبل الامتحانات"><div class="course-head"><div><div class="step"><b>1</b> الدرس أولاً، ثم الأسئلة الرسمية</div><h2>دروس علوم التربية — الثانوي الإعدادي والتأهيلي</h2><p class="small">هذا اختبار علوم التربية الخاص بالثانوي الإعدادي والتأهيلي، المشترك بين التخصصات ومنها التربية الإسلامية، وليس اختبار الابتدائي ولا اختبار مادة التخصص. الدروس موسعة بشرح النظريات والمفكرين والأمثلة، ثم تأتي الأسئلة الأصلية.</p><p class="small"><a href="https://drive.google.com/file/d/1H8Ql6B3s3rWep-O51YJJ0MOnF2j7V0WA/view" target="_blank" rel="noopener noreferrer">التوصيف الوزاري لعلوم التربية – مسلك الثانوي – نونبر 2025</a></p></div><span class="question-code">35 درساً · 6 محاور</span></div><div class="course-controls"><label for="course-group">المحور حسب التوصيف الوزاري</label><select id="course-group"><option value="all">جميع المحاور (100%)</option></select><label for="course-search">البحث عن درس أو مفهوم</label><input id="course-search" type="search" placeholder="مثلاً: بياجيه، الكفايات، بورديو، السوسيومترية" autocomplete="off"></div><p class="small" id="course-count" role="status"></p><div class="course-tabs" id="course-tabs" role="group" aria-label="اختيار الدرس"></div><h3 id="course-current" class="course-current"></h3><p class="small">المحاور والنسب من التوصيف الرسمي لوزارة التربية الوطنية المغربية (نونبر 2025). الشروح الموسعة ومواقف المفكرين والأمثلة إضافات تعليمية للمراجعة، وليست نصوصاً وزارية حرفية؛ الوزارة لا تنشر في هذا التوصيف شروح النظريات.</p><div id="course-article" class="course-article"></div><div class="course-exercises"><h3>المرحلة الثانية: الأسئلة الرسمية المتحقق من ربطها بالدرس</h3><p class="course-note">لا تظهر أزرار سؤال خاص إلا عندما يكون الربط بالدرس موثقاً في بيانات المراجعة. باقي الدروس لا نختلق لها أسئلة. الأسئلة المصورة أصلية، لكن أجوبة نونبر 2025 المقترحة غير وزارية.</p><div id="course-qs"></div></div></section><div class="layout">
+<main class="wrap"><section class="card" id="course-hub" aria-label="الدروس قبل الامتحانات"><div class="course-head"><div><div class="step"><b>1</b> الدرس أولاً، ثم الأسئلة الرسمية</div><h2>دروس علوم التربية — الثانوي الإعدادي والتأهيلي</h2><p class="small">هذا اختبار علوم التربية الخاص بالثانوي الإعدادي والتأهيلي، المشترك بين التخصصات ومنها التربية الإسلامية، وليس اختبار الابتدائي ولا اختبار مادة التخصص. الدروس مرتبة من التعريف وأفكار العلماء إلى التطبيق والمراجعة، ثم تأتي الأسئلة الأصلية التي تحققنا من صلتها بالدرس.</p><p class="small"><a href="https://drive.google.com/file/d/1H8Ql6B3s3rWep-O51YJJ0MOnF2j7V0WA/view" target="_blank" rel="noopener noreferrer">التوصيف الوزاري لعلوم التربية – مسلك الثانوي – نونبر 2025</a></p></div><span class="question-code">35 درساً · 6 محاور · ترتيب جديد</span></div><div class="course-controls"><label for="course-group">المحور حسب التوصيف الوزاري</label><select id="course-group"><option value="all">جميع المحاور (100%)</option></select><label for="course-search">البحث عن درس أو مفهوم</label><input id="course-search" type="search" placeholder="مثلاً: بياجيه، الكفايات، بورديو، السوسيومترية" autocomplete="off"></div><p class="small" id="course-count" role="status"></p><div class="course-tabs" id="course-tabs" role="group" aria-label="اختيار الدرس"></div><h3 id="course-current" class="course-current"></h3><p class="small">المحاور والنسب من التوصيف الرسمي لوزارة التربية الوطنية المغربية (نونبر 2025). الشرح النظري والأمثلة مكتوبة للمراجعة وليست منقولة حرفياً من وثائق الوزارة؛ التوصيف يحدد المحاور ولا يتضمن دروساً مفصلة.</p><div id="course-article" class="course-article"></div><div class="course-exercises"><h3>المرحلة الثانية: الأسئلة الرسمية المتحقق من ربطها بالدرس</h3><p class="course-note">لا تظهر أزرار سؤال خاص إلا عندما يكون الربط بالدرس موثقاً في بيانات المراجعة. باقي الدروس لا نختلق لها أسئلة. الأسئلة المصورة أصلية، لكن أجوبة نونبر 2025 المقترحة غير وزارية.</p><div id="course-qs"></div></div></section><div class="layout">
 <aside class="side">
 <section class="card mainselector"><h3>امتحانات علوم التربية — الثانوي</h3><label class="field" for="exam-select">الدورة</label><select id="exam-select"></select><label class="field" for="number-select">رقم السؤال</label><select id="number-select"></select><div class="info" id="exam-meta"></div></section>
 <section class="card"><h3>النتيجة التدريبية</h3><div class="counter" id="score">0 / 0</div><div class="small" id="completed">0 من 354 سؤالاً</div><div class="progress"><div id="progress-bar"></div></div><button id="reset" class="clear" type="button">مسح الإجابات</button></section>
@@ -209,6 +225,7 @@ fetch('science-proposed-keys.json',{cache:'no-store'})
 <script src="science-secondary-deep-pedagogy.js?v=20261110a"></script>
 <script src="science-secondary-deep-sociology.js?v=20261110a"></script>
 <script src="science-secondary-thinkers.js?v=20261110a"></script>
+<script src="science-secondary-curated.js?v=20261110b"></script>
 <script>
 (function(){
 const lessons=window.MASAR_SECONDARY_LESSONS||[];
@@ -227,8 +244,22 @@ function renderCourse(){
  courseCount.textContent=indexes.length+' درساً ظاهراً من أصل '+lessons.length+' درساً — '+lessons.reduce((n,c)=>n+c.parts.length,0)+' فقرة شرح وتطبيق — اختَر الدرس ثم انتقل إلى الامتحان الأصلي';
  if(currentIndex<0){currentTitle.textContent='ما لقيناش درساً بهذا البحث';article.append(node('p','small','جرب كلمة أخرى أو اختَر جميع المحاور.'));return}
  for(const i of indexes){const c=lessons[i],b=node('button','course-tab'+(i===currentIndex?' active':''),c.title);b.type='button';b.setAttribute('aria-pressed',String(i===currentIndex));b.onclick=()=>{currentIndex=i;renderCourse();currentTitle.scrollIntoView({behavior:'smooth',block:'start'})};tabs.appendChild(b)}
- const c=lessons[currentIndex],g=groups.find(x=>x[0]===c.group);currentTitle.textContent=c.title+' — '+(g?g[1]:'');const src=node('p','small','المرجع الرسمي لتحديد المحور: وزارة التربية الوطنية، توصيف علوم التربية للثانوي، نونبر 2025. الشرح التفصيلي تربوي محرر للمراجعة وليس اقتباساً رسمياً.');const link=document.createElement('a');link.href='https://drive.google.com/file/d/1H8Ql6B3s3rWep-O51YJJ0MOnF2j7V0WA/view';link.target='_blank';link.rel='noopener noreferrer';link.textContent='فتح التوصيف الوزاري';src.append(' ',link);article.append(src);
- for(const [heading,body] of c.parts){const section=node('section','course-block');section.append(node('h3','',heading),node('p','',body));article.append(section)}
+ const c=lessons[currentIndex],g=groups.find(x=>x[0]===c.group);currentTitle.textContent=c.title+' — '+(g?g[1]:'');
+ const outline=node('nav','course-outline');outline.setAttribute('aria-label','فهرس فقرات الدرس');outline.append(node('h3','','فهرس الدرس — اقرأ بالترتيب'));
+ const ol=document.createElement('ol');
+ c.parts.forEach(([heading],k)=>{const li=document.createElement('li'),a=document.createElement('a');a.href='#course-section-'+k;a.textContent=heading;li.append(a);ol.append(li)});
+ outline.append(ol);article.append(outline);
+ c.parts.forEach(([heading,body],k)=>{
+   const kind=c.sectionKinds?.[k]||'شرح الدرس',exam=kind==='ما يجب ضبطه في المباراة';
+   const section=node('section','course-block'+(exam?' course-exam':''));section.id='course-section-'+k;
+   section.append(node('span','course-kind',(k+1)+' / '+c.parts.length+' · '+kind),node('h3','',heading),node('p','',body));
+   article.append(section);
+ });
+ const sources=node('div','course-sources');sources.append(node('h3','','المراجع الرسمية المرتبطة بالمحور'));
+ sources.append(node('p','','توصيف الوزارة يحدد موضوع الاختبار ووزنه، ولا يقدم نصوص هذه الدروس. الشروح النظرية والأمثلة أعلاه صياغة تعليمية للمراجعة، وليست مقتطفات رسمية.'));
+ const link=document.createElement('a');link.href='https://drive.google.com/file/d/1H8Ql6B3s3rWep-O51YJJ0MOnF2j7V0WA/view';link.target='_blank';link.rel='noopener noreferrer';link.textContent='التوصيف الوزاري لعلوم التربية – الثانوي (2025)';sources.append(link);
+ for(const [label,url] of c.ministrySources||[]){const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label;sources.append(a)}
+ article.append(sources);
  if(c.qs?.length){for(const n of c.qs){const b=node('button','course-q','سؤال أصلي Q'+n);b.type='button';b.onclick=()=>openOriginalQuestion(n);qs.appendChild(b)}}
  else{qs.append(node('p','small','لم نتحقق بعد من سؤال رسمي محدد مرتبط بهذا الدرس. الأسئلة الموجودة أسفل الصفحة من ورقة الامتحان العامة، وقد لا تتعلق بالدرس الحالي. لن نعرضها باعتبارها QCM خاصاً بهذا الدرس.'));const b=node('button','course-q','استعراض الامتحان الكامل (ليس مرتبطاً بالدرس)');b.type='button';b.onclick=()=>{const exam=document.getElementById('exam-select');if(exam){exam.value='2025';exam.dispatchEvent(new Event('change'))}document.getElementById('question-card')?.scrollIntoView({behavior:'smooth',block:'start'})};qs.appendChild(b)}
 }
