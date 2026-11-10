@@ -21,10 +21,10 @@ const examLabels={"2021-specialty":"تخصص التربية الإسلامية �
 const examPdf={"2021-specialty":"https://drive.google.com/file/d/1TOgJD3LlkogCecwnDmZv-kYPdSSfZaxm/view","2021-didactics":"https://drive.google.com/file/d/1TOUSy2tf8Sg5TE5h9qVph3Yq7Krf-QFk/view"};
 const hero=N("div","master-hero");
 hero.append(
-  N("div","master-pill","المقرر المفصل · اختبار التخصص والديداكتيك للسلك الثانوي"),
-  N("h2",null,"التربية الإسلامية: ملخص + شرح + 10 QCM + الامتحانات الأصلية"),
-  N("p",null,courses.length+" درساً ومحوراً: ابدأ بالملخص المنظم، افتح الشرح بالتفصيل، حلّ عشرة أسئلة مستخرجة من محتوى الدرس، ثم راجع أسئلة الامتحانات الأصلية المرتبطة بالمبحث."),
-  N("p",null,"الأسئلة التدريبية غير رسمية وموسومة بوضوح؛ أسئلة 2021 منقولة من الورقتين الأصليتين، ومفاتيحها من عناصر الإجابة المرفقة، وتعليلاتها تحريرية للمراجعة.")
+  N("div","master-pill","الوثائق الأصلية أولاً · ثم ملخصات توضيحية موسومة بمصدرها"),
+  N("h2",null,"التربية الإسلامية: المصادر الأصلية والبرنامج الرسمي"),
+  N("p",null,courses.length+" محوراً في البرنامج والمراجعة. المنهاج الوزاري يحدد المضامين والتدرج، لكنه لا يقدم بالضرورة نص درس تخصص مفصل في كل موضوع. المراجع الأصلية معروضة قبل أي تلخيص."),
+  N("p",null,"التلخيصات والشروح وأسئلة التدريب نصوص تحريرية غير رسمية، وليست منقولة من كتاب مدرسي. أسئلة امتحان 2021 وحدها منقولة من ورقتيه الأصليتين مع مفاتيحها المرفقة.")
 );
 const filters=N("div","master-filters");
 const search=N("input");search.type="search";search.placeholder="ابحث عن موضوع أو آية أو مفهوم أو حكم فقهي...";search.setAttribute("aria-label","البحث في كل محتوى الدروس");
@@ -193,10 +193,26 @@ function renderPractice(c){
 function renderCourse(c){
  detail.replaceChildren();
  const heading=N("div","master-title");
- heading.append(N("span","master-tag",c.group),N("h2",null,c.title),N("p",null,"أولاً ملخص الدرس، ثم الشرح التفصيلي، ثم اختبار تدريبي خاص به، وبعده أسئلة المباريات السابقة."));
+ heading.append(N("span","master-tag",c.group),N("h2",null,c.title),N("p",null,"الوثيقة الأصلية أولاً، ثم ملخص وشرح غير رسميين، ثم تدريبات محررة، وبعدها أسئلة المباريات المنقولة عن الأصل."));
  detail.append(heading);
+ const official=N("section","master-primary-documents");
+ official.append(N("h3",null,"أولاً: الوثيقة الأصلية المعتمدة — قبل أي ملخص"));
+ const origin=N("p",null,"البرنامج الوزاري يحدد محتوى المادة وتوزيع الدروس، ولا يعادل كتاباً مفصلاً في علوم القرآن أو الحديث أو الفقه. اقرأ الوثيقة الأصلية وتحقق من المحاور قبل استعمال الملخص أدناه.");
+ official.append(origin);
+ const ministry="https://ampei.ma/wp-content/uploads/2021/02/وثيقة-منهاج-التربية-الإسلامية-بسلكي-التعليم-الثانوي-الإعدادي-والتأهيلي-العمومي-والخصوصي-يونيو-2016.pdf";
+ const older="https://drive.google.com/file/d/1sgRHfZiHx1M1cL1nTiXffPjYJNRZY6ee/view";
+ const specialty="https://drive.google.com/file/d/1WBEIWhyO7RyFQJDK7TyMKnMX3mqHMelg/view";
+ const didactics="https://drive.google.com/file/d/17VzuoBGS3TtsujEyxxX9okcfJfWgVpJB/view";
+ official.append(link("منهاج الوزارة يونيو 2016 — PDF أصلي",ministry));
+ if(c.group==="الأولى إعدادي")official.append(N("p",null,"موضع البرنامج: الصفحتان 13–14 من وثيقة 2016."));
+ if(c.group==="الثانية إعدادي")official.append(N("p",null,"موضع البرنامج: الصفحتان 15–16 من وثيقة 2016."));
+ if(c.group==="الثالثة إعدادي")official.append(N("p",null,"موضع البرنامج: الصفحتان 17–18 من وثيقة 2016."));
+ if(c.group==="الديداكتيك")official.append(N("p",null,"توصيف الاختبار من المركز الوطني للامتحانات: المجالات وأوزانها، وليس درساً مفصلاً."),link("التوصيف الرسمي للديداكتيك — PDF",didactics));
+ if(c.group==="التخصص")official.append(N("p",null,"وثيقة توصيف اختبار مادة التخصص تحدد المجالات المحتملة للأسئلة، ولا تعتبر مرجعاً تعليمياً مفصلاً لكل علم."),link("توصيف اختبار التخصص — PDF",specialty));
+ if(["الأولى إعدادي","الثانية إعدادي","الثالثة إعدادي"].includes(c.group))official.append(link("التوجيهات التربوية 2009 — مرجع تاريخي سابق للمنهاج المعدل",older));
+ detail.append(official);
  const rows=lessonRows(c),compact=N("section","master-quick-review master-focused");
- compact.append(N("span","master-quick-kicker","المرحلة الأولى — ملخص للمراجعة"),N("h3",null,"فهم المفاهيم الأساسية"));
+ compact.append(N("span","master-quick-kicker","تلخيص تحريري غير رسمي — للمساعدة فقط"),N("h3",null,"ملخص مُحرّر من فريق الموقع، وليس نص درس وزارياً"));
  const table=N("table","master-quick-table"),th=N("thead"),tr=N("tr"),body=N("tbody");
  tr.append(N("th",null,"المفهوم أو القضية"),N("th",null,"الخلاصة الدقيقة"));th.append(tr);table.append(th);
  for(const r of rows){const line=N("tr");line.append(N("td",null,r[0]),N("td",null,r.slice(1).join(" — ")));body.append(line)}
