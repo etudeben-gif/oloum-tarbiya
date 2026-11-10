@@ -1,0 +1,35 @@
+/* Shared named learning profiles: both sections, same origin and same learner. */
+.masar-profile-chip{position:fixed;z-index:500;bottom:20px;left:20px;max-width:min(80vw,340px);border:1px solid #add9c9!important;border-radius:100px;background:linear-gradient(120deg,#135b5b,#087969)!important;color:#fff!important;padding:12px 18px!important;font-size:13px!important;font-weight:800!important;box-shadow:0 5px 25px #124f4c4d;cursor:pointer;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.masar-profile-chip:hover{filter:brightness(1.1)}
+.masar-profile-cover[hidden],.masar-profile-roster[hidden],.masar-profile-backup[hidden],.masar-profile-migrate[hidden],.masar-profile-close[hidden]{display:none!important}
+body.masar-profile-locked{overflow:hidden!important}
+.masar-profile-cover{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:#092d39bb;backdrop-filter:blur(6px);padding:18px;direction:rtl;text-align:right;overflow:auto;color:#193e49}
+.masar-profile-modal{position:relative;width:min(100%,560px);max-height:calc(100dvh - 28px);overflow:auto;border:1px solid #cce4d9;border-radius:22px;background:radial-gradient(circle at top left,#e6f7ec 0%,transparent 52%),white;padding:26px 28px;box-shadow:0 22px 80px #062b3b66;font-family:inherit;box-sizing:border-box}
+.masar-profile-brand{display:inline-block;background:#e0f2e9;color:#0e7361;font-size:12px;font-weight:900;border-radius:40px;padding:6px 13px;letter-spacing:.2px}
+.masar-profile-modal h2{font-size:clamp(22px,3.8vw,29px);color:#164854;margin:13px 0 9px;line-height:1.5;font-weight:850}
+.masar-profile-hint{font-size:14px;line-height:2;color:#496771;margin:0 0 17px}
+.masar-profile-form{display:flex;flex-direction:column;gap:8px;margin:12px 0 10px}
+.masar-profile-form label{font-weight:800;font-size:14px;color:#265a62}
+.masar-profile-form input{font:inherit;font-size:16px!important;background:#fff!important;color:#143f4b!important;border:1px solid #a9cfc5!important;border-radius:10px!important;padding:13px 14px!important;width:100%;box-sizing:border-box;min-height:45px;direction:rtl}
+.masar-profile-form input:focus{outline:2px solid #9bd4c4;outline-offset:2px}
+.masar-profile-form .masar-profile-main{font:inherit;background:#0d7468!important;color:white!important;border:0!important;border-radius:10px!important;min-height:46px;padding:11px 16px!important;font-weight:850!important;cursor:pointer}
+.masar-profile-form .masar-profile-main:hover{background:#095e56!important}
+.masar-profile-message{font-size:13px;color:#b64b36;font-weight:700;min-height:14px;margin:0}
+.masar-profile-roster{margin:14px 0;border-top:1px solid #deebe6;padding-top:14px}
+.masar-profile-roster h3,.masar-profile-backup h3{font-size:15px;font-weight:850;color:#205763;margin:0 0 9px}
+.masar-profile-roster-list{display:flex;flex-direction:column;gap:8px;max-height:160px;overflow:auto}
+.masar-profile-person{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid #deebe7;background:#f8fbfa;border-radius:11px;padding:9px 11px}
+.masar-profile-person-name{display:flex;flex-direction:column;gap:2px;min-width:0}
+.masar-profile-person-name strong{font-size:14px;color:#154f57;overflow-wrap:anywhere}
+.masar-profile-person-name small{font-size:11px;color:#607880;line-height:1.6}
+.masar-profile-select,.masar-profile-export,.masar-profile-import,.masar-profile-close{border-radius:9px!important;font:inherit;font-size:12px!important;padding:8px 13px!important;font-weight:800!important;cursor:pointer;border:1px solid #a6d2c4!important;background:#e7f4ef!important;color:#155b57!important;white-space:nowrap}
+.masar-profile-select:disabled{opacity:.48;cursor:default}
+.masar-profile-migrate{display:flex;gap:8px;align-items:flex-start;padding:9px 11px;border:1px solid #d3e7de;background:#f4faf7;border-radius:10px;color:#3b6666;font-size:12px;line-height:1.8}
+.masar-profile-migrate input{margin-top:4px;accent-color:#147d6d}
+.masar-profile-backup{margin:14px 0 12px;padding:13px 14px;background:#f4f9fa;border-radius:11px;border:1px solid #e0e9eb}
+.masar-profile-backup p{font-size:12px;color:#536f75;line-height:1.85;margin:0 0 11px}
+.masar-profile-export,.masar-profile-import{margin:0 0 7px 8px}
+.masar-profile-warning{font-size:12px;line-height:1.9;color:#6a5960;background:#fffbf6;border:1px solid #eee5d7;padding:10px 12px;border-radius:10px;margin:10px 0}
+.masar-profile-close{display:block;margin-right:auto;margin-top:10px;background:#f6f9f8!important}
+@media(max-width:650px){.masar-profile-chip{left:10px;bottom:11px;padding:10px 12px!important;font-size:12px!important}.masar-profile-cover{padding:9px}.masar-profile-modal{border-radius:15px;padding:19px 15px;max-height:calc(100dvh - 18px)}.masar-profile-person{padding:7px 8px}.masar-profile-person-name small{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.masar-profile-cover{backdrop-filter:none}}
