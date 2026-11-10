@@ -150,8 +150,18 @@ function renderCourse(c){
    tb.append(line);
   }
   table.append(tb);
-  summary.append(N("h3",null,"ملخص الدرس"),table);
+  summary.append(N("h3",null,c.sourceStatus?"ملخص مستخرج من الدروس المرتبطة بالمصادر الوزارية":"ملخص الدرس"),table);
+  if(c.sourceNote)summary.append(N("p","master-source-note",c.sourceNote));
   detail.append(summary);
+ }
+ if(c.officialSources?.length){
+  const src=N("section","master-citations");
+  src.append(N("h3",null,"الوثائق المرجعية"));
+  for(const ref of c.officialSources){
+   const p=N("p",null,ref.type+" — ");
+   p.append(link(ref.title,ref.url));src.append(p);
+  }
+  detail.append(src);
  }
  const actions=N("div","master-action-row");
  const mark=N("button","primary",finished[c.id]?"✓ تمت المراجعة":"تحديد الدرس كمراجع");
