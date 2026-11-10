@@ -347,7 +347,8 @@ const sciencePracticeKey=window.MASAR_PROFILES?.key('masar-science-practice-2026
 let sciencePracticeAnswers={};try{sciencePracticeAnswers=JSON.parse(localStorage.getItem(sciencePracticeKey)||'{}')||{}}catch(e){}
 function saveSciencePractice(){try{localStorage.setItem(sciencePracticeKey,JSON.stringify(sciencePracticeAnswers))}catch(e){}}
 function renderScienceTraining(c,index){
- const rows=(c.quickReview?.rows||[]).filter(r=>r?.length>=2).slice(0,4);
+ const pool=(c.quickReview?.rows||[]).filter(r=>r?.length>=2);
+ const rows=index===2&&pool.length>=8?[pool[0],pool[3],pool[4],pool[7]]:pool.slice(0,4);
  const box=node('section','science-training');
  box.append(node('span','quick-tag','أسئلة تدريبية من إعداد الموقع — ليست ورقة رسمية'),node('h3','','QCM خاصة بهذا الدرس'));
  box.append(node('p','science-score-note','جاوب بعد فهم الشرح: +1 للصحيح، −1 للخطأ، و0 للمتروك. كل سؤال مبني على مفاهيم هذا الدرس فقط.'));
