@@ -1,0 +1,25 @@
+name: Test named learner profiles and saved QCM scores
+on:
+  push:
+    paths:
+      - 'assets/masar-profiles.js'
+      - 'assets/masar-profiles.css'
+      - 'index.html'
+      - 'tarbiya-islamia/index.html'
+      - 'tarbiya-islamia/master-reader.js'
+      - 'scripts/test-learner-profiles.cjs'
+      - '.github/workflows/test-learner-profiles.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  profile-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --ignore-scripts jsdom@24
+      - run: node scripts/test-learner-profiles.cjs
