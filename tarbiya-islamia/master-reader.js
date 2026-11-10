@@ -24,7 +24,7 @@ hero.append(
   N("div","master-pill","المقرر المفصل · اختبار التخصص والديداكتيك للسلك الثانوي"),
   N("h2",null,"التربية الإسلامية: الدرس كاملاً ثم الأسئلة الرسمية"),
   N("p",null,courses.length+" درساً ومحوراً: القرآن والتجويد والحديث والفقه والعقيدة والأصول والسيرة، وديداكتيك المادة، ودروس الإعدادي الثلاث. الشرح منظم بالأفكار والأدلة والأمثلة، والأسئلة التفاعلية من ورقتي 2021 الأصليتين فقط."),
-  N("p",null,"ابدأ بعلوم التخصص، أو اختر مستوى الإعدادي أو الديداكتيك. تميّز الأزرار بين سؤال مطابق لمجال الدرس وبين سؤال عام للمراجعة.")
+  N("p",null,"كل درس معه خريطة ذهنية تفاعلية. والتصحيح بالنظام الكندي في المراجعة: +1 صحيح، −1 خطأ، و0 سؤال متروك؛ هذه طريقة تدريب وليست إعلاناً عن سلم التنقيط الرسمي.")
 );
 const filters=N("div","master-filters");
 const search=N("input");search.type="search";search.placeholder="ابحث عن موضوع أو آية أو مفهوم أو حكم فقهي...";search.setAttribute("aria-label","البحث في كل محتوى الدروس");
@@ -39,6 +39,33 @@ container.append(hero,library,detail,quiz);
 let finished={};try{finished=JSON.parse(localStorage.getItem("masar-islam-lessons-v2")||"{}")||{}}catch(_){}
 let answers={};try{answers=JSON.parse(localStorage.getItem("masar-islam-qcm-v2")||"{}")||{}}catch(_){}
 let current="quran",activeQuestion=0,picked="";
+const questionIds=Object.entries(bank).flatMap(([exam,questions])=>Object.keys(questions).map(q=>({exam,q})));
+function scoreSummary(){
+ let right=0,wrong=0,skipped=0;
+ for(const {exam,q} of questionIds){const answer=answers[exam+"-"+q];if(!answer){skipped++;continue}if(answer===bank[exam][q].answer)right++;else wrong++}
+ return {right,wrong,skipped,points:right-wrong,attempted:right+wrong,total:questionIds.length};
+}
+function scoreText(s){return (s.points>0?"+":"")+s.points}
+function makeMindMap(c){
+ const box=N("section","master-mindmap");
+ box.setAttribute("aria-label","الخريطة الذهنية التفاعلية للدرس");
+ box.append(N("div","master-mindmap-kicker","تصوّر الدرس قبل القراءة"));
+ box.append(N("h3",null,"الخريطة الذهنية"));
+ box.append(N("p","master-mindmap-note","اضغط على أي فرع للانتقال مباشرة إلى الشرح المرتبط به."));
+ const root=N("div","master-mindmap-root");
+ root.append(N("span","master-mindmap-root-icon","✦"),N("strong",null,c.title),N("span","master-mindmap-root-sub",c.readerChapters.length+" مفاهيم أساسية"));
+ box.append(root);
+ const branches=N("div","master-mindmap-branches");
+ c.readerChapters.forEach((part,i)=>{
+  const btn=N("button","master-mindmap-branch",part.title);
+  btn.type="button";btn.setAttribute("aria-label","اقرأ القسم: "+part.title);
+  btn.append(N("small",null,"المحور "+(i+1)));
+  btn.onclick=()=>document.getElementById("islam-chapter-"+i)?.scrollIntoView({behavior:"smooth",block:"start"});
+  branches.append(btn);
+ });
+ box.append(branches);
+ return box;
+}
 function persist(){
  try{localStorage.setItem("masar-islam-lessons-v2",JSON.stringify(finished))}catch(_){}
  try{localStorage.setItem("masar-islam-qcm-v2",JSON.stringify(answers))}catch(_){}
@@ -56,9 +83,9 @@ function splitParagraphs(text){
 }
 function updateProgress(){
  const f=courses.filter(c=>finished[c.id]).length;
- const a=Object.keys(answers).filter(k=>k.startsWith("2021-specialty-")||k.startsWith("2021-didactics-")).length;
- progress.textContent="مراجعة "+f+" / "+courses.length+" درساً · أجبت عن "+a+" سؤالاً من أصل 110 QCM رسمية";
- const top=document.getElementById("progress");if(top)top.textContent="تقدم المراجعة: "+f+" درساً / "+a+" سؤالاً";
+ const score=scoreSummary();
+ progress.textContent="أنجزت "+f+" / "+courses.length+" درساً · "+score.attempted+" / "+score.total+" سؤالاً · النقطة "+scoreText(score)+" · ✓"+score.right+" / ✕"+score.wrong;
+ const top=document.getElementById("progress");if(top)top.textContent="النظام الكندي: "+scoreText(score)+" نقطة · "+score.right+" صحيح · "+score.wrong+" خطأ";
 }
 function showList(){
  library.replaceChildren();
@@ -82,6 +109,7 @@ function renderCourse(c){
  title.append(N("span","master-tag",c.group+(c.id.startsWith("g1-")?" · الأولى إعدادي":c.id.startsWith("g2-")?" · الثانية إعدادي":c.id.startsWith("g3-")?" · الثالثة إعدادي":"")),N("h2",null,c.title),N("p",null,c.summary));
  title.append(N("p",null,"تتضمن القراءة "+c.readerChapters.length+" فصول أساسية، "+c.readerGlossary.length+" فقرة ضبط إضافية، ثم أسئلة من الامتحان الأصلي إن وُجدت صلة موضوعية موثقة."));
  detail.append(title);
+ detail.append(makeMindMap(c));
  const toc=N("nav","master-outline");toc.setAttribute("aria-label","فهرس الدرس");
  toc.append(N("h3",null,"فهرس الدرس — اقرأ بالتسلسل"));
  const ol=N("ol");
@@ -126,7 +154,15 @@ function renderQuiz(c){
  quiz.replaceChildren();
  const list=c.officialExamLinks||[];
  quiz.append(N("h3",null,"المرحلة الثانية — QCM أصلية بعد الدرس"));
- quiz.append(N("p",null,"هذه نصوص الأسئلة والاختيارات المنقولة من امتحاني مادة التخصص وديداكتيك التربية الإسلامية لدجنبر 2021. مفاتيح الإجابة من جدول العناصر المرفق بالورقة، والتعليل شرح تعليمي. ما كاين حتى سؤال مختلق."));
+ quiz.append(N("p",null,"أسئلة 2021 من أوراق التخصص والديداكتيك مع التصحيح والتعليل. نظام التنقيط الكندي للتدريب فقط: +1 للإجابة الصحيحة، −1 للخاطئة، 0 للمتروكة."));
+ const board=N("div","master-scoreboard");
+ const score=scoreSummary();
+ for(const [label,value,kind] of [["النقطة",scoreText(score),"points"],["صحيح +1",score.right,"correct"],["خطأ −1",score.wrong,"incorrect"],["متروك 0",score.skipped,"skipped"]]){
+  const item=N("div","master-scoreboard-item "+kind);
+  item.append(N("span",null,label),N("strong",null,String(value)));
+  board.append(item);
+ }
+ quiz.append(board);
  if(!list.length){
   const empty=N("p","master-noq","هذا المحور ما لقيناش ليه سؤالاً مطابقاً ضمن 110 أسئلة QCM المنقولة من 2021؛ ما غاديش نعوضوه بسؤال مفبرك. تقدر تفتح ورقتي الامتحان الأصليتين.");
   empty.append(" ",link("أسئلة التخصص الأصلية",examPdf["2021-specialty"])," · ",link("أسئلة الديداكتيك الأصلية",examPdf["2021-didactics"]));quiz.append(empty);return;
@@ -160,12 +196,14 @@ function renderQuiz(c){
  check.onclick=()=>{if(!picked){alert("اختار أولاً أحد الأجوبة A أو B أو C أو D.");return}answers[ansId]=picked;persist();renderQuiz(c)};
  const retry=N("button","master-quiz-button secondary","عاود نفس السؤال");retry.type="button";retry.hidden=!existing;
  retry.onclick=()=>{delete answers[ansId];picked="";persist();renderQuiz(c)};
+ const skip=N("button","master-quiz-button secondary","تخطي (0 نقطة)");skip.type="button";skip.disabled=activeQuestion>=list.length-1;
+ skip.onclick=()=>{activeQuestion++;picked="";renderQuiz(c)};
  const next=N("button","master-quiz-button secondary","السؤال التالي");next.type="button";next.disabled=activeQuestion>=list.length-1;
  next.onclick=()=>{activeQuestion++;picked="";renderQuiz(c)};
- controls.append(check,retry,next);qbox.append(controls);
+ controls.append(check,retry,skip,next);qbox.append(controls);
  if(existing){
   const good=existing===obj.answer,feedback=N("div","master-feedback"+(good?"":" wrong"));
-  feedback.append(N("strong",null,good?"✓ جواب صحيح":"✗ الجواب غير صحيح"));
+  feedback.append(N("strong",null,good?"✓ جواب صحيح · +1 نقطة":"✗ الجواب غير صحيح · −1 نقطة"));
   feedback.append(N("p",null,"جوابك: "+existing+" · الجواب الصحيح حسب دليل 2021: "+obj.answer+" — "+(obj.options[letters.indexOf(obj.answer)]||"راجع الاختيارات الأصلية")));
   feedback.append(N("p",null,"التعليل: "+obj.reason));
   feedback.append(N("p",null,"المطلوب: "+(obj.task||"اختيار الجواب الصحيح")+". وثيقة التصحيح الأصلية هي مرجع الحرف، أما شرح المفهوم فصياغة تعليمية."));
