@@ -104,6 +104,14 @@ select{background:#fff;border:1px solid #cbdce1;border-radius:10px;padding:10px;
 #course-hub .layout .content{min-width:0}
 #course-hub .layout .frame{max-height:65vh}
 @media(max-width:740px){#course-hub .reader-toc ol{columns:1}#course-hub .master-chapter{padding:19px 13px}#course-hub .master-chapter p{font-size:15px;line-height:2.08}#course-hub .reader-hero,#course-hub .reader-references{padding:15px 12px}#course-hub .course-tabs{max-height:200px}#course-hub>.layout{margin-top:15px}}
+
+#course-hub .reader-glossary{background:#f7faf9;border:1px solid #d4e5e0;border-radius:12px;padding:20px 22px;margin:15px 0 4px}
+#course-hub .reader-glossary h3{font-size:18px;color:#1a5760;margin:0 0 9px}
+#course-hub .reader-glossary-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#course-hub .reader-glossary-item{background:#fff;border:1px solid #e0e9e7;border-right:3px solid #5d9d91;border-radius:10px;padding:12px 15px}
+#course-hub .reader-glossary-item h4{font-size:15px;color:#225a5e;margin:0 0 5px}
+#course-hub .reader-glossary-item p{color:#344d56;font-size:14px;line-height:1.95;margin:0}
+@media(max-width:680px){#course-hub .reader-glossary-grid{grid-template-columns:1fr}#course-hub .reader-glossary{padding:13px 11px}}
 </style></head><body>
 <header><div class="inner"><div class="brand">مسار | علوم التربية للثانوي</div><a href="./tarbiya-islamia/" style="color:#fff;background:#147b76;border-radius:9px;padding:7px 14px;font-weight:bold;text-decoration:none">التربية الإسلامية</a></div></header>
 <main class="wrap"><section class="card" id="course-hub" aria-label="الدروس قبل الامتحانات"><div class="course-head"><div><div class="step"><b>1</b> الدرس أولاً، ثم الأسئلة الرسمية</div><h2>دروس علوم التربية — الثانوي الإعدادي والتأهيلي</h2><p class="small">هذا اختبار علوم التربية الخاص بالثانوي الإعدادي والتأهيلي، المشترك بين التخصصات ومنها التربية الإسلامية، وليس اختبار الابتدائي ولا اختبار مادة التخصص. برنامج مراجعة موسّع: 35 درساً ضمن المحاور الرسمية و9 دروس إضافية مستخلصة من موضوعات امتحانات سابقة. اقرأ الشرح المتسلسل ثم جاوب عن أسئلة الأوراق الأصلية مباشرة أسفل الدرس.</p><p class="small"><a href="https://drive.google.com/file/d/1H8Ql6B3s3rWep-O51YJJ0MOnF2j7V0WA/view" target="_blank" rel="noopener noreferrer">التوصيف الوزاري لاختبار علوم التربية – الثانوي – نونبر 2025</a> · <a href="https://crmefcasablancasettat.ma/%D8%A8%D8%B7%D8%A7%D9%82%D8%A7%D8%AA-%D8%AA%D9%88%D8%B5%D9%8A%D9%81-%D8%A7%D9%84%D8%AB%D8%A7%D9%86%D9%88%D9%8A-2/" target="_blank" rel="noopener noreferrer">بطاقة مجزوءة علوم التربية – المركز الجهوي لتكوين الثانوي</a></p></div><span class="question-code">44 درساً · 35 أساسي + 9 تكميلي من الامتحانات</span></div><div class="course-controls"><label for="course-group">المحور حسب التوصيف الوزاري</label><select id="course-group"><option value="all">جميع المحاور (100%)</option></select><label for="course-search">البحث عن درس أو مفهوم</label><input id="course-search" type="search" placeholder="مثلاً: بياجيه، الكفايات، بورديو، السوسيومترية" autocomplete="off"></div><p class="small" id="course-count" role="status"></p><div class="course-tabs" id="course-tabs" role="group" aria-label="اختيار الدرس"></div><h3 id="course-current" class="course-current"></h3><p class="small">المحاور والنسب من التوصيف الرسمي لوزارة التربية الوطنية المغربية (نونبر 2025). الشرح النظري والأمثلة مكتوبة للمراجعة وليست منقولة حرفياً من وثائق الوزارة؛ التوصيف يحدد المحاور ولا يتضمن دروساً مفصلة.</p><div id="course-article" class="course-article"></div><div class="course-exercises"><h3>المرحلة الثانية: QCM من أوراق المباريات الأصلية — بعد الدرس</h3><p class="course-note">كل زر يفتح سؤالاً مصوراً من ورقة امتحان حقيقية؛ نميّز السؤال المباشر عن المرتبط بالمقارنة. اختر الإجابة ثم اقرأ التصحيح والتعليل. مفاتيح 2025 و2022 غير وزارية، خلافاً لشبكة أبريل 2024 الموثقة.</p><div id="course-qs"></div></div><div class="layout">
@@ -279,6 +287,7 @@ fetch('science-proposed-keys.json',{cache:'no-store'})
 <script src="science-master-methods.js?v=20261110final1"></script>
 <script src="science-master-sociology.js?v=20261110final1"></script>
 <script src="science-master-extras.js?v=20261110final1"></script>
+<script src="science-master-extras-enriched.js?v=20261110final2"></script>
 <script src="science-master-exam-links.js?v=20261110final1"></script>
 <script src="science-master-assemble.js?v=20261110final1"></script>
 <script>
@@ -312,8 +321,8 @@ function renderCourse(){
  const indexes=filteredIndexes();
  if(!indexes.includes(currentIndex))currentIndex=indexes[0]??-1;
  tabs.replaceChildren();article.replaceChildren();qs.replaceChildren();
- const totalParts=lessons.reduce((n,c)=>n+(c.displayParts?.length||0),0);
- courseCount.textContent=indexes.length+' من أصل '+lessons.length+' درساً · '+totalParts+' فصل شرح وتطبيق · نسـخة منقحة 10 نونبر 2026';
+ const totalParts=lessons.reduce((n,c)=>n+(c.displayParts?.length||0)+(c.glossary?.length||0),0);
+ courseCount.textContent=indexes.length+' من أصل '+lessons.length+' درساً · '+totalParts+' فقرة شرح ومراجعة · النسخة النهائية 10 نونبر 2026';
  if(currentIndex<0){currentTitle.textContent='لم نجد درساً مطابقاً';article.append(node('p','small','جرب عبارة أخرى أو اختر جميع المحاور.'));return}
  for(const i of indexes){
   const c=lessons[i],b=node('button','course-tab'+(i===currentIndex?' active':''),(i+1)+'. '+c.title);
@@ -353,6 +362,13 @@ function renderCourse(){
    const sub=node('details','reader-ministry-note'),summary=document.createElement('summary');summary.textContent=heading;
    sub.append(summary,node('p','',body),linkTo(url,'المرجع المنشور على موقع الوزارة'));
    sources.append(sub);
+ }
+ if(c.glossary?.length){
+  const gloss=node('section','reader-glossary');gloss.append(node('h3','','معجم المفاهيم والتفصيلات المساندة'));
+  gloss.append(node('p','reader-note','مراجعة منظمة لأهم التعريفات والفروق المرتبطة بالدرس، بعد الشرح المطوّل.'));
+  const panel=node('div','reader-glossary-grid');
+  for(const part of c.glossary){const item=node('div','reader-glossary-item');item.append(node('h4','',part.heading),node('p','',part.text));panel.append(item)}
+  gloss.append(panel);article.append(gloss);
  }
  article.append(sources);
  const nav=node('div','reader-actions');
