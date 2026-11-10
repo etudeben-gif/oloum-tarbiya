@@ -212,3 +212,15 @@ nav[aria-label="أقسام الصفحة"] button.active{background:#10786c;color
 #masar-course-app .master-quick-review{border-top:3px solid #c3a978}
 #masar-course-app .master-quick-kicker{background:#f5ede0;color:#65522e}
 @media(max-width:700px){#masar-course-app .master-primary-documents{margin:12px 10px;padding:13px}}
+
+/* المقالات الأصلية: السند ثم الأسئلة فالتصحيح */
+#essay-exams{margin-top:25px}
+#essay-exams>h2{margin:0 0 16px;color:#164b55;font-size:22px}
+#essay-exams .exam-essay-series{margin:22px 0;border-top:2px solid #cde3df;padding:19px 0}
+#essay-exams .exam-essay-series h3{color:#175b60;font-size:19px}
+#essay-exams .exam-essay-series>p{color:#405e66}
+#essay-exams .exam-essay-question{background:#f8fbfa;border:1px solid #ddeae6;border-radius:11px;padding:13px 18px;margin:12px 0}
+#essay-exams .exam-essay-question h4{font-size:16px;color:#163e4c;line-height:1.9;margin:2px 0 12px}
+#essay-exams details{background:#fff;border-radius:8px;padding:12px 15px}
+#essay-exams summary{cursor:pointer;color:#197a67;font-weight:800}
+#essay-exams details p{line-height:2;font-size:15px}
