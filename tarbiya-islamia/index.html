@@ -222,7 +222,7 @@ const escape=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&g
 const card=(t,m,p,l,href)=>'<article class="card"><h3>'+escape(t)+'</h3><div class="meta">'+escape(m)+'</div><p>'+escape(p)+'</p><a class="link" target="_blank" rel="noopener noreferrer" href="'+escape(href)+'">'+escape(l)+'</a></article>';
 let activeExam=exams.find(e=>e.id==="2021-specialty")||exams[0],qno=4,page=4,zoom=100,onlyMistakes=false,proposed={};
 let qanswers={};try{qanswers=JSON.parse(localStorage.getItem("masar-islam-qcm-v2")||"{}")||{}}catch(e){qanswers={}}
-function save(){try{localStorage.setItem("masar-islam-qcm-v2",JSON.stringify(qanswers))}catch(e){}}
+function save(){try{localStorage.setItem("masar-islam-qcm-v2",JSON.stringify(qanswers))}catch(e){}if(typeof window.MASAR_MASTER_SYNC==="function")window.MASAR_MASTER_SYNC()}
 function getKey(e,q){const item=window.MASAR_ISLAM_TRANSCRIPT?.[e.id]?.[String(q)];return item?.answer||null}
 function countScores(){
  let scored=0,correct=0,wrong=0;
@@ -375,4 +375,4 @@ renderQuiz();renderMistakes();
 <script src="master-didactics.js?v=20261110master3"></script>
 <script src="master-official-exam-links.js?v=20261110master3"></script>
 <script src="master-assemble.js?v=20261110master3"></script>
-<script src="master-reader.js?v=20261110map2"></script></body></html>
+<script src="master-reader.js?v=20261110map3"></script></body></html>
