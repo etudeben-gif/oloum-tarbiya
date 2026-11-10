@@ -314,6 +314,7 @@ render();
 <script src="science-master-exam-links.js?v=20261110final1"></script>
 <script src="science-master-assemble.js?v=20261110final1"></script>
 <script src="science-quick-review.js?v=20261110quick1"></script>
+<script src="science-exam-insights.js?v=20261111a"></script>
 <script>
 (function(){
 const lessons=window.MASAR_SECONDARY_LESSONS||[];
@@ -341,6 +342,50 @@ function openOriginalQuestion(examId,n){
 function linkTo(url,label){
  const a=document.createElement('a');a.href=url;a.target='_blank';a.rel='noopener noreferrer';a.textContent=label;return a;
 }
+
+const sciencePracticeKey=window.MASAR_PROFILES?.key('masar-science-practice-2026')||'masar-science-practice-2026';
+let sciencePracticeAnswers={};try{sciencePracticeAnswers=JSON.parse(localStorage.getItem(sciencePracticeKey)||'{}')||{}}catch(e){}
+function saveSciencePractice(){try{localStorage.setItem(sciencePracticeKey,JSON.stringify(sciencePracticeAnswers))}catch(e){}}
+function renderScienceTraining(c,index){
+ const rows=(c.quickReview?.rows||[]).filter(r=>r?.length>=2).slice(0,5);
+ const box=node('section','science-training');
+ box.append(node('span','quick-tag','أسئلة تدريبية من إعداد الموقع — ليست ورقة رسمية'),node('h3','','QCM خاصة بهذا الدرس'));
+ box.append(node('p','science-score-note','جاوب بعد فهم الشرح: +1 للصحيح، −1 للخطأ، و0 للمتروك. كل سؤال مبني على مفاهيم هذا الدرس فقط.'));
+ if(rows.length<4)return box;
+ const total=rows.reduce((acc,_,i)=>{
+  const value=sciencePracticeAnswers[index+'-'+i];
+  return acc+(value===undefined?0:(value===i?1:-1));
+ },0);
+ box.append(node('div','science-training-total','نقطة تدريبات هذا الدرس: '+(total>0?'+':'')+total));
+ rows.forEach((r,i)=>{
+  const answerKey=index+'-'+i,existing=sciencePracticeAnswers[answerKey];
+  const question=node('div','science-training-question');
+  const options=rows.slice(0,4).map(x=>x[0]);
+  const right=i<4?i:0;
+  const description=r.length>2?r[2]:r[1];
+  if(i>=4)return;
+  const qTitle=node('strong','','Q'+(i+1)+' — أي مفهوم يطابق الوصف التالي؟');question.append(qTitle,node('p','',description));
+  const answers=node('div','science-training-options');
+  const order=[0,1,2,3].map(x=>(x+i+1)%4);
+  for(const j of order){
+   const b=node('button','science-training-choice'+(existing!==undefined&&j===right?' correct':existing===j?' wrong':''),options[j]);
+   b.type='button';b.disabled=existing!==undefined;
+   b.onclick=()=>{sciencePracticeAnswers[answerKey]=j;saveSciencePractice();renderCourse()};
+   answers.append(b);
+  }
+  question.append(answers);
+  if(existing!==undefined){
+   const msg=node('p','science-training-feedback',existing===right?'✓ جواب صحيح +1':'✗ خطأ −1');
+   msg.append(document.createTextNode(' · الصحيح: '+r[0]+'، لأن '+description));
+   question.append(msg);
+   const retry=node('button','science-training-retry','إعادة المحاولة');retry.type='button';
+   retry.onclick=()=>{delete sciencePracticeAnswers[answerKey];saveSciencePractice();renderCourse()};
+   question.append(retry);
+  }
+  box.append(question);
+ });
+ return box;
+}
 function renderCourse(){
  const indexes=filteredIndexes();
  if(!indexes.includes(currentIndex))currentIndex=indexes[0]??-1;
@@ -358,50 +403,31 @@ function renderCourse(){
  currentTitle.textContent=(currentIndex+1)+'. '+c.title;
  const hero=node('div','reader-hero');
  hero.append(node('span','reader-kicker',(g?g[1]:c.group)+' · '+(c.extraExam?'درس إضافي من مواضيع الامتحانات':'درس ضمن محاور التوصيف')));
- hero.append(node('p','','الدرس مقسم إلى '+c.displayParts.length+' فصول متتابعة. الفهم أولاً، ثم QCM من الامتحانات الأصلية. ويمكنك فتح وثائق الوزارة والمركز الجهوي بعد الشرح.'));
+ hero.append(node('p','','المعنى الأساسي، مثال تطبيقي، والفروق التي تتكرر في QCM. الملخص وحده كافٍ للمراجعة السريعة؛ والأسئلة المباشرة من الامتحانات الأصلية موجودة أسفله.'));
  article.append(hero);
- if(c.quickReview?.rows?.length){
-  const review=node('section','science-quick-review');
-  review.append(node('div','quick-tag','للحفظ السريع'),node('h3','','ملخص الدرس في دقيقة'));
-  const tbl=document.createElement('table');tbl.className='science-quick-table';
-  const head=document.createElement('thead'),hr=document.createElement('tr');
-  c.quickReview.headers.forEach(v=>{const th=document.createElement('th');th.textContent=v;hr.append(th)});
-  head.append(hr);tbl.append(head);
-  const body=document.createElement('tbody');
-  c.quickReview.rows.forEach(row=>{
-   const tr=document.createElement('tr');
-   row.forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.append(td)});
-   body.append(tr);
-  });
-  tbl.append(body);review.append(tbl);
-  if(currentIndex===1)review.append(node('p','science-quick-hint','مفاتيح QCM: دوام الشيء ← حس حركية · التمركز حول الذات ← ما قبل العمليات · ثبات الكمية ← المحسوسة · الفرضيات ← الصورية. الأعمار تقريبية.'));
-  article.append(review);
+ const review=node('section','science-quick-review science-focused-lesson');
+ review.append(node('span','quick-tag','مراجعة واضحة حسب التوصيف'),node('h3','','خلاصة الدرس — افهم ثم احفظ'));
+ const tbl=document.createElement('table');tbl.className='science-quick-table';
+ const head=document.createElement('thead'),hr=document.createElement('tr');
+ for(const word of (c.quickReview?.headers||['المفهوم','المعنى'])){const th=document.createElement('th');th.textContent=word;hr.append(th)}
+ head.append(hr);tbl.append(head);
+ const body=document.createElement('tbody');
+ for(const row of c.quickReview?.rows||[]){
+  const tr=document.createElement('tr');
+  for(const word of row){const td=document.createElement('td');td.textContent=word;tr.append(td)}
+  body.append(tr);
  }
- const map=node('section','science-mindmap');map.setAttribute('aria-label','الخريطة الذهنية التفاعلية لعلوم التربية');
- map.append(node('div','science-mindmap-kicker','تعرّف على العلاقات بين عناصر الدرس'),node('h3','','الخريطة الذهنية'),node('p','','اضغط على كل فرع للانتقال إلى شرحه المفصل.'));
- const root=node('div','science-mindmap-root');root.append(node('strong','',c.title),node('span','',c.displayParts.length+' محاور رئيسية'));map.append(root);
- const branches=node('div','science-mindmap-branches');
- c.displayParts.forEach((p,k)=>{
-  const b=node('button','science-mindmap-branch',p.heading);b.type='button';
-  b.setAttribute('aria-label','الانتقال إلى: '+p.heading);
-  b.append(node('small','','الفرع '+(k+1)));
-  b.onclick=()=>document.getElementById('master-section-'+k)?.scrollIntoView({behavior:'smooth',block:'start'});
-  branches.append(b);
- });
- map.append(branches);article.append(map);
- const toc=node('nav','reader-toc');toc.setAttribute('aria-label','فهرس الدرس');
- toc.append(node('h3','','محتويات الدرس'));
- const ol=document.createElement('ol');
- c.displayParts.forEach((p,k)=>{const li=document.createElement('li'),a=document.createElement('a');a.href='#master-section-'+k;a.textContent=p.heading;li.append(a);ol.append(li)});
- toc.append(ol);article.append(toc);
- c.displayParts.forEach((part,k)=>{
-   const section=node('section','master-chapter');section.id='master-section-'+k;
-   section.append(node('span','chapter-label','الفصل '+(k+1)+' من '+c.displayParts.length));
-   section.append(node('h3','',part.heading));
-   const paragraphs=part.text.split(/\n+/).map(x=>x.trim()).filter(Boolean);
-   for(const value of paragraphs)section.append(node('p','',value));
-   article.append(section);
- });
+ tbl.append(body);review.append(tbl);
+ if(c.examInsight){
+  const notes=node('div','science-exam-notes');
+  for(const [label,value] of [['بمعنى بسيط',c.examInsight.meaning],['مثال تفهم به',c.examInsight.example],['انتبه في QCM',c.examInsight.pitfall]]){
+   const item=node('div','science-exam-note');item.append(node('strong','',label),node('p','',value));notes.append(item);
+  }
+  review.append(notes);
+ }
+ if(currentIndex===1)review.append(node('p','science-quick-hint','الأعمار تقريبية: الحس حركية 0–2، ما قبل العمليات 2–7، المحسوسة 7–11، الصورية منذ 11–12 تقريباً.'));
+ article.append(review);
+ article.append(renderScienceTraining(c,currentIndex));
  const sources=node('section','reader-references');
  sources.append(node('h3','','مصادر الدرس ومرجعية التكوين'));
  sources.append(node('p','reader-note','التوصيف الوزاري يحدد محاور الاختبار، وبطاقة مجزوءة المركز الجهوي تحدد محتويات التكوين ومراجعه. متن الدرس شرح تعليمي أصلي في ضوء هذه المرجعيات، وليس نقلاً حرفياً عن الوزارة.'));
@@ -416,29 +442,19 @@ function renderCourse(){
    sub.append(summary,node('p','',body),linkTo(url,'المرجع المنشور على موقع الوزارة'));
    sources.append(sub);
  }
- if(c.glossary?.length){
-  const gloss=node('section','reader-glossary');gloss.append(node('h3','','معجم المفاهيم والتفصيلات المساندة'));
-  gloss.append(node('p','reader-note','مراجعة منظمة لأهم التعريفات والفروق المرتبطة بالدرس، بعد الشرح المطوّل.'));
-  const panel=node('div','reader-glossary-grid');
-  for(const part of c.glossary){const item=node('div','reader-glossary-item');item.append(node('h4','',part.heading),node('p','',part.text));panel.append(item)}
-  gloss.append(panel);article.append(gloss);
- }
  article.append(sources);
  const nav=node('div','reader-actions');
  const back=node('button','reader-nav','الدرس السابق');back.type='button';back.disabled=currentIndex===0;back.onclick=()=>{if(currentIndex>0){currentIndex--;renderCourse();currentTitle.scrollIntoView({behavior:'smooth',block:'start'})}};
  const next=node('button','reader-nav','الدرس التالي');next.type='button';next.disabled=currentIndex===lessons.length-1;next.onclick=()=>{if(currentIndex<lessons.length-1){currentIndex++;renderCourse();currentTitle.scrollIntoView({behavior:'smooth',block:'start'})}};
  const qGo=node('button','reader-nav reader-nav-primary','انتقل إلى الأسئلة الرسمية');qGo.type='button';qGo.onclick=()=>document.querySelector('#course-hub .course-exercises')?.scrollIntoView({behavior:'smooth',block:'start'});
  nav.append(back,next,qGo);article.append(nav);
- const arr=c.examLinks||[];
- if(arr.length){
-  const nDirect=arr.filter(x=>x.relation==='مباشر').length;
-  qs.append(node('p','reader-note','وجدنا '+arr.length+' سؤالاً مصوراً مناسباً لهذا المحور، منها '+nDirect+' أسئلة مباشرة، والباقي للتوسيع أو المقارنة. الصياغة والاختيارات في صورة الورقة الأصلية.'));
-  for(const item of arr){
-   const b=node('button','course-q master-q',(item.relation==='مباشر'?'سؤال مباشر':'سؤال '+item.relation)+' · '+examLabel(item.exam)+' · Q'+item.q+' — '+item.topic);
-   b.type='button';b.onclick=()=>openOriginalQuestion(item.exam,item.q);qs.append(b);
-  }
- }else{
-  qs.append(node('p','reader-note','لا توجد أسئلة مطابقة في الأوراق المقروءة بعد. جميع دورات الامتحانات الأصلية متاحة أسفل الدرس.'));
+ const arr=(c.examLinks||[]).filter(x=>x.relation==='مباشر');
+ qs.append(node('p','reader-note','أسئلة حقيقية من ورقة المباراة مرتبطة مباشرة بهذا المحور، بالإضافة إلى QCM التدريبية الخاصة بالدرس أعلاه. جميع الأسئلة الأصلية متاحة في عارض الامتحان.'));
+ if(arr.length){for(const item of arr){
+  const b=node('button','course-q master-q','امتحان '+examLabel(item.exam)+' · Q'+item.q+' — '+item.topic);
+  b.type='button';b.onclick=()=>openOriginalQuestion(item.exam,item.q);qs.append(b);
+ }}else{
+  qs.append(node('p','reader-note','لا يوجد سؤال مباشر متحقق من مطابقته لهذا العنوان في الأوراق المفهرسة؛ لهذا قدمنا QCM تدريبية خاصة بالدرس دون نسبتها للوزارة.'));
  }
 }
 groupSelect.addEventListener('change',renderCourse);searchInput.addEventListener('input',renderCourse);
