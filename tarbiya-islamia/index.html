@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#123f4a">
 <meta name="description" content="التحضير لمباراة التعليم في مادة التربية الإسلامية: امتحانات أصلية، الديداكتيك، الدروس ومصادر المراجعة">
-<title>التربية الإسلامية | المصادر الرسمية قبل التلخيص وأسئلة المباريات</title>
+<title>التربية الإسلامية | الدروس والامتحانات السابقة</title>
 <style>
 [hidden]{display:none!important}
 :root{font:15px/1.85 Tahoma,"Segoe UI",Arial,sans-serif;color:#193d48;background:#f4f7f7}
@@ -70,11 +70,11 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 <header><div class="wrap"><strong>مسار | التربية الإسلامية</strong><a href="../">علوم التربية للثانوي</a></div></header>
 <main>
 <div class="section-eyebrow">مادة التخصص · الديداكتيك</div><h1>التربية الإسلامية</h1>
-<p class="sub">الوثائق الأصلية الرسمية للبرنامج والتوصيف، ثم شروح وتلخيصات غير رسمية مميزة عن أسئلة الامتحانات المنقولة من مصادرها.</p>
+
 <div class="meter"><span class="metric">التخصص والديداكتيك</span><span class="metric">امتحانات 2021–2025</span><span class="metric">مراجع الوزارة وملفات المراجعة</span><span class="metric" id="progress">تقدّمك: 0</span></div>
-<nav aria-label="أقسام الصفحة"><button type="button" data-tab="exams">الامتحانات وQCM</button><button type="button" class="active" data-tab="courses">الدروس والملخصات وQCM</button><button type="button" data-tab="review">أخطائي ونقطي</button><button type="button" data-tab="library">الوثائق والمراجع</button></nav>
+<nav aria-label="أقسام الصفحة"><button type="button" data-tab="courses" class="active">الدروس</button><button type="button" data-tab="exams">الامتحانات السابقة</button></nav>
 <section id="exams" class="screen" hidden>
-<div class="knowledge-block" style="margin-bottom:16px"><strong>امتحانات 2021: مكتملة بمفاتيح التصحيح المرفقة بالورقتين الأصليتين</strong><p>80 سؤالاً في التخصص و30 في الديداكتيك، مع الاختيارات والتعليلات. الأسئلة المقالية الأربعة عشر موجودة في قسم الدروس تحت «المقالات الرسمية». أما دورات 2022–2025 فما زالت بعض أسئلتها صوراً فقط، ولم يُنقل جميعها إلى نص تفاعلي بعد.</p></div>
+
 <div class="quiz-layout">
 <div class="card quiz-menu">
 <h3>اختار الاختبار</h3>
@@ -99,9 +99,10 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 <div class="scan-tools"><button type="button" id="page-back">→ صفحة سابقة</button><span id="shown-page">الصفحة 1</span><button type="button" id="page-forward">صفحة تالية ←</button><button type="button" id="zoom-down">−</button><span id="zoom-ratio">100%</span><button type="button" id="zoom-up">+</button></div>
 <div id="scan-frame" class="scan-frame"><img id="scan" alt="صورة الصفحة الأصلية من امتحان التربية الإسلامية، تشمل السؤال والاختيارات دون تغيير"><div id="img-status" class="mini" hidden>تعذر تحميل صورة الصفحة.</div></div>
 <div class="quiz-form">
+<div id="question-context" class="knowledge-block" style="font-size:16px;line-height:2;white-space:pre-wrap" hidden></div>
 <div id="question-verbatim" class="knowledge-block" style="font-size:19px;font-weight:800;line-height:2;white-space:pre-wrap" aria-live="polite">نص السؤال الأصلي سيظهر هنا عندما يكون منقولاً من الورقة.</div>
 <h3>السؤال الأصلي والاختيارات — <span id="active-q">Q1</span></h3>
-<p class="mini">اقرأ السؤال والاختيارات المكتوبة هنا، واختار جوابك باش يبان التصحيح والتعليل مباشرة. الصورة الأصلية متاحة للمقارنة.</p>
+
 <div id="original-options-note" class="mini" role="status"></div><div id="answer-letters" class="letter-grid"></div>
 <div class="quiz-controls"><button type="button" class="main-btn" id="submit-answer">صحّح الجواب</button><button type="button" id="q-prev">→ السابق</button><button type="button" id="q-next">تجاوز السؤال (0) ←</button></div>
 <div id="grade-feedback" class="grade-feedback" hidden></div>
@@ -128,11 +129,11 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
   <div class="program-row"><div class="program-top"><strong>طرائق ومقاربات تدريس المادة</strong><span>30%</span></div><div class="progress"><div style="width:30%"></div></div><p class="mini">بيداغوجيا الأهداف والمقاربة بالكفايات</p></div>
  </div>
 </div>
-<div class="notice">الدروس هنا ملخصات تنظيمية لمجالات المراجعة، وليست بدائل عن الوثائق الرسمية. كل موضوع فيه رابط مرجعه، ويمكن حفظ تقدّم القراءة على الجهاز.</div>
+
 <div id="course-items" class="grid"></div>
 </section>
 <section id="review" class="screen" hidden><div class="card"><h2>الأخطاء اللي خاصك تراجع</h2><p class="mini">الأسئلة اللي كتجاوب عليها غلط حسب التصحيح المقترح. تقدر ترجع لأي سؤال وتعاود تختبر راسك.</p><div id="mistake-list"></div></div></section><section id="library" class="screen" hidden>
-<div class="notice">هنا روابط الوثائق اللي كاينة فمجلدات Drive اللي شاركتي. صلاحية فتحها عند أي زائر كتتوقف على إعدادات المشاركة ديال Google Drive. المصادر العامة البديلة متاحة كذلك.</div>
+
 <div id="library-items" class="grid"></div>
 </section>
 </main>
@@ -142,13 +143,12 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 (function(){
 "use strict";
 const archive="https://mesconcours.ma/ar/concours/enseignement/college-lycee/education-islamique/";
-const quizForm=document.querySelector(".quiz-form"),scanTools=document.querySelector(".quiz-paper .scan-tools");
-if(quizForm&&scanTools&&scanTools.parentNode)scanTools.parentNode.insertBefore(quizForm,scanTools);
+
 const readingContext={
  "2021-specialty":{pages:[2],title:"الوثيقة السابقة لقسم الأسئلة الموضوعية – 2021",note:"في الورقة الأصلية نص وأسئلة إنشائية قبل قسم QCM. ما تأكدناش أنه مرتبط بسؤال QCM معيّن؛ يمكنك الاطلاع عليه إذا احتجتي."},
  "2021-didactics":{pages:[2],title:"الوثيقة التمهيدية من امتحان ديداكتيك 2021",note:"الصفحة الثانية فيها وضعيات وأسئلة تسبق QCM. ما كنقدموهاش على أنها سند مباشر لكل أسئلة الاختيار."}
 };
-let introductionZoomed=false,introductionHidden=true;
+let introductionZoomed=false,introductionHidden=false;
 function renderReadingContext(ex){
  const row=readingContext[ex.id],el=document.getElementById("intro-live");
  const box=document.getElementById("intro-live-images");
@@ -157,13 +157,13 @@ function renderReadingContext(ex){
  const toggle=document.getElementById("intro-live-toggle");
  if(!el||!box||!empty||!zoom||!toggle)return;
  // Text embedded in the same QCM page is not a separate introduction.
- el.hidden=!row;box.replaceChildren();introductionZoomed=false;introductionHidden=true;
+ el.hidden=!row;box.replaceChildren();introductionZoomed=false;introductionHidden=false;
  if(!row)return;
  document.getElementById("intro-live-title").textContent=row.title;
  document.getElementById("intro-live-note").textContent=row.note;
- empty.hidden=true;box.hidden=true;
+ empty.hidden=true;box.hidden=false;
  zoom.hidden=false;toggle.hidden=false;
- zoom.textContent="تكبير الوثيقة";toggle.textContent="عرض الوثيقة السابقة للأسئلة";
+ zoom.textContent="تكبير الوثيقة";toggle.textContent="إخفاء الوثيقة";
  for(const page of row.pages){
   const figure=document.createElement("figure");figure.className="intro-figure";
   const img=document.createElement("img");img.loading="lazy";img.decoding="async";
@@ -278,7 +278,8 @@ function letterUI(){const container=$("answer-letters");container.replaceChildre
  const saved=qanswers[activeExam.id+"-"+qno]||"";
  const item=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]?.[String(qno)];
  const options=item?.options;
- const prompt=document.getElementById("question-verbatim");prompt.textContent=item?.question?((item.task?"⚠ "+item.task+" من الاختيارات التالية\n\n":"")+item.question+(item.context?"\n\n"+item.context:"")):"هذا السؤال مازال ما تفرغش حرفياً. اقرأه من صورة الورقة الأصلية الموجودة أعلاه.";
+ const ctx=document.getElementById("question-context");ctx.hidden=!item?.context;ctx.textContent=item?.context?("نص الانطلاق / السند الأصلي:\n"+item.context):"";
+  const prompt=document.getElementById("question-verbatim");prompt.textContent=item?.question?((item.task?"⚠ "+item.task+" من الاختيارات التالية\n\n":"")+item.question):"السؤال والاختيارات موجودان في صورة الورقة الأصلية المعروضة قبل هذا الموضع.";
  const verified=Array.isArray(options)&&options.length===activeExam.letters&&options.every(x=>typeof x==="string"&&x.trim());
  const note=$("original-options-note");
  note.textContent=verified?((item.task?"تعليمات الورقة: اختر العبارة الخاطئة. ":"تعليمات الورقة: اختر الجواب الصحيح. ")+"الاختيارات منقولة من صورة الامتحان الأصلي، ويمكنك مقارنتها بها."):"الاختيارات مكتوبة داخل صورة الورقة الأصلية أعلاه. لم تُنسخ بعد إلى نص قابل للنقر، لذلك تظهر الحروف هنا فقط. لا نريد اختراع اقتراحات غير موجودة في PDF.";
@@ -310,7 +311,7 @@ function feedback(){const box=$("grade-feedback");box.replaceChildren();let ans=
   }
  }
  const back=document.createElement("button");back.type="button";back.className="quiet-button";back.textContent="رجع للدرس وراجع المفاهيم";back.onclick=()=>{const tab=document.querySelector('nav button[data-tab="courses"]');if(tab)tab.click();document.getElementById("masar-current-course")?.scrollIntoView({behavior:"smooth",block:"start"})};expl.appendChild(back);box.appendChild(expl);
- const small=document.createElement("div");small.className="mini";small.textContent=checked?.keySource?"الجواب مأخوذ من دليل التصحيح المرفق بملف الامتحان الأصلي؛ التنقيط المعروض هنا تدريبي.":"التنقيط هنا للتدريب، والتصحيح اجتهادي غير وزاري.";box.appendChild(small);if(checked?.keySourceUrl){const a=document.createElement("a");a.href=checked.keySourceUrl;a.target="_blank";a.rel="noopener noreferrer";a.textContent="شاهد PDF الأصلي ودليل التصحيح";box.appendChild(a)}
+ const small=document.createElement("div");small.className="mini";small.textContent=checked?.keySource?"الجواب مأخوذ من دليل التصحيح المرفق بملف الامتحان الأصلي؛ التنقيط المعروض هنا تدريبي.":"التنقيط هنا للتدريب، والتصحيح اجتهادي غير وزاري.";box.appendChild(small);
 }
 function renderQuiz(resetPage=true){const ex=activeExam;
  renderReadingContext(ex);
@@ -324,9 +325,9 @@ function renderQuiz(resetPage=true){const ex=activeExam;
  showScan();letterUI();feedback();countScores();
  const v=window.MASAR_ISLAM_TRANSCRIPT?.[ex.id]||{};const onlyVerified=$("only-transcribed").checked&&Object.keys(v).length>0;const ids=Object.keys(v).map(Number).sort((a,b)=>a-b);$("q-prev").disabled=onlyVerified?qno<=ids[0]:qno<=1;$("q-next").disabled=onlyVerified?qno>=ids[ids.length-1]:qno>=ex.count;
  $("submit-answer").textContent=qanswers[ex.id+"-"+qno]?"غيّر الجواب وصححو":"صحّح الجواب";
- $("paper-tip").textContent="Q"+qno+": اقرأ السؤال والاختيارات المكتوبة أولاً، ثم قارنها بصورة الورقة الأصلية الموجودة أسفل التمرين. يمكنك تكبير الصورة وتغيير الصفحة.";
+ $("paper-tip").textContent="نص الانطلاق في الصورة الأصلية قبل السؤال رقم "+qno+".";
 }
-function changeQuestion(v){let n=Math.min(activeExam.count,Math.max(1,v));const verified=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]||{};if($("only-transcribed").checked&&Object.keys(verified).length&& !verified[String(n)]){const direction=v>qno?1:-1;while(n>=1&&n<=activeExam.count&&!verified[String(n)])n+=direction;if(n<1||n>activeExam.count)return}qno=n;renderQuiz();document.getElementById("question-verbatim")?.scrollIntoView({behavior:"smooth",block:"start"});}
+function changeQuestion(v){let n=Math.min(activeExam.count,Math.max(1,v));const verified=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]||{};if($("only-transcribed").checked&&Object.keys(verified).length&& !verified[String(n)]){const direction=v>qno?1:-1;while(n>=1&&n<=activeExam.count&&!verified[String(n)])n+=direction;if(n<1||n>activeExam.count)return}qno=n;renderQuiz();document.querySelector(".quiz-paper .scan-frame")?.scrollIntoView({behavior:"smooth",block:"start"});}
 for(const ex of exams){const o=document.createElement("option");o.value=ex.id;o.textContent=ex.title;$("exam-sel").append(o)}
 $("exam-sel").onchange=function(){activeExam=exams.find(x=>x.id===this.value)||exams[0];const verified=window.MASAR_ISLAM_TRANSCRIPT?.[activeExam.id]||{};qno=$("only-transcribed").checked&&Object.keys(verified).length?Number(Object.keys(verified).sort((a,b)=>Number(a)-Number(b))[0]):1;zoom=100;renderQuiz()};
 $("question-sel").onchange=function(){changeQuestion(Number(this.value))};
@@ -368,7 +369,7 @@ fetch("proposed-keys.json",{cache:"no-store"}).then(r=>r.ok?r.json():{}).then(da
 }).catch(()=>{proposed={};renderQuiz(false)});
 let completed={};try{completed=JSON.parse(localStorage.getItem(window.MASAR_PROFILES?.key("masar-islam-lessons-v1")||"masar-islam-lessons-v1")||"{}")}catch(e){completed={}}
 function renderCourses(){$("course-items").innerHTML=courses.map((c,i)=>'<article class="card course"><div class="head"><h3>'+escape(c.title)+'</h3><button type="button" data-complete="'+i+'" class="'+(completed[i]?"done":"")+'">'+(completed[i]?"تمت المراجعة ✓":"تحديد كمراجع")+'</button></div><p>'+escape(c.desc)+'</p><div class="mini">مرجع الموضوع: '+escape(c.ref)+'</div></article>').join("");$("progress").textContent="تقدّمك: "+Object.values(completed).filter(Boolean).length+" / "+courses.length+" محاور";document.querySelectorAll('[data-complete]').forEach(b=>b.onclick=function(){const i=this.dataset.complete;completed[i]=!completed[i];try{localStorage.setItem(window.MASAR_PROFILES?.key("masar-islam-lessons-v1")||"masar-islam-lessons-v1",JSON.stringify(completed))}catch(e){}renderCourses()})}
-$("library-items").innerHTML=docs.map(d=>card(d.title,d.group,d.type,"فتح الوثيقة",d.url)).join("");
+
 document.querySelectorAll("nav button").forEach(b=>b.onclick=function(){showTab(b.dataset.tab)});
 renderQuiz();renderMistakes();
 })();
@@ -387,13 +388,5 @@ renderQuiz();renderMistakes();
 <script src="master-assemble.js?v=20261110master3"></script>
 <script src="resumes-specialty.js?v=20261111a"></script>
 <script src="resumes-grades.js?v=20261111a"></script>
-<script src="exam-topic-matches.js?v=20261111study2"></script>
-<script src="official-links-audited.js?v=20261110topic1"></script>
 <script src="official-choice-notes.js?v=20261110review1"></script>
-<script src="qcm-specialty-reviewed.js?v=20261110topics1"></script>
-<script src="qcm-didactics-reviewed.js?v=20261110topics1"></script>
-<script src="qcm-grade1-reviewed.js?v=20261110topics1"></script>
-<script src="qcm-grade2-reviewed.js?v=20261110topics1"></script>
-<script src="qcm-grade3-reviewed.js?v=20261110topics1"></script>
-<script src="qcm-support-reviewed.js?v=20261110topics1"></script>
-<script src="master-reader.js?v=20261110sourcefirst1"></script></body></html>
+<script src="master-reader.js?v=20261110lessons-only2"></script></body></html>
