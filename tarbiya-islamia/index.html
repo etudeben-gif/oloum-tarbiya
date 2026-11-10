@@ -4,7 +4,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#123f4a">
 <meta name="description" content="التحضير لمباراة التعليم في مادة التربية الإسلامية: امتحانات أصلية، الديداكتيك، الدروس ومصادر المراجعة">
-<title>التربية الإسلامية | مسار التحضير لمباراة التعليم</title>
+<title>دروس التربية الإسلامية كاملة + أسئلة 2021 الرسمية | مسار مباراة التعليم</title>
 <style>
 [hidden]{display:none!important}
 :root{font:15px/1.85 Tahoma,"Segoe UI",Arial,sans-serif;color:#193d48;background:#f4f7f7}
@@ -65,7 +65,8 @@ footer{background:#123e48;color:#d9e9eb;padding:18px;font-size:12px}footer a{col
 .intro-live-actions button{background:#126e6b;color:white;border-radius:9px;padding:9px 14px;font-weight:750}
 .intro-live-actions button[hidden]{display:none!important}
 @media(max-width:700px){#intro-live{padding:11px}.intro-live-heading h3{font-size:17px}.intro-live-images.enlarged .intro-figure img{width:190%}}
-</style></head><body>
+</style><link rel="stylesheet" href="master-reader.css?v=20261110master3">
+</head><body>
 <header><div class="wrap"><strong>مسار | التربية الإسلامية</strong><a href="../">علوم التربية للثانوي</a></div></header>
 <main>
 <div class="section-eyebrow">مادة التخصص · الديداكتيك</div><h1>التربية الإسلامية</h1>
@@ -347,6 +348,7 @@ function renderMistakes(){let mistakes=[];
 function showTab(tab){document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x.dataset.tab===tab));
  document.querySelectorAll(".screen").forEach(x=>x.hidden=x.id!==tab);
  if(tab==="review")renderMistakes();if(tab==="exams")showScan();}
+window.addEventListener("masar-lesson-qcm",()=>{try{qanswers=JSON.parse(localStorage.getItem("masar-islam-qcm-v2")||"{}")||{}}catch(e){}renderQuiz(false);renderMistakes()});
 $("to-review").onclick=()=>showTab("review");
 fetch("proposed-keys.json",{cache:"no-store"}).then(r=>r.ok?r.json():{}).then(data=>{
  proposed=data||{};renderQuiz(false);renderMistakes();
@@ -363,4 +365,11 @@ renderQuiz();renderMistakes();
 <script src="grade3-detailed.js?v=20261109j"></script>
 <script src="grade-extra-detailed.js?v=20261109k"></script>
 <script src="courses-enriched.js?v=20261109j"></script>
-<script src="courses-ui.js?v=20261109l"></script></body></html>
+<script src="master-grade1.js?v=20261110master3"></script>
+<script src="master-grade2.js?v=20261110master3"></script>
+<script src="master-grade3.js?v=20261110master3"></script>
+<script src="master-specialty.js?v=20261110master3"></script>
+<script src="master-didactics.js?v=20261110master3"></script>
+<script src="master-official-exam-links.js?v=20261110master3"></script>
+<script src="master-assemble.js?v=20261110master3"></script>
+<script src="master-reader.js?v=20261110master3"></script></body></html>
