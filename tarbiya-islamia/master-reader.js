@@ -1,7 +1,7 @@
 /* منهجية المراجعة: ملخص الدرس، الشرح المفصل، 10 QCM تدريبية، ثم أسئلة المباراة الأصلية 2021 مع التعليل. */
 (function(){
 "use strict";
-const courses=window.MASAR_ISLAM_COURSES||[];
+const courses=(window.MASAR_ISLAM_COURSES||[]).filter(c=>c.group!=="المقالات الرسمية");
 const bank=window.MASAR_ISLAM_TRANSCRIPT||{};
 const section=document.getElementById("courses");
 const original=document.getElementById("course-items");
@@ -24,7 +24,7 @@ hero.append(N("h2",null,"دروس التربية الإسلامية"),N("p",null
 const filters=N("div","master-filters");
 const search=N("input");search.type="search";search.placeholder="ابحث عن موضوع أو آية أو مفهوم أو حكم فقهي...";search.setAttribute("aria-label","البحث في كل محتوى الدروس");
 const select=N("select");select.setAttribute("aria-label","المجال الدراسي");
-for(const [value,label] of [["التخصص","التخصص: علوم شرعية"],["الديداكتيك","الديداكتيك: التخطيط والتدبير والتقويم"],["الأولى إعدادي","الأولى إعدادي"],["الثانية إعدادي","الثانية إعدادي"],["الثالثة إعدادي","الثالثة إعدادي"],["المنهاج الرسمي","خرائط المنهاج الرسمية"],["المقالات الرسمية","الأسئلة المقالية الرسمية"],["منهجية","منهجية الاختبار"],["all","جميع الدروس"]]){const opt=N("option",null,label);opt.value=value;select.append(opt)}
+for(const [value,label] of [["التخصص","التخصص: علوم شرعية"],["الديداكتيك","الديداكتيك: التخطيط والتدبير والتقويم"],["الأولى إعدادي","الأولى إعدادي"],["الثانية إعدادي","الثانية إعدادي"],["الثالثة إعدادي","الثالثة إعدادي"],["المنهاج الرسمي","خرائط المنهاج الرسمية"],["منهجية","منهجية الاختبار"],["all","جميع الدروس"]]){const opt=N("option",null,label);opt.value=value;select.append(opt)}
 select.value="التخصص";filters.append(select,search);hero.append(filters);
 const progress=N("p","master-pill");hero.append(progress);
 const library=N("div","master-library");
