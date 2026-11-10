@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#112f32">
+<meta name="description" content="دروس التربية الإسلامية لمباراة التعليم، QCM مبنية على الدروس، وامتحانات سابقة بسنداتها الأصلية.">
+<title>منار | مراجعة التربية الإسلامية</title>
+<link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+<header class="site-head">
+ <div class="head-inner">
+  <div class="logo-mark">م</div>
+  <div class="brand"><div class="eyebrow">مباراة التعليم · الثانوي الإعدادي</div><h1>منار <span>التربية الإسلامية</span></h1></div>
+  <div class="head-detail">التخصص · الديداكتيك · برامج الإعدادي</div>
+ </div>
+ <nav class="top-tabs" aria-label="أقسام الموقع"><button type="button" data-tab="lessons" class="active">الدروس</button><button type="button" data-tab="practice">QCM من الدروس</button><button type="button" data-tab="exams">الامتحانات السابقة</button></nav>
+</header>
+<main class="layout">
+ <section id="lessons" class="tab-panel">
+  <div class="section-intro"><div class="eyebrow dark">دروس المراجعة</div><h2>دروس التخصص والديداكتيك</h2></div>
+  <div class="study-layout">
+   <aside class="study-sidebar"><label for="lesson-search">ابحث عن درس</label><input id="lesson-search" type="search" placeholder="القرآن، المالكية، الوضعية المشكلة..."><label for="lesson-group">المجال</label><select id="lesson-group"></select><div id="lesson-list" class="lesson-list"></div></aside>
+   <article class="lesson-pane" id="lesson-pane"><div class="loading">جاري عرض الدروس...</div></article>
+  </div>
+ </section>
+ <section id="practice" class="tab-panel" hidden>
+  <div class="section-intro"><div class="eyebrow dark">اختبار الفهم</div><h2>QCM مرتبطة بمحتوى الدروس</h2><p>أسئلة تدريبية تحليلية متوسطة وصعبة، منفصلة عن أسئلة المباريات الرسمية.</p></div>
+  <div class="practice-controls"><label>اختر الدرس <select id="practice-lesson"></select></label><label>المستوى <select id="practice-level"><option value="all">متوسط وصعب</option><option value="hard">صعب فقط</option></select></label><button id="reset-practice" class="outline">إعادة الاختبار</button></div>
+  <div class="score-line"><strong id="practice-stats"></strong></div>
+  <div id="practice-content" class="practice-content"></div>
+ </section>
+ <section id="exams" class="tab-panel" hidden>
+  <div class="section-intro"><div class="eyebrow dark">أسئلة أصلية</div><h2>الامتحانات السابقة</h2><p>نص الانطلاق والسند أولاً، ثم السؤال والاختيارات. الأسئلة غير المفرغة تُعرض من الورقة المصورة دون اختراع إجابات.</p></div>
+  <div class="exam-controls"><label>الدورة <select id="exam-year"></select></label><label>السؤال <select id="exam-question"></select></label><div class="exam-movement"><button class="outline" id="prev-question">السابق</button><button class="outline" id="next-question">التالي</button></div></div>
+  <div id="exam-paper" class="exam-paper"></div>
+  <div id="essay-area" class="essay-area"></div>
+ </section>
+</main>
+<footer>منار · مراجعة التربية الإسلامية</footer>
+<script src="../tarbiya-islamia/transcribed-questions.js"></script>
+<script src="../tarbiya-islamia/courses-full.js"></script>
+<script src="../tarbiya-islamia/grade12-detailed.js"></script>
+<script src="../tarbiya-islamia/grade3-detailed.js"></script>
+<script src="../tarbiya-islamia/grade-extra-detailed.js"></script>
+<script src="../tarbiya-islamia/courses-enriched.js"></script>
+<script src="../tarbiya-islamia/master-grade1.js"></script>
+<script src="../tarbiya-islamia/master-grade2.js"></script>
+<script src="../tarbiya-islamia/master-grade3.js"></script>
+<script src="../tarbiya-islamia/master-specialty.js"></script>
+<script src="../tarbiya-islamia/master-didactics.js"></script>
+<script src="../tarbiya-islamia/didactics-official-syllabus.js"></script>
+<script src="../tarbiya-islamia/master-assemble.js"></script>
+<script src="../tarbiya-islamia/resumes-specialty.js"></script>
+<script src="../tarbiya-islamia/resumes-grades.js"></script>
+<script src="questions.js?v=1"></script>
+<script src="app.js?v=1"></script>
+</body></html>
