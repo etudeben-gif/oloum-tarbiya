@@ -86,6 +86,12 @@ function updateProgress(){
  const score=scoreSummary();
  progress.textContent="أنجزت "+f+" / "+courses.length+" درساً · "+score.attempted+" / "+score.total+" سؤالاً · النقطة "+scoreText(score)+" · ✓"+score.right+" / ✕"+score.wrong;
  const top=document.getElementById("progress");if(top)top.textContent="النظام الكندي: "+scoreText(score)+" نقطة · "+score.right+" صحيح · "+score.wrong+" خطأ";
+ const oldScore=document.getElementById("total-score");
+ const oldBreakdown=document.getElementById("answered-total");
+ const oldBar=document.getElementById("progress-fill");
+ if(oldScore)oldScore.textContent=scoreText(score)+" نقطة";
+ if(oldBreakdown)oldBreakdown.textContent=score.right+" صحيح (+1) · "+score.wrong+" خطأ (−1) · "+score.skipped+" متروك (0)";
+ if(oldBar)oldBar.style.width=100*score.attempted/Math.max(1,score.total)+"%";
 }
 function showList(){
  library.replaceChildren();
@@ -224,5 +230,10 @@ search.addEventListener("input",()=>{
  const first=courses.find(matches);
  if(first&&first.id!==current)goTo(first.id,false);else showList();
 });
+window.MASAR_MASTER_SYNC=function(){
+ try{answers=JSON.parse(localStorage.getItem("masar-islam-qcm-v2")||"{}")||{}}catch(_){}
+ const c=courses.find(x=>x.id===current);if(c)renderQuiz(c);
+ updateProgress();
+};
 goTo(current,false);
 })();
