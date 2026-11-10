@@ -49,6 +49,8 @@ const {JSDOM,VirtualConsole}=require("jsdom");
  assert(app,"Expanded course reader missing");
  assert.equal(document.querySelectorAll(".master-tile").length,9,"Specialty filter must show nine complete courses");
  assert(document.querySelectorAll(".master-chapter").length>=5,"Detailed course content missing");
+ assert(app.querySelector(".master-quick-review"),"Concise memorization table missing");
+ assert.equal(app.querySelectorAll(".master-quick-table tbody tr").length,4,"Quick review should show four key concepts");
  assert.equal(document.querySelectorAll(".master-choice").length,4,"Original QCM choices not embedded after the lesson");
  assert(app.querySelector(".master-mindmap"),"Interactive mind map missing from the lesson");
  const branches=app.querySelectorAll(".master-mindmap-branch");
