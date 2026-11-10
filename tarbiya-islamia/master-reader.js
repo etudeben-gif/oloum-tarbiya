@@ -22,9 +22,9 @@ const examPdf={"2021-specialty":"https://drive.google.com/file/d/1TOgJD3LlkogCec
 const hero=N("div","master-hero");
 hero.append(
   N("div","master-pill","المقرر المفصل · اختبار التخصص والديداكتيك للسلك الثانوي"),
-  N("h2",null,"التربية الإسلامية: شرح مختصر ومفهوم + QCM"),
-  N("p",null,courses.length+" ملخصاً منظماً لعلوم التخصص وديداكتيك المادة ودروس الإعدادي. كل درس فيه مفاهيم مبسطة وأمثلة وفروق مهمة لـQCM، ثم تدريبات خاصة وأصلية عند توفرها."),
-  N("p",null,"الدروس كاملة في شكل ملخص مفهوم، مع أمثلة وفروق QCM. بلا خريطة ذهنية ولا شرح مطوّل.")
+  N("h2",null,"التربية الإسلامية: الدرس أولاً ثم أسئلة المباراة الأصلية"),
+  N("p",null,courses.length+" درساً ومحوراً: اقرأ فصول الدرس كاملة، ثم اختبر نفسك بالأسئلة المنقولة من امتحان 2021 فقط عندما ترتبط بالمبحث."),
+  N("p",null,"لا تُعرض هنا أسئلة مولّدة آلياً. نبيّن مصدر السؤال وحرف الإجابة، ونميّز بين مفتاح التصحيح المرفق والتعليل التحريري.")
 );
 const filters=N("div","master-filters");
 const search=N("input");search.type="search";search.placeholder="ابحث عن موضوع أو آية أو مفهوم أو حكم فقهي...";search.setAttribute("aria-label","البحث في كل محتوى الدروس");
@@ -122,59 +122,39 @@ function lessonRows(c){
  if(c.resumeRows?.length>=4)return c.resumeRows;
  return c.readerChapters.slice(0,6).map(p=>[p.title,shortText(p.text,160)]);
 }
-function renderPractice(c){
- const rows=lessonRows(c);
- const bank=window.MASAR_GENERATE_TEN_QCM(rows);
- const box=N("section","master-practice");
- box.append(N("span","master-quick-kicker","10 QCM تدريبية بصياغة مشابهة للمباراة — غير وزارية"));
- box.append(N("h3",null,"10 أسئلة مناسبة لدرس: "+c.title));
- box.append(N("p","master-practice-intro","تطبيق للمفاهيم، تعاريف، تمييز بين البدائل، واختيار العبارة غير الصحيحة. تُعرض أسئلة الامتحانات الأصلية منفصلة أسفل الملخص."));
- let points=0,done=0;
- for(let i=0;i<bank.length;i++){
-  const x=practice[c.id+"-ten-"+i];if(x!==undefined){done++;points+=x===bank[i].correct?1:-1}
- }
- box.append(N("div","master-practice-score","نقطة هذا الدرس: "+(points>0?"+":"")+points+" · "+done+" / 10"));
- for(let i=0;i<bank.length;i++){
-  const item=bank[i],key=c.id+"-ten-"+i,chosen=practice[key],q=N("div","master-practice-question");
-  q.append(N("strong",null,"Q"+(i+1)+" — "+item.kind),N("p",null,item.prompt));
-  const choices=N("div","master-practice-options");
-  item.options.forEach((opt,j)=>{
-   const button=N("button","master-practice-option"+(chosen!==undefined&&j===item.correct?" correct":chosen===j?" wrong":""),String.fromCharCode(65+j)+" — "+opt);
-   button.type="button";button.disabled=chosen!==undefined;
-   button.onclick=()=>{practice[key]=j;savePractice();renderCourse(c)};
-   choices.append(button);
-  });
-  q.append(choices);
-  if(chosen!==undefined){
-   const good=chosen===item.correct;
-   const message=(good?"✓ صحيح +1":"✗ خطأ −1")+
-     " · الجواب الصحيح: "+String.fromCharCode(65+item.correct)+" — "+item.options[item.correct]+
-     ". التعليل: "+item.reason+
-     (good?"":" · اختيارك كان: "+String.fromCharCode(65+chosen)+" — "+item.options[chosen]+".");
-   q.append(N("p","master-practice-feedback",message));
-   const retry=N("button","master-practice-retry","إعادة المحاولة");retry.type="button";
-   retry.onclick=()=>{delete practice[key];savePractice();renderCourse(c)};q.append(retry);
-  }
-  box.append(q);
- }
- return box;
-}
 function renderCourse(c){
  detail.replaceChildren();
  const title=N("div","master-title");
- title.append(N("span","master-tag",c.group),N("h2",null,c.title),N("p",null,"شرح مختصر مفهوم حسب المنهاج، مثال، الفرق بين المصطلحات، وQCM مرتبطة بالدرس."));
+ title.append(N("span","master-tag",c.group),N("h2",null,c.title),N("p",null,"اقرأ جميع فصول الدرس ثم اختبر فهمك بالأسئلة الرسمية المتحقَّق من نصوصها والمربوطة بالمبحث."));
  detail.append(title);
+ const chapters=Array.isArray(c.readerChapters)?c.readerChapters:[];
+ if(chapters.length){
+   const contents=N("div","master-outline"),heading=N("h3",null,"فهرس الدرس الكامل"),items=N("ol"),reading=N("div","master-reading");
+   chapters.forEach((chapter,i)=>{
+     const sectionId="masar-reading-"+c.id+"-"+i;
+     const li=N("li"),anchor=N("a",null,chapter.title);anchor.href="#"+sectionId;li.append(anchor);items.append(li);
+     const chapterEl=N("section","master-chapter");chapterEl.id=sectionId;
+     chapterEl.append(N("span","master-chapter-number","الفصل "+(i+1)+" من "+chapters.length),N("h3",null,chapter.title));
+     const paragraphs=String(chapter.text||"").split(/\n\s*\n/).filter(x=>x.trim());
+     for(const para of paragraphs)chapterEl.append(N("p",null,para.trim()));
+     reading.append(chapterEl);
+   });
+   contents.append(heading,items);detail.append(contents,reading);
+ }
  const rows=lessonRows(c),compact=N("section","master-quick-review master-focused");
- compact.append(N("span","master-quick-kicker","خلاصة للمراجعة قبل 28 نونبر"),N("h3",null,"افهم الفكرة، ثم احفظ المصطلح"));
+ compact.append(N("span","master-quick-kicker","بعد قراءة الشرح"),N("h3",null,"خلاصة للمراجعة وحل الأسئلة"));
  const table=N("table","master-quick-table"),head=N("thead"),tr=N("tr"),body=N("tbody");
- tr.append(N("th",null,"المفهوم"),N("th",null,"الشرح الواضح"));head.append(tr);table.append(head);
+ tr.append(N("th",null,"المفهوم"),N("th",null,"معلومة أساسية"));head.append(tr);table.append(head);
  for(const r of rows){const line=N("tr");line.append(N("td",null,r[0]),N("td",null,r.slice(1).join(" — ")));body.append(line)}
  table.append(body);compact.append(table);
- const explain=N("div","master-understand");
- explain.append(N("h4",null,"كيفاش نفهم الدرس؟"),N("p",null,shortText(c.readerChapters[0]?.text,330)));
- explain.append(N("h4",null,"انتبه فـQCM"),N("p",null,c.examTip||"ميز المصطلحات المتشابهة، ثم طبقها على مثال واضح."));
- compact.append(explain);detail.append(compact);
- detail.append(renderPractice(c));
+ compact.append(N("h4",null,"انتبه أثناء حل QCM"),N("p",null,c.examTip||"اقرأ المطلوب أولاً، ثم تحقق من دلالة كل اختيار."));
+ detail.append(compact);
+ if(Array.isArray(c.readerGlossary)&&c.readerGlossary.length){
+   const gloss=N("section","master-glossary");
+   gloss.append(N("h3",null,"مفاهيم إضافية للفهم والمراجعة"));
+   for(const g of c.readerGlossary){const item=N("div","master-glossary-entry");item.append(N("h4",null,g.title),N("p",null,g.text));gloss.append(item)}
+   detail.append(gloss);
+ }
  const sources=N("details","master-citations master-citations-compact");
  sources.append(N("summary",null,"مراجع الدرس والوثائق الرسمية"));
  sources.append(N("p",null,c.sourceNote));
@@ -203,10 +183,10 @@ function renderQuiz(c){
  }
  quiz.append(board);
  if(!list.length){
-  const empty=N("p","master-noq","ما لقيناش سؤالاً أصلياً مطابقاً لهاد الدرس ضمن أسئلة 2021. التدريب اللي فوق مخصص لنفس الموضوع وموسوم بأنه غير وزاري.");
+  const empty=N("p","master-noq","لم نعثر على سؤال أصلي مرتبط بهذا الدرس تحديداً ضمن بنك 2021 المتاح. لن نضع هنا سؤالاً مولّداً أو من مجال آخر على أنه سؤال مطابق.");
   empty.append(" ",link("أسئلة التخصص الأصلية",examPdf["2021-specialty"])," · ",link("أسئلة الديداكتيك الأصلية",examPdf["2021-didactics"]));quiz.append(empty);return;
  }
- quiz.append(N("p",null,"المتاح: "+list.length+" سؤالاً أصلياً مربوطاً بهاذ المبحث بعد مراجعة العناوين؛ والتدريب الخاص بالدرس كاين فوق."));
+ quiz.append(N("p",null,"المتاح: "+list.length+" سؤالاً من امتحان دجنبر 2021 له صلة بهذا المبحث. اسم الدورة ورقم السؤال مذكوران، والنص كما هو في بنك الورقة المنقول."));
  const picker=N("div","master-quiz-picker");
  list.forEach((entry,i)=>{
   const b=N("button",(i===activeQuestion?"current":""),"Q"+entry.number+" · "+"مرتبط");
@@ -245,6 +225,19 @@ function renderQuiz(c){
   feedback.append(N("strong",null,good?"✓ جواب صحيح · +1 نقطة":"✗ الجواب غير صحيح · −1 نقطة"));
   feedback.append(N("p",null,"جوابك: "+existing+" · الجواب الصحيح حسب دليل 2021: "+obj.answer+" — "+(obj.options[letters.indexOf(obj.answer)]||"راجع الاختيارات الأصلية")));
   feedback.append(N("p",null,"التعليل: "+obj.reason));
+   const notes=window.MASAR_ISLAM_OPTION_NOTES?.[ansId];
+   if(notes){
+     const review=N("div","master-choice-rationales");
+     review.append(N("strong",null,"تحليل الاختيارات واحداً واحداً"));
+     for(let i=0;i<obj.options.length;i++){
+       const letter=letters[i];
+       const why=notes[letter];
+       if(why)review.append(N("p",null,letter+" — "+(letter===obj.answer?"✓ ":"✗ ")+why));
+     }
+     feedback.append(review);
+   }else{
+     feedback.append(N("p","master-explanation-limit","التعليل يشرح سبب اختيار الجواب المحدد في مفتاح 2021. لم يكتمل بعد تحليل مستقل لكل بديل في هذا السؤال، لذلك لا ننسب تبريراً غير مدقق إلى المصدر الأصلي."));
+   }
   feedback.append(N("p",null,"المطلوب: "+(obj.task||"اختيار الجواب الصحيح")+". وثيقة التصحيح الأصلية هي مرجع الحرف، أما شرح المفهوم فصياغة تعليمية."));
   feedback.append(link("افتح ملف PDF الأصلي ودليل التصحيح",obj.keySourceUrl||examPdf[entry.exam]));
   qbox.append(feedback);
