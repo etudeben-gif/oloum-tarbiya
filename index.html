@@ -378,7 +378,11 @@ function renderScienceTraining(c,index){
   question.append(answers);
   if(existing!==undefined){
    const msg=node('p','science-training-feedback',existing===right?'✓ جواب صحيح +1':'✗ خطأ −1');
-   msg.append(document.createTextNode(' · الصحيح: '+r[0]+'، لأن '+description));
+   const chosenRow=rows[existing];
+   if(existing!==right&&chosenRow)msg.append(document.createTextNode(' · اختيارك «'+chosenRow[0]+'» كيعني: '+chosenRow.slice(1).join(' — ')+'. ولكن المطلوب هنا هو «'+r[0]+'» لأنه: '+description));
+   else msg.append(document.createTextNode(' · '+r[0]+' يعني: '+description));
+   const related=c.examLinks?.filter(x=>x.relation==='مباشر')||[];
+   if(related.length)msg.append(document.createTextNode(' · تقدر تتدرب أيضاً على السؤال الأصلي المباشر من نفس المحور أسفل الملخص.'));
    question.append(msg);
    const retry=node('button','science-training-retry','إعادة المحاولة');retry.type='button';
    retry.onclick=()=>{delete sciencePracticeAnswers[answerKey];saveSciencePractice();renderCourse()};
