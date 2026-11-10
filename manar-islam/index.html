@@ -18,14 +18,14 @@
 </header>
 <main class="layout">
  <section id="lessons" class="tab-panel">
-  <div class="section-intro"><div class="eyebrow dark">دروس المراجعة</div><h2>دروس التخصص والديداكتيك</h2></div>
+  <div class="section-intro"><div class="eyebrow dark">دروس المراجعة</div><h2>التربية الإسلامية وعلوم التربية</h2><p>شروح مرتبة ومتوسطة الطول، وفق مجالات التوصيف الوزاري، مع ملخص بعد كل درس.</p></div>
   <div class="study-layout">
    <aside class="study-sidebar"><label for="lesson-search">ابحث عن درس</label><input id="lesson-search" type="search" placeholder="القرآن، المالكية، الوضعية المشكلة..."><label for="lesson-group">المجال</label><select id="lesson-group"></select><div id="lesson-list" class="lesson-list"></div></aside>
    <article class="lesson-pane" id="lesson-pane"><div class="loading">جاري عرض الدروس...</div></article>
   </div>
  </section>
  <section id="practice" class="tab-panel" hidden>
-  <div class="section-intro"><div class="eyebrow dark">اختبار الفهم</div><h2>QCM مرتبطة بمحتوى الدروس</h2><p>أسئلة تدريبية تحليلية متوسطة وصعبة، منفصلة عن أسئلة المباريات الرسمية.</p></div>
+  <div class="section-intro"><div class="eyebrow dark">اختبار الفهم</div><h2>QCM متوسطة وصعبة من الدروس</h2><p>أسئلة تدريبية تحليلية متوسطة وصعبة، منفصلة عن أسئلة المباريات الرسمية.</p></div>
   <div class="practice-controls"><label>اختر الدرس <select id="practice-lesson"></select></label><label>المستوى <select id="practice-level"><option value="all">متوسط وصعب</option><option value="hard">صعب فقط</option></select></label><button id="reset-practice" class="outline">إعادة الاختبار</button></div>
   <div class="score-line"><strong id="practice-stats"></strong></div>
   <div id="practice-content" class="practice-content"></div>
@@ -50,9 +50,13 @@
 <script src="../tarbiya-islamia/master-specialty.js"></script>
 <script src="../tarbiya-islamia/master-didactics.js"></script>
 <script src="../tarbiya-islamia/didactics-official-syllabus.js"></script>
+<script src="specialty-2025-extra.js?v=1"></script>
+<script src="education-courses.js?v=1"></script>
 <script src="../tarbiya-islamia/master-assemble.js"></script>
 <script src="../tarbiya-islamia/resumes-specialty.js"></script>
 <script src="../tarbiya-islamia/resumes-grades.js"></script>
 <script src="questions.js?v=1"></script>
+<script src="advanced-questions.js?v=1"></script>
+<script src="education-questions.js?v=1"></script>
 <script src="app.js?v=1"></script>
 </body></html>
